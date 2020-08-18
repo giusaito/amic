@@ -178,6 +178,7 @@ return [
         // Novos providers 
 
         Spatie\Permission\PermissionServiceProvider::class,
+        jeremykenedy\LaravelLogger\LaravelLoggerServiceProvider::class,
 
     ],
 
