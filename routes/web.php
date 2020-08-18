@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.', 'middleware' => ['web', 'auth', 'activity']], function () {
+
+    // Início rota link útil
+    Route::group(['prefix' => 'link-ultil', 'as' => 'link.util.'], function () {
+        Route::resource('/', 'LinkController');
+    });
+
+});

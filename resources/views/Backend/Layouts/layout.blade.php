@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>BEWWEB | Admin</title>
+    <title>@yield('title') | Painel administrativo</title>
     <link rel="apple-touch-icon" href="{{ URL::asset('favicon/apple-icon-180x180.png') }}">
     <link rel="shortcut icon" href="{{ URL::asset('favicon.png') }}">
     <link href="{{ URL::asset('css/backend/all.css') }}" rel="stylesheet">
@@ -40,18 +40,7 @@
             </nav>
             </div>
             <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="text-center m-t-lg">
-                            <h1>
-                                INSPINIA Static Seed Project for BS4
-                            </h1>
-                            <small>
-                                It is an application skeleton for a typical web app. You can use it to quickly bootstrap your webapp projects and dev environment for these projects.
-                            </small>
-                        </div>
-                    </div>
-                </div>
+                @yield('content')
             </div>
             @include("Backend.Layouts.Includes.footer")
         </div>

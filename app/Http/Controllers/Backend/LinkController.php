@@ -17,37 +17,9 @@ class LinkController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->query('keyword');
+        $links = link::paginate(20);
 
-        if($query) {
-            $links = link::search($query)->paginate(10);
-            $response = [
-                'pagination' => [
-                    'total' => $links->total(),
-                    'per_page' => $links->perPage(),
-                    'current_page' => $links->currentPage(),
-                    'last_page' => $links->lastPage(),
-                    'from' => $links->firstItem(),
-                    'to' => $links->lastItem()
-                ],
-                'data' => $links
-            ];
-            return response()->json($response);
-        } else {
-            $links = link::orderBy('id', 'DESC')->paginate(10);
-            $response = [
-                'pagination' => [
-                    'total' => $links->total(),
-                    'per_page' => $links->perPage(),
-                    'current_page' => $links->currentPage(),
-                    'last_page' => $links->lastPage(),
-                    'from' => $links->firstItem(),
-                    'to' => $links->lastItem()
-                ],
-                'data' => $links
-            ];
-            return response()->json($response);
-        }
+        return view('Backend.LinkUtil.index', $links);
     }
 
     /**

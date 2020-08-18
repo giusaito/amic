@@ -60,9 +60,9 @@ class CreateLinksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_links');
-        Schema::dropIfExists('links');
         Schema::dropIfExists('category_link');
+        Schema::dropIfExists('links');
+        Schema::dropIfExists('category_links');
       
     }
 }
