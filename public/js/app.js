@@ -9771,7 +9771,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/element-ui/lib/theme-chalk/index.css":
 /*!*******************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/element-ui/lib/theme-chalk/index.css ***!
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/src??ref--7-2!./node_modules/element-ui/lib/theme-chalk/index.css ***!
   \*******************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -62173,7 +62173,7 @@ module.exports = "/fonts/vendor/element-ui/lib/theme-chalk/element-icons.woff?53
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../css-loader??ref--6-1!../../../postcss-loader/src??ref--6-2!./index.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/element-ui/lib/theme-chalk/index.css");
+var content = __webpack_require__(/*! !../../../css-loader??ref--7-1!../../../postcss-loader/src??ref--7-2!./index.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/element-ui/lib/theme-chalk/index.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -112114,15 +112114,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/site.scss":
+/*!**********************************!*\
+  !*** ./resources/sass/site.scss ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nSassError: Undefined variable.\n  ╷\n3 │   background-color: $site-navbar-header-bg;\r\n  │                     ^^^^^^^^^^^^^^^^^^^^^^\n  ╵\n  resources\\sass\\secoes\\_site-navbar.scss 3:21  @import\n  C:\\laragon\\www\\amic\\resources\\sass\\site.scss 3:9                                     root stylesheet\n    at C:\\laragon\\www\\amic\\node_modules\\webpack\\lib\\NormalModule.js:316:20\n    at C:\\laragon\\www\\amic\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\laragon\\www\\amic\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\laragon\\www\\amic\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at C:\\laragon\\www\\amic\\node_modules\\sass-loader\\dist\\index.js:73:7\n    at Function.call$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:88191:16)\n    at _render_closure1.call$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:77610:12)\n    at _RootZone.runBinary$3$3 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:26152:18)\n    at _RootZone.runBinary$3 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:26156:19)\n    at _FutureListener.handleError$1 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24600:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24897:40)\n    at Object._Future__propagateToListeners (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4311:88)\n    at _Future._completeError$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24725:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24117:12)\n    at Object._asyncRethrow (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4065:17)\n    at C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:14087:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4090:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24138:12)\n    at _awaitOnObject_closure0.call$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24130:25)\n    at _RootZone.runBinary$3$3 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:26152:18)\n    at _RootZone.runBinary$3 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:26156:19)\n    at _FutureListener.handleError$1 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24600:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24897:40)\n    at Object._Future__propagateToListeners (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4311:88)\n    at _Future._completeError$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24725:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24117:12)\n    at Object._asyncRethrow (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4065:17)\n    at C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:16672:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4090:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24138:12)\n    at _awaitOnObject_closure0.call$2 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24130:25)\n    at _RootZone.runBinary$3$3 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:26152:18)\n    at _RootZone.runBinary$3 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:26156:19)\n    at _FutureListener.handleError$1 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24600:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:24897:40)\n    at Object._Future__propagateToListeners (C:\\laragon\\www\\amic\\node_modules\\sass\\sass.dart.js:4311:88)");
+
+/***/ }),
+
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!****************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/site.scss ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/leonardo/Desktop/Leonardo/amic/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/leonardo/Desktop/Leonardo/amic/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\amic\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\laragon\www\amic\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\laragon\www\amic\resources\sass\site.scss */"./resources/sass/site.scss");
 
 
 /***/ })
