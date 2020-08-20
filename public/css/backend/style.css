@@ -2414,6 +2414,16 @@ button.dim:active:before {
   outline: none !important;
 }
 
+.logout-button {
+  color: #999c9e;
+  font-size: 14px;
+  padding: 20px 10px;
+  min-height: 50px;
+  display: block;
+  border: none;
+  background: none;
+}
+
 .label {
   background-color: #D1DADE;
   color: #5E5E5E;
