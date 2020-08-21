@@ -71,6 +71,7 @@
             </div>
         </div>
     </div>
+    {{ $token }}
 </div>
 </template>
 <script> 

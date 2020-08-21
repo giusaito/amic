@@ -47,6 +47,7 @@ return [
             // 'hash' => false,
             'driver' => 'passport',
             'provider' => 'users',
+            'hash' => true,
         ],
     ],
 
