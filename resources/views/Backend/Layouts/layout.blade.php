@@ -1,64 +1,49 @@
 <!DOCTYPE html>
-<html class="no-js css-menubar" lang="pt-BR">
+<html>
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <meta name="description" content="BEWWEB Admin">
-  <meta name="author" content="BEWWEB">
 
-  <title>Área Administrativa</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="apple-touch-icon" href="{{ URL::asset('public/favicon/apple-icon-180x180.png') }}">
-  <link rel="shortcut icon" href="{{ URL::asset('public/favicon.png') }}">
+    <title>@yield('title') | Painel administrativo</title>
+    <link rel="apple-touch-icon" href="{{ URL::asset('favicon/apple-icon-180x180.png') }}">
+    <link rel="shortcut icon" href="{{ URL::asset('favicon.png') }}">
+    <link href="{{ URL::asset('css/backend/all.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/backend/style.css') }}" rel="stylesheet">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="{{ URL::asset('public/css/global/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('public/css/global/bootstrap-extend.min.css') }}">
-  <link rel="stylesheet" href="assets/css/site.min.css">
-
-  <!-- Skin tools (demo site only) -->
-  <link rel="stylesheet" href="../global/css/skintools.min.css">
-  <script src="assets/js/Plugin/skintools.min.js"></script>
-
-  <!-- Plugins -->
-  <link rel="stylesheet" href="../global/vendor/animsition/animsition.min.css">
-  <link rel="stylesheet" href="../global/vendor/asscrollable/asScrollable.min.css">
-  <link rel="stylesheet" href="../global/vendor/switchery/switchery.min.css">
-  <link rel="stylesheet" href="../global/vendor/intro-js/introjs.min.css">
-  <link rel="stylesheet" href="../global/vendor/slidepanel/slidePanel.min.css">
-  <link rel="stylesheet" href="../global/vendor/flag-icon-css/flag-icon.min.css">
-  <link rel="stylesheet" href="../global/vendor/waves/waves.min.css">
-
-  <!-- Plugins For This Page -->
-  <link rel="stylesheet" href="../global/vendor/chartist/chartist.min.css">
-  <link rel="stylesheet" href="../global/vendor/jvectormap/jquery-jvectormap.min.css">
-  <link rel="stylesheet" href="../global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.min.css">
-
-  <!-- Page -->
-  <link rel="stylesheet" href="assets/examples/css/dashboard/v1.min.css">
-
-  <!-- Fonts -->
-  <link rel="stylesheet" href="../global/fonts/material-design/material-design.min.css">
-  <link rel="stylesheet" href="../global/fonts/brand-icons/brand-icons.min.css">
-  <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,700">
-
-
-  <!--[if lt IE 9]>
-    <script src="../global/vendor/html5shiv/html5shiv.min.js"></script>
-    <![endif]-->
-
-  <!--[if lt IE 10]>
-    <script src="../global/vendor/media-match/media.match.min.js"></script>
-    <script src="../global/vendor/respond/respond.min.js"></script>
-    <![endif]-->
-
-  <!-- Scripts -->
-  <script src="../global/vendor/breakpoints/breakpoints.min.js"></script>
-  <script>
-    Breakpoints();
-  </script>
 </head>
-<body class="animsition dashboard">
-</body>
+
+<body>
+
+    <div id="wrapper">
+        @include("Backend.Layouts.Includes.sidebar")
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <form role="search" class="navbar-form-custom" method="post" action="#">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                @yield('content')
+            </div>
+            @include("Backend.Layouts.Includes.footer")
+        </div>
+    </div>
+    <script src="{{ URL::asset('js/backend/all.js') }}"></script>
 </html>
