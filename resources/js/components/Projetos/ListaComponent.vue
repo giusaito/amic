@@ -35,12 +35,13 @@
                                 <tbody>
                                     <tr v-for="projeto in projetos" :key="projeto.id">
                                         <td class="project-status">
-                                            <span class="label label-primary">Active</span>
+                                            <span v-if="projeto.status === 'TRUE'" class="label label-primary">Ativo</span>
+                                            <span v-if="projeto.status === 'FALSE'" class="label label-danger">Inativo</span>
                                         </td>
                                         <td class="project-title">
-                                            <a href="project_detail.html">Contract with Zender Company</a>
+                                            <a href="project_detail.html">{{ projeto.name }}</a>
                                             <br>
-                                            <small>Created 14.08.2014</small>
+                                            <small>Adicionado em {{ projeto.created_at }}14.08.2014</small>
                                         </td>
                                         <td class="project-completion">
                                                 <small>Completion with: 48%</small>

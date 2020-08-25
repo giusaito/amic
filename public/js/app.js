@@ -1986,6 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['homeRoute', 'listRoute'],
@@ -39220,19 +39221,49 @@ var render = function() {
                     "tbody",
                     _vm._l(_vm.projetos, function(projeto) {
                       return _c("tr", { key: projeto.id }, [
+                        _c("td", { staticClass: "project-status" }, [
+                          projeto.status === "TRUE"
+                            ? _c(
+                                "span",
+                                { staticClass: "label label-primary" },
+                                [_vm._v("Ativo")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          projeto.status === "FALSE"
+                            ? _c(
+                                "span",
+                                { staticClass: "label label-danger" },
+                                [_vm._v("Inativo")]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "project-title" }, [
+                          _c("a", { attrs: { href: "project_detail.html" } }, [
+                            _vm._v(_vm._s(projeto.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v(
+                              "Adicionado em " +
+                                _vm._s(projeto.created_at) +
+                                "14.08.2014"
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _vm._m(3, true),
                         _vm._v(" "),
                         _vm._m(4, true),
-                        _vm._v(" "),
-                        _vm._m(5, true),
-                        _vm._v(" "),
-                        _vm._m(6, true),
                         _vm._v(" "),
                         _c(
                           "td",
                           { staticClass: "project-actions" },
                           [
-                            _vm._m(7, true),
+                            _vm._m(5, true),
                             _vm._v(" "),
                             _c(
                               "router-link",
@@ -39334,28 +39365,6 @@ var staticRenderFns = [
           ])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "project-status" }, [
-      _c("span", { staticClass: "label label-primary" }, [_vm._v("Active")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "project-title" }, [
-      _c("a", { attrs: { href: "project_detail.html" } }, [
-        _vm._v("Contract with Zender Company")
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("small", [_vm._v("Created 14.08.2014")])
     ])
   },
   function() {
