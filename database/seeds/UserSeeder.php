@@ -21,11 +21,13 @@ class UserSeeder extends Seeder
             'name' => 'Editor',
             'email' => 'edt@bewweb.com.br',
             'password' => Hash::make('admin5151'),
+            'activation_token' => '123',
         ]);
         $user2 = Factory(App\User::class)->create([
             'name' => 'ADMIN',
             'email' => 'oi@bewweb.com.br',
             'password' => Hash::make('admin5151'),
+            'activation_token' => '123',
         ]);
         $user2->assignRole($role1);
     }

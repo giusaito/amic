@@ -84,8 +84,14 @@
             }
         },
         created() {
+            // axios.defaults.headers.common["Authorization"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMjNhNDhjYTdmY2JkYTJmZTYyMzZhOGM2YWUxZmRkNGI0Y2NlYTQ5MjJiZjgzYjBhMDUxNmQ0MDdhZWY4NmRmNGJjNWFjYTNlMmUwYjFlMjAiLCJpYXQiOjE1OTgzNTk0NjEsIm5iZiI6MTU5ODM1OTQ2MSwiZXhwIjoxNjI5ODk1NDYxLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.QL3dpZxwdMFqQSn2qTudIurY_A6mAzURs5UfWFetK_4aDxv3T5Z-bvYXEgZe6-9tg7_oGH9Bstgeh3UBmv2BcXK3AvU6iujV6gb3N2SrDui8bAkZ5SzqGQdDrvZQ0G-a3NaT6GgME_1qyb6qzs-X8iNPHs8v5fH77hKs6D2xu0W_SpJU-vtfChkCO4bSfiirdfrMfB9b8P_bf5SJ5M-mJXZRcIaMXLjwAJlrugTpSQVnU7kLxhBrwT3BgXBxf3p_GSUsHC7LJRS1i-rhpj5dt1kPJOA2p1HnkiwQSqYeFUmjHQoHDLU-DKo1hPz7SgVdwzFI43_MZJnHO8mek3QjmOpFA9t1pIvO_uNMBzEeH_V1137oVMuGuo4ekGdpc12Z2T41lT-MucMj8dHnjPOS5VTWzDmrXM8rcddg-cWmjN5EbOZzrmm6839ysCLNhSZepLawMQJgJAuuuITlT4AV7OdYmzCDzcz7igKeWyYEdYSg9xhZmlHHJDVKFHBPPlg-Flarcl1BGsAvHd7EADtOZsqnzIaTK6wSiGJ_aDNRpvJPQHsuhOmcJfgMw6IDlmNhe80-m913PdtLiufDnM4ZtJe53R5SGkFviGkxaqaQbde8N9Ua3xK54xSat85zo48jZK7xrx8rG60Pmlt8Ngv6y8G_vaKspzbUaTHYF65qepc",
+            // axios.defaults.headers.common["Accept"] = "*/*";
+            axios.defaults.headers.common = {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': window.csrf_token
+            };
             axios
-                .get('/api/painel/projetos')
+                .get('/api/auth/painel/projetos')
                 .then(response => {
                     this.projetos = response.data;
                 });
@@ -96,7 +102,7 @@
         methods: {
             deleteProjeto(id) {
                 this.axios
-                    .delete(`/api/painel/projeto/excluir/${id}`)
+                    .delete(`/api/auth/painel/projeto/excluir/${id}`)
                     .then(response => {
                         let i = this.projetos.map(item => item.id).indexOf(id);
                         this.projetos.splice(i, 1)
