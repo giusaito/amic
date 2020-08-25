@@ -77,7 +77,7 @@
 <script> 
     import axios from 'axios';
     export default {
-        props: ['homeRoute'],
+        props: ['homeRoute', 'listRoute'],
         data() {
             return {
                 projetos: []
@@ -91,7 +91,7 @@
                 'X-CSRF-TOKEN': window.csrf_token
             };
             axios
-                .get('/api/auth/painel/projetos')
+                .get(this.$props.listRoute)
                 .then(response => {
                     this.projetos = response.data;
                 });

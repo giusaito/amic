@@ -1988,7 +1988,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['homeRoute'],
+  props: ['homeRoute', 'listRoute'],
   data: function data() {
     return {
       projetos: []
@@ -2003,7 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
       'X-Requested-With': 'XMLHttpRequest',
       'X-CSRF-TOKEN': window.csrf_token
     };
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/auth/painel/projetos').then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.$props.listRoute).then(function (response) {
       _this.projetos = response.data;
     }); // this.$http.get('/api/painel/projetos').then((response) => {
     //     this.projetos = response.data;

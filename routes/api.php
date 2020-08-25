@@ -24,15 +24,15 @@ Route::group(['prefix' => 'auth'], function () {
     ], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
-        Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'],function(){
-            Route::get('projetos', 'ProjectController@get');
-            Route::group(['prefix' => 'projeto'], function () {
-                Route::post('adicionar', 'ProjectController@add');
-                Route::get('editar/{id}', 'ProjectController@edit');
-                Route::post('atualizar/{id}', 'ProjectController@update');
-                Route::delete('excluir/{id}', 'ProjectController@delete');
-            });
-        });
+        // Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'],function(){
+        //     Route::get('projetos', 'ProjectController@get');
+        //     Route::group(['prefix' => 'projeto'], function () {
+        //         Route::post('adicionar', 'ProjectController@add');
+        //         Route::get('editar/{id}', 'ProjectController@edit');
+        //         Route::post('atualizar/{id}', 'ProjectController@update');
+        //         Route::delete('excluir/{id}', 'ProjectController@delete');
+        //     });
+        // });
     });
 });
 Route::group(['namespace' => 'Auth', 'middleware' => 'api', 'prefix' => 'password'], function () {    
@@ -40,15 +40,3 @@ Route::group(['namespace' => 'Auth', 'middleware' => 'api', 'prefix' => 'passwor
     Route::get('find/{token}', 'PasswordResetController@find');
     Route::post('reset', 'PasswordResetController@reset');
 });
-// Route::middleware('auth:api')->group(function () {
-//     Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'],function(){
-//         Route::get('projetos', 'ProjectController@get');
-//         Route::group(['prefix' => 'projeto'], function () {
-//             Route::post('adicionar', 'ProjectController@add');
-//             Route::get('editar/{id}', 'ProjectController@edit');
-//             Route::post('atualizar/{id}', 'ProjectController@update');
-//             Route::delete('excluir/{id}', 'ProjectController@delete');
-//         });
-//     });
-//     // return $request->user();
-// });
