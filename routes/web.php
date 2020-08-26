@@ -22,9 +22,16 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.', 'middleware' => ['web', 'auth', 'activity']], function () {
+    // Painel
+    Route::resource('/', 'DashboardController');
+
+    // Início rota projetos
+    Route::group(['prefix' => 'projetos', 'as' => 'projects.'], function () {
+        Route::resource('/', 'ProjectController');
+    });
 
     // Início rota link útil
-    Route::group(['prefix' => 'link-ultil', 'as' => 'link.util.'], function () {
+    Route::group(['prefix' => 'links-uteis', 'as' => 'link.util.'], function () {
         Route::resource('/', 'LinkController');
     });
 
