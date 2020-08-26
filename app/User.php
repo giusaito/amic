@@ -44,9 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function projetos(){
+    	return $this->hasMany('App\Models\Project');
+	}
+
     protected $appends = ['avatar_url'];
     public function getAvatarUrlAttribute()
     {
-        return Storage::url('avatars/'.$this->id.'/'.$this->avatar);
+        return Storage::url('/public/images/avatars/'.$this->id.'/'.$this->avatar);
     }
 }

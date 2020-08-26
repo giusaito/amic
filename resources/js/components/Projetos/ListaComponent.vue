@@ -19,6 +19,9 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Lista de projetos cadastrados</h5>
+                        <div class="ibox-tools">
+                            <a href="" class="btn btn-primary btn-xs">Criar novo projeto</a>
+                        </div>
                     </div>
                     <div class="ibox-content">
                         <div class="row m-b-sm m-t-sm">
@@ -36,18 +39,15 @@
                                     <tr v-for="projeto in projetos" :key="projeto.id">
                                         <td class="project-status">
                                             <span v-if="projeto.status === 'TRUE'" class="label label-primary">Ativo</span>
-                                            <span v-if="projeto.status === 'FALSE'" class="label label-danger">Inativo</span>
+                                            <span v-if="projeto.status === 'FALSE'" class="label label-default">Inativo</span>
                                         </td>
                                         <td class="project-title">
                                             <a href="project_detail.html">{{ projeto.name }}</a>
                                             <br>
-                                            <small>Adicionado em {{ projeto.created_at }}14.08.2014</small>
+                                            <small>Adicionado em {{ projeto.created_at | format_date }}</small>
                                         </td>
-                                        <td class="project-completion">
-                                                <small>Completion with: 48%</small>
-                                                <div class="progress progress-mini">
-                                                    <div style="width: 48%;" class="progress-bar"></div>
-                                                </div>
+                                        <td class="project-people tooltip-screen" ref="tooltip">
+                                                <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="imageUrlAlt"></a></strong></small>
                                         </td>
                                         <td class="project-people">
                                             <a href=""><img alt="image" class="rounded-circle" src="img/a3.jpg"></a>
@@ -57,50 +57,116 @@
                                             <a href=""><img alt="image" class="rounded-circle" src="img/a5.jpg"></a>
                                         </td>
                                         <td class="project-actions">
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                            <!-- <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a> -->
-                                            <router-link :to="{name: 'edit', params: { id: projeto.id }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar
-                                            </router-link>
-                                            <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
+                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
+                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
+                                            <!-- <router-link :to="{name: 'edit', params: { id: projeto.id }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar
+                                            </router-link> -->
+                                            <button class="btn btn-danger" @click="deletePost(projeto.id)">Excluir</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="text-center">
+                            <div class="btn-group">
+                                <a  href="#" @click="getProjetos(pagination.prev_page_url)" v-bind:class="[{disabled: !pagination.prev_page_url}]" class="btn btn-white"><i class="fa fa-chevron-left"></i></a>
+                                <a href="" class="btn btn-white">1</a>
+                                <a href="" class="btn btn-white  active">2</a>
+                                <a href="" class="btn btn-white">3</a>
+                                <a href="" class="btn btn-white">4</a>
+                                <a href="" class="btn btn-white">5</a>
+                                <a href="" class="btn btn-white">6</a>
+                                <a href="" class="btn btn-white">7</a>
+                                <a  href="#" @click="getProjetos(pagination.next_page_url)" v-bind:class="[{disabled: !pagination.next_page_url}]" class="btn btn-white"><i class="fa fa-chevron-right"></i> </a>
+                            </div>
+                            <!-- <ul class="pagination justify-content-center">
+                                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+                                    <a class="page-link" href="#" @click="getProjetos(pagination.prev_page_url)">Previous</a>
+                                </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">{{ pagination.current_page }} of {{ pagination.last_page }}</a>
+                                </li>
+                                <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+                                    <a class="page-link" href="#" @click="getProjetos(pagination.next_page_url)">Next</a>
+                                </li>
+                            </ul> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{ $token }}
 </div>
 </template>
 <script> 
     import axios from 'axios';
+    import moment from 'moment';
+    import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+    Vue.use(BootstrapVue)
+    Vue.use(IconsPlugin)
+    // import 'bootstrap/dist/css/bootstrap.css'
+    import 'bootstrap-vue/dist/bootstrap-vue.css'
     export default {
         props: ['homeRoute', 'listRoute'],
+        filters: {
+            format_date(value){
+                if (value) {
+                    moment.locale('pt-br');
+                    return moment(String(value)).format('lll');
+                }
+            },
+        },
         data() {
             return {
-                projetos: []
+                projetos: [],
+                pagination: {}
             }
         },
         created() {
-            // axios.defaults.headers.common["Authorization"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMjNhNDhjYTdmY2JkYTJmZTYyMzZhOGM2YWUxZmRkNGI0Y2NlYTQ5MjJiZjgzYjBhMDUxNmQ0MDdhZWY4NmRmNGJjNWFjYTNlMmUwYjFlMjAiLCJpYXQiOjE1OTgzNTk0NjEsIm5iZiI6MTU5ODM1OTQ2MSwiZXhwIjoxNjI5ODk1NDYxLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.QL3dpZxwdMFqQSn2qTudIurY_A6mAzURs5UfWFetK_4aDxv3T5Z-bvYXEgZe6-9tg7_oGH9Bstgeh3UBmv2BcXK3AvU6iujV6gb3N2SrDui8bAkZ5SzqGQdDrvZQ0G-a3NaT6GgME_1qyb6qzs-X8iNPHs8v5fH77hKs6D2xu0W_SpJU-vtfChkCO4bSfiirdfrMfB9b8P_bf5SJ5M-mJXZRcIaMXLjwAJlrugTpSQVnU7kLxhBrwT3BgXBxf3p_GSUsHC7LJRS1i-rhpj5dt1kPJOA2p1HnkiwQSqYeFUmjHQoHDLU-DKo1hPz7SgVdwzFI43_MZJnHO8mek3QjmOpFA9t1pIvO_uNMBzEeH_V1137oVMuGuo4ekGdpc12Z2T41lT-MucMj8dHnjPOS5VTWzDmrXM8rcddg-cWmjN5EbOZzrmm6839ysCLNhSZepLawMQJgJAuuuITlT4AV7OdYmzCDzcz7igKeWyYEdYSg9xhZmlHHJDVKFHBPPlg-Flarcl1BGsAvHd7EADtOZsqnzIaTK6wSiGJ_aDNRpvJPQHsuhOmcJfgMw6IDlmNhe80-m913PdtLiufDnM4ZtJe53R5SGkFviGkxaqaQbde8N9Ua3xK54xSat85zo48jZK7xrx8rG60Pmlt8Ngv6y8G_vaKspzbUaTHYF65qepc",
-            // axios.defaults.headers.common["Accept"] = "*/*";
             axios.defaults.headers.common = {
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-TOKEN': window.csrf_token
             };
-            axios
-                .get(this.$props.listRoute)
-                .then(response => {
-                    this.projetos = response.data;
-                });
-            // this.$http.get('/api/painel/projetos').then((response) => {
-            //     this.projetos = response.data;
-            // })
+            axios.get(this.$props.listRoute).then(response => {
+                this.projetos = response.data.data;
+            });
+            this.getProjetos();
         },
         methods: {
+            getProjetos(api_url) {
+                let vm = this;
+                api_url = api_url || this.$props.listRoute;
+                // fetch(api_url)
+                //     .then(function(response) {
+                //         return response.json();
+                //     })
+                //     .then(response => {
+                //         this.projetos = response.data.data;
+                //         // vm.paginator(response.meta, response.links);
+                //         vm.paginator(response);
+                //     })
+                //     .catch(err => console.log(err));
+                axios.defaults.headers.common = {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': window.csrf_token
+                };
+                axios.get(api_url)
+                .then(response => {
+                    console.log(response);
+                    this.projetos = response.data.data;
+                    vm.paginator(response.data);
+                });
+            },
+            // paginator(meta, links) {
+            paginator(meta) {
+                this.pagination = {
+                    current_page: meta.current_page,
+                    last_page: meta.last_page,
+                    next_page_url: meta.next_page_url,
+                    prev_page_url: meta.prev_page_url
+                };
+            },
             deleteProjeto(id) {
                 this.axios
                     .delete(`/api/auth/painel/projeto/excluir/${id}`)
@@ -108,7 +174,19 @@
                         let i = this.projetos.map(item => item.id).indexOf(id);
                         this.projetos.splice(i, 1)
                     });
+            },
+            imageUrlAlt(event) {
+                event.target.src = "/storage/images/user.jpg"
+            },
+            tooltip(){
+                jQuery(this.$refs.tooltip).tooltip({
+                    selector: "[data-toggle=tooltip]",
+                    container: "body"
+                });
             }
+        },
+        mounted(){
+            
         }
     }
 </script>
