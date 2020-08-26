@@ -108,10 +108,10 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
-        Schema::dropIfExists('project_editions');
         Schema::dropIfExists('project_slideshows');
         Schema::dropIfExists('project_photos');
         Schema::dropIfExists('project_companies');
+        Schema::dropIfExists('project_editions');
+        Schema::dropIfExists('projects');
     }
 }

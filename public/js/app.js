@@ -1985,9 +1985,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['homeRoute'],
+  props: ['homeRoute', 'listRoute'],
   data: function data() {
     return {
       projetos: []
@@ -1996,7 +1998,13 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/painel/projetos').then(function (response) {
+    // axios.defaults.headers.common["Authorization"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMjNhNDhjYTdmY2JkYTJmZTYyMzZhOGM2YWUxZmRkNGI0Y2NlYTQ5MjJiZjgzYjBhMDUxNmQ0MDdhZWY4NmRmNGJjNWFjYTNlMmUwYjFlMjAiLCJpYXQiOjE1OTgzNTk0NjEsIm5iZiI6MTU5ODM1OTQ2MSwiZXhwIjoxNjI5ODk1NDYxLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.QL3dpZxwdMFqQSn2qTudIurY_A6mAzURs5UfWFetK_4aDxv3T5Z-bvYXEgZe6-9tg7_oGH9Bstgeh3UBmv2BcXK3AvU6iujV6gb3N2SrDui8bAkZ5SzqGQdDrvZQ0G-a3NaT6GgME_1qyb6qzs-X8iNPHs8v5fH77hKs6D2xu0W_SpJU-vtfChkCO4bSfiirdfrMfB9b8P_bf5SJ5M-mJXZRcIaMXLjwAJlrugTpSQVnU7kLxhBrwT3BgXBxf3p_GSUsHC7LJRS1i-rhpj5dt1kPJOA2p1HnkiwQSqYeFUmjHQoHDLU-DKo1hPz7SgVdwzFI43_MZJnHO8mek3QjmOpFA9t1pIvO_uNMBzEeH_V1137oVMuGuo4ekGdpc12Z2T41lT-MucMj8dHnjPOS5VTWzDmrXM8rcddg-cWmjN5EbOZzrmm6839ysCLNhSZepLawMQJgJAuuuITlT4AV7OdYmzCDzcz7igKeWyYEdYSg9xhZmlHHJDVKFHBPPlg-Flarcl1BGsAvHd7EADtOZsqnzIaTK6wSiGJ_aDNRpvJPQHsuhOmcJfgMw6IDlmNhe80-m913PdtLiufDnM4ZtJe53R5SGkFviGkxaqaQbde8N9Ua3xK54xSat85zo48jZK7xrx8rG60Pmlt8Ngv6y8G_vaKspzbUaTHYF65qepc",
+    // axios.defaults.headers.common["Accept"] = "*/*";
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common = {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRF-TOKEN': window.csrf_token
+    };
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.$props.listRoute).then(function (response) {
       _this.projetos = response.data;
     }); // this.$http.get('/api/painel/projetos').then((response) => {
     //     this.projetos = response.data;
@@ -2006,7 +2014,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteProjeto: function deleteProjeto(id) {
       var _this2 = this;
 
-      this.axios["delete"]("/api/painel/projeto/excluir/".concat(id)).then(function (response) {
+      this.axios["delete"]("/api/auth/painel/projeto/excluir/".concat(id)).then(function (response) {
         var i = _this2.projetos.map(function (item) {
           return item.id;
         }).indexOf(id);
@@ -39213,19 +39221,49 @@ var render = function() {
                     "tbody",
                     _vm._l(_vm.projetos, function(projeto) {
                       return _c("tr", { key: projeto.id }, [
+                        _c("td", { staticClass: "project-status" }, [
+                          projeto.status === "TRUE"
+                            ? _c(
+                                "span",
+                                { staticClass: "label label-primary" },
+                                [_vm._v("Ativo")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          projeto.status === "FALSE"
+                            ? _c(
+                                "span",
+                                { staticClass: "label label-danger" },
+                                [_vm._v("Inativo")]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "project-title" }, [
+                          _c("a", { attrs: { href: "project_detail.html" } }, [
+                            _vm._v(_vm._s(projeto.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v(
+                              "Adicionado em " +
+                                _vm._s(projeto.created_at) +
+                                "14.08.2014"
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _vm._m(3, true),
                         _vm._v(" "),
                         _vm._m(4, true),
-                        _vm._v(" "),
-                        _vm._m(5, true),
-                        _vm._v(" "),
-                        _vm._m(6, true),
                         _vm._v(" "),
                         _c(
                           "td",
                           { staticClass: "project-actions" },
                           [
-                            _vm._m(7, true),
+                            _vm._m(5, true),
                             _vm._v(" "),
                             _c(
                               "router-link",
@@ -39271,7 +39309,8 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v("\n    " + _vm._s(_vm.$token) + "\n")
   ])
 }
 var staticRenderFns = [
@@ -39326,28 +39365,6 @@ var staticRenderFns = [
           ])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "project-status" }, [
-      _c("span", { staticClass: "label label-primary" }, [_vm._v("Active")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "project-title" }, [
-      _c("a", { attrs: { href: "project_detail.html" } }, [
-        _vm._v("Contract with Zender Company")
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("small", [_vm._v("Created 14.08.2014")])
     ])
   },
   function() {
