@@ -39279,7 +39279,7 @@ var render = function() {
                               [
                                 _c("i", { staticClass: "fa fa-pencil" }),
                                 _vm._v(
-                                  " Editar\n                                            "
+                                  " Editar\r\n                                            "
                                 )
                               ]
                             ),
@@ -39310,7 +39310,7 @@ var render = function() {
         ])
       ])
     ]),
-    _vm._v("\n    " + _vm._s(_vm.$token) + "\n")
+    _vm._v("\r\n    " + _vm._s(_vm.$token) + "\r\n")
   ])
 }
 var staticRenderFns = [
@@ -54872,14 +54872,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! C:\laragon\www\amic\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! C:\laragon\www\amic\resources\sass\app.scss */"./resources/sass/app.scss");
 module.exports = __webpack_require__(/*! C:\laragon\www\amic\resources\sass\style.scss */"./resources/sass/style.scss");
-=======
-__webpack_require__(/*! /Users/giulianosaito/Desktop/bkp_07-08-2020/bewweb/amic/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /Users/giulianosaito/Desktop/bkp_07-08-2020/bewweb/amic/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /Users/giulianosaito/Desktop/bkp_07-08-2020/bewweb/amic/resources/sass/style.scss */"./resources/sass/style.scss");
 
 
 /***/ }),
@@ -54890,7 +54885,6 @@ module.exports = __webpack_require__(/*! /Users/giulianosaito/Desktop/bkp_07-08-
   \*********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
->>>>>>> 4fc2fc3b97d8e0a5ddf243bc822e383a6d8deb37
 
 /* (ignored) */
 
