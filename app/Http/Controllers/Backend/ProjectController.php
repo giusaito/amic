@@ -16,10 +16,15 @@ class ProjectController extends Controller
     }
     
     // listar projetos
-    public function get(){
-        // $projects = Project::all()->toArray();
-        // return array_reverse($projects);
-        $projects = Project::with(['user'])->orderBy('created_at', 'desc')->paginate(20);
+    public function get($busca = false){
+        if($busca){
+            $projects = Project::with(['user','edicoes'])->where(function($query) use($busca){
+                $searchWildcard = '%' . $busca . '%';
+                $query->orWhere('name', 'LIKE', $searchWildcard);
+            })->orderBy('created_at', 'desc')->paginate(20);
+        }else {
+            $projects = Project::with(['user','edicoes'])->orderBy('created_at', 'desc')->paginate(20);
+        }
         return response()->json($projects);
     }
 
