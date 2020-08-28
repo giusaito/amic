@@ -20,7 +20,7 @@
                     <div class="ibox-title">
                         <h5>Lista de projetos cadastrados</h5>
                         <div class="ibox-tools">
-                            <a href="" class="btn btn-primary btn-xs">Criar novo projeto</a>
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="showNewProjectModal">Criar novo projeto</button>
                         </div>
                     </div>
                     <div class="ibox-content">
@@ -30,8 +30,13 @@
                             </div>
                             <div class="col-md-11">
                                 <div class="input-group">
+                                    <span class="input-group-prepend" v-if="buscaTermo">
+                                        <button type="submit" class="btn btn-sm btn-warning" v-on:click="clearSearch()"> 
+                                            <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </span>
                                     <input type="text" placeholder="Buscar" class="form-control-sm form-control" ref="busca"> 
-                                    <span class="input-group-btn">
+                                    <span class="input-group-append">
                                         <button type="submit" class="btn btn-sm btn-primary" v-on:click="buscaEnviar"> OK</button>
                                     </span>
                                 </div>
@@ -91,6 +96,34 @@
             </div>
         </div>
     </div>
+    <b-modal ref="newProjectModal" hide-footer title="Adicionar Projeto">
+        <div class="d-block">
+            <form v-on:submit.prevent="createProject">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <b-input v-model="projectData.name" id="name" placeholder="Insira o nome do Projeto" />
+                    <b-form-invalid-feedback :force-show="true" v-if="errors.name">{{errors.name[0]}}</b-form-invalid-feedback>
+                </div>
+                <div class="form-group">
+                    <label for="name">Logomarca</label>
+                    <b-row>
+                        <b-col cols="3" v-if="projectData.logo.name">
+                            <b-img thumbnail fluid ref="newProjectLogoDisplay"></b-img>
+                        </b-col>
+                        <b-col>
+                            <input type="file" v-on:change="attachLogo" ref="newProjectLogo" class="form-control" id="logo" />
+                            <b-form-invalid-feedback :force-show="true" v-if="errors.logo">{{errors.logo[0]}}</b-form-invalid-feedback>
+                        </b-col>
+                    </b-row>
+                </div>
+                <hr>
+                <div class="text-right">
+                    <button type="button" class="btn btn-default" v-on:click="hideNewProjectModal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><span class="fa fa-check"></span> Salvar</button>
+                </div>
+            </form>
+        </div>
+    </b-modal>
 </div>
 </template>
 <script> 
@@ -101,6 +134,7 @@
     Vue.use(IconsPlugin)
     // import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
+    import * as projectService from '../../services/project_service';
     export default {
         props: ['homeRoute', 'listRoute'],
         filters: {
@@ -115,7 +149,19 @@
             return {
                 projetos: [],
                 pagination: {},
-                buscaTermo: ""
+                buscaTermo: "",
+                projectData: {
+                    name: "",
+                    logo: ""
+                },
+                errors: {},
+                thumbnail: { 
+                    blank: true, 
+                    blankColor: '#777', 
+                    width: 75, 
+                    height: 75, 
+                    class: 'm1' 
+                }
             }
         },
         created() {
@@ -136,6 +182,25 @@
                     vm.paginator(response.data);
                 });
             },
+            createProject: async function() {
+                let formData = new FormData();
+                formData.append('name', this.projectData.name);
+                formData.append('logo', this.projectData.logo);
+
+                try {
+                    const response = await projectService.createProject(formData);
+                } catch (error) {
+                    switch (error.response.status) {
+                        case 422:
+                            this.errors = error.response.data.errors;
+                            console.log(this.errors);
+                            break;
+                        default:
+                            alert("Ocorreu algum erro durante o processo! Por favor, tente novamente.");
+                            break;
+                    }
+                }
+            },
             paginator(meta) {
                 this.pagination = {
                     current_page: meta.current_page,
@@ -147,6 +212,11 @@
                     per_page: meta.per_page,
                     to: meta.to
                 };
+            },
+            clearSearch(){
+                this.getProjetos();
+                this.buscaTermo = "";
+                this.$refs.busca.value = "";
             },
             deleteProjeto(id) {
                 this.axios
@@ -173,8 +243,23 @@
                 return (result < 1) ? 1 : result
             },
             buscaEnviar : function(){
-                this.$refs.busca.value;
+                this.buscaTermo = this.$refs.busca.value;
                 this.getProjetos(this.$props.listRoute+'/'+this.$refs.busca.value);
+            },
+            hideNewProjectModal(){
+                this.$refs.newProjectModal.hide();
+            },
+            showNewProjectModal(){
+                this.$refs.newProjectModal.show();
+            },
+            attachLogo() {
+                this.projectData.logo = this.$refs.newProjectLogo.files[0];
+                let reader = new FileReader();
+                reader.addEventListener('load', function() {
+                    this.$refs.newProjectLogoDisplay.src = reader.result;
+                }.bind(this), false);
+
+                reader.readAsDataURL(this.projectData.logo);
             }
         }
     }
