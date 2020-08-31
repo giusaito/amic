@@ -57,7 +57,10 @@
                                         </td>
                                         <td class="project-people">
                                             <div class="lightBoxGallery">
-                                                <a :href="'/storage/images/projects/logo/'+projeto.logo" :title="projeto.name" data-gallery=""><img :src="'/storage/images/projects/logo/'+projeto.logo"></a>
+                                                <a v-if="projeto.logo" :href="'/storage/images/projects/logo/'+projeto.logo" :title="projeto.name" data-gallery="">
+                                                    <img :src="'/storage/images/projects/logo/'+projeto.logo" @error="logoUrlAlt">
+                                                </a>
+                                                <img v-else :src="'/storage/images/projects/logo/'+projeto.logo" @error="logoUrlAlt">
                                                 <div id="blueimp-gallery" class="blueimp-gallery">
                                                     <div class="slides"></div>
                                                     <h3 class="title"></h3>
@@ -70,7 +73,7 @@
                                             </div>
                                         </td>
                                         <td class="project-people tooltip-screen" ref="tooltip">
-                                                <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="imageUrlAlt"></a></strong></small>
+                                                <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="userUrlAlt"></a></strong></small>
                                         </td>
                                         <td class="project-actions">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
@@ -107,7 +110,8 @@
                 <div class="form-group">
                     <label for="name">Logomarca</label>
                     <b-row>
-                        <b-col cols="3" v-if="projectData.logo.name">
+                        <!-- <b-col cols="3" v-if="projectData.logo.type === 'image/jpg' || projectData.logo.type === 'image/png'"> -->
+                        <b-col cols="3" v-show="projectData.logo.type === 'image/jpg' || projectData.logo.type === 'image/png'">
                             <b-img thumbnail fluid ref="newProjectLogoDisplay"></b-img>
                         </b-col>
                         <b-col>
@@ -186,9 +190,15 @@
                 let formData = new FormData();
                 formData.append('name', this.projectData.name);
                 formData.append('logo', this.projectData.logo);
+                formData.append('author_id', document.querySelector('meta[name="user-id"]').getAttribute('content'));
 
                 try {
                     const response = await projectService.createProject(formData);
+                    if(response.status === 200){
+                        this.getProjetos();
+                        this.hideNewProjectModal();
+                    }
+                    // this.getProjetos();
                 } catch (error) {
                     switch (error.response.status) {
                         case 422:
@@ -226,8 +236,11 @@
                         this.projetos.splice(i, 1)
                     });
             },
-            imageUrlAlt(event) {
+            userUrlAlt(event) {
                 event.target.src = "/storage/images/user.jpg"
+            },
+            logoUrlAlt(event) {
+                event.target.src = "/storage/images/no_picture.png"
             },
             numberOfPages() {
                 if (
@@ -248,19 +261,26 @@
             },
             hideNewProjectModal(){
                 this.$refs.newProjectModal.hide();
+                this.resetForm();
             },
             showNewProjectModal(){
                 this.$refs.newProjectModal.show();
             },
             attachLogo() {
                 this.projectData.logo = this.$refs.newProjectLogo.files[0];
-                let reader = new FileReader();
-                reader.addEventListener('load', function() {
-                    this.$refs.newProjectLogoDisplay.src = reader.result;
-                }.bind(this), false);
+                if(this.projectData.logo.type === 'image/jpeg' || this.projectData.logo.type === 'image/png'){
+                    let reader = new FileReader();
+                    reader.addEventListener('load', function() {
+                        this.$refs.newProjectLogoDisplay.src = reader.result;
+                    }.bind(this), false);
 
-                reader.readAsDataURL(this.projectData.logo);
-            }
+                    reader.readAsDataURL(this.projectData.logo);
+                }
+            },
+            resetForm() {
+                // this.formData = Object.assign({}, this.projectData);
+                this.projectData.name = this.projectData.logo = '';
+            },
         }
     }
 </script>

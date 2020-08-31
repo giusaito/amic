@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Project;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Response;
 
 class ProjectController extends Controller
@@ -42,10 +43,16 @@ class ProjectController extends Controller
 
         $project = new Project();
         $project->name = $request->name;
+        $project->author_id = $request->author_id;
+        
+        $logo = $request->file('logo');
+        if($logo){
+            $logoNome = time().uniqid(rand());
+            $logoExtensao = $logo->guessExtension();
 
-        $path = $request->file('logo')->store('projects/logo');
-
-        $project->logo = $path;
+            $project->logo = $logoNome.".".$logoExtensao;
+            $path = $logo->storeAs('public/images/projects/logo', $logoNome.'.'.$logoExtensao,'local');
+        }
 
         if ($project->save()) {
             return response()->json($project, 200);
