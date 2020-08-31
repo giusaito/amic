@@ -17,8 +17,10 @@ class ProjectController extends Controller
     
     // listar projetos
     public function get(){
-        $projects = Project::all()->toArray();
-        return array_reverse($projects);
+        // $projects = Project::all()->toArray();
+        // return array_reverse($projects);
+        $projects = Project::with(['user'])->orderBy('created_at', 'desc')->paginate(20);
+        return response()->json($projects);
     }
 
     // add projeto

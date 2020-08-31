@@ -486,7 +486,7 @@ $(document).ready(function () {
     });
 
     // Tooltips demo
-    $('.tooltip-demo').tooltip({
+    $('.tooltip-screen').tooltip({
         selector: "[data-toggle=tooltip]",
         container: "body"
     });

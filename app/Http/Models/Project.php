@@ -13,7 +13,7 @@ class Project extends Model
 	// protected $fillable = ['*'];
 
 	public function user(){
-    	return $this->belongsTo('App\Models\User','author_id','id');
+    	return $this->belongsTo('App\User','author_id','id');
 	}
 	public function edicoes(){
     	return $this->hasMany('App\Models\ProjectEdition');
