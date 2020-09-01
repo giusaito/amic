@@ -18,8 +18,9 @@ mix.js('resources/js/app.js', 'public/js')
         'public/css/global/bootstrap.min.css',
         'public/font-awesome/css/font-awesome.css',
         'public/css/global/animate.css',
+        'public/css/global/blueimp/css/blueimp-gallery.min.css',
 
     ], 'public/css/backend/all.css')
     .combine(['resources/js/backend/*'], 'public/js/backend/all.js');
 
-mix.browserSync("http://localhost:8000");
+// mix.browserSync("http://localhost:8000");

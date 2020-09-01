@@ -27,7 +27,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 
     // Início rota projetos
     Route::group(['prefix' => 'projetos', 'as' => 'projects.'], function () {
-        Route::get('lista', 'ProjectController@get')->name('lista');
+        Route::get('lista/{busca?}', 'ProjectController@get')->name('lista');
         Route::resource('/', 'ProjectController');
     });
 

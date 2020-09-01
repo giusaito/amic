@@ -40,3 +40,10 @@ Route::group(['namespace' => 'Auth', 'middleware' => 'api', 'prefix' => 'passwor
     Route::get('find/{token}', 'PasswordResetController@find');
     Route::post('reset', 'PasswordResetController@reset');
 });
+
+// Route::resource('categories', 'CategoryController');
+Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'], function () {
+    Route::group(['prefix' => 'projetos', 'as' => 'projects.'], function () {
+        Route::resource('/', 'ProjectController');
+    });
+});
