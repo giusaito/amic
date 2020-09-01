@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="user-id" content="{{ Auth::user()->id }}">
 
     <title>@yield('title') | Painel administrativo</title>
     <link rel="apple-touch-icon" href="{{ URL::asset('favicon/apple-icon-180x180.png') }}">
