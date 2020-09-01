@@ -36,6 +36,12 @@ Vue.component(
 );
 Vue.component('projetos-component', require('./components/Projetos/ListaComponent.vue').default);
 
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import FlashMessage from '@smartweb/vue-flash-message';
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(FlashMessage);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

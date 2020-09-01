@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\Project;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Response;
 
 class ProjectController extends Controller
@@ -63,43 +64,18 @@ class ProjectController extends Controller
             ], 500);
         }
     }
-
-    // add projeto
-    // public function add(Request $request)
-    // {
-    //     $project = new Project([
-    //         'name'      => $request->input('name'),
-    //         'logo'      => $request->input('logo'),
-    //         'author_id' => Auth::user()->id,
-    //         'status'    => $request->input('status')
-    //     ]);
-    //     $project->save();
- 
-    //     return response()->json('O projeto foi adicionado com sucesso!');
-    // }
-
-    // // edit projeto
-    // public function edit($id)
-    // {
-    //     $project = Project::find($id);
-    //     return response()->json($project);
-    // }
-
-    // // atualizar projeto
-    // public function update($id, Request $request)
-    // {
-    //     $project = Project::find($id);
-    //     $project->update($request->all());
- 
-    //     return response()->json('O projeto foi atualizado com sucesso!');
-    // }
- 
-    // // excluir projeto
-    // public function delete($id)
-    // {
-    //     $project = Project::find($id);
-    //     $project->delete();
- 
-    //     return response()->json('O projeto foi excluido com sucesso!');
-    // }
+    public function destroy(Project $projeto){
+        if($projeto->delete()) {
+            Storage::delete('public/images/projects/logo/'.$projeto->logo);
+            return response()->json([
+                'message' => 'O projeto '.$projeto->name.' foi excluído com sucesso',
+                'status_code' => 200
+            ], 200);
+        }else {
+            return response()->json([
+                'message' => 'Houve um problema para excluir o projeto '.$projeto->name.'. Por favor tente novamente.',
+                'status_code' => 500
+            ], 500);
+        }
+    }
 }

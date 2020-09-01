@@ -43,7 +43,5 @@ Route::group(['namespace' => 'Auth', 'middleware' => 'api', 'prefix' => 'passwor
 
 // Route::resource('categories', 'CategoryController');
 Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'], function () {
-    Route::group(['prefix' => 'projetos', 'as' => 'projects.'], function () {
-        Route::resource('/', 'ProjectController');
-    });
+    Route::resource('projetos', 'ProjectController');
 });

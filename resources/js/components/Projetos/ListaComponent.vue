@@ -77,8 +77,8 @@
                                         </td>
                                         <td class="project-actions">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
-                                            <button class="btn btn-danger" @click="deleteProject(projeto.id)">Excluir</button>
+                                            <a href="#" class="btn btn-white btn-sm" v-on:click="editProject(projeto)"><i class="fa fa-pencil"></i> Editar </a>
+                                            <button class="btn btn-danger" v-on:click="deleteProject(projeto)">Excluir</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -127,14 +127,43 @@
             </form>
         </div>
     </b-modal>
+    <b-modal ref="editProjectModal" hide-footer title="Editar Projeto">
+        <div class="d-block">
+            <form v-on:submit.prevent="updateProject">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <b-input v-model="editProjectData.name" id="name" placeholder="Insira o nome do Projeto" />
+                    <b-form-invalid-feedback :force-show="true" v-if="errors.name">{{errors.name[0]}}</b-form-invalid-feedback>
+                </div>
+                <div class="form-group">
+                    <label for="name">Logomarca</label>
+                    <b-row>
+                        <!-- <b-col cols="3" v-if="projectData.logo.type === 'image/jpg' || projectData.logo.type === 'image/png'"> -->
+                        <b-col cols="3">
+                            <!-- <b-img thumbnail fluid ref="newProjectLogoDisplay"></b-img> -->
+                            <!-- <img class="img-thumbnail img-fluid" :src="`${$store.state.serverPath}/storage/images/projects/logo/${editProjectData.logo}`" ref="editProjectLogoDisplay"> -->
+                            <img class="img-thumbnail img-fluid" :src="`/storage/images/projects/logo/${editProjectData.logo}`" @error="logoUrlAlt" ref="editProjectLogoDisplay">
+                        </b-col>
+                        <b-col>
+                            <input type="file" v-on:change="editAttachLogo" ref="editProjectLogo" class="form-control" id="logo" />
+                            <b-form-invalid-feedback :force-show="true" v-if="errors.logo">{{errors.logo[0]}}</b-form-invalid-feedback>
+                        </b-col>
+                    </b-row>
+                </div>
+                <hr>
+                <div class="text-right">
+                    <button type="button" class="btn btn-default" v-on:click="hideEditProjectModal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary"><span class="fa fa-check"></span> Editar</button>
+                </div>
+            </form>
+        </div>
+    </b-modal>
+    <FlashMessage :position="'right bottom'"></FlashMessage>
 </div>
 </template>
 <script> 
     import axios from 'axios';
     import moment from 'moment';
-    import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-    Vue.use(BootstrapVue)
-    Vue.use(IconsPlugin)
     // import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
     import * as projectService from '../../services/project_service';
@@ -159,6 +188,7 @@
                     logo: ""
                 },
                 errors: {},
+                editProjectData: {},
                 thumbnail: { 
                     blank: true, 
                     blankColor: '#777', 
@@ -194,7 +224,12 @@
 
                 try {
                     const response = await projectService.createProject(formData);
-                    if(response.status === 200){
+                    if(response.status === 200){ 
+                        this.flashMessage.success({
+                            title: 'Sucesso!',
+                            message: 'O projeto '+this.projectData.name+' foi adicionado com sucesso!',
+                            time: 5000
+                        });
                         this.getProjetos();
                         this.hideNewProjectModal();
                     }
@@ -203,12 +238,35 @@
                     switch (error.response.status) {
                         case 422:
                             this.errors = error.response.data.errors;
-                            console.log(this.errors);
                             break;
                         default:
-                            alert("Ocorreu algum erro durante o processo! Por favor, tente novamente.");
+                            this.flashMessage.error({
+                                title: 'Erro!',
+                                message: 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
+                                time: 5000
+                            });
                             break;
                     }
+                }
+            },
+            deleteProject: async function(project){
+                if(!window.confirm(`Você tem certeza que deseja excluir o projeto ${project.name}?`)){
+                    return;
+                }
+                try {
+                    await projectService.deleteProject(project.id);
+                    this.getProjetos();
+                    this.flashMessage.warning({
+                        title: 'Sucesso!',
+                        message: 'O projeto '+project.name+' foi excluído com sucesso!',
+                        time: 5000
+                    });
+                } catch (error) {
+                    this.flashMessage.error({
+                        title: 'Ops!',
+                        message: error.response.data.message,
+                        time: 5000
+                    });
                 }
             },
             changeStatus(id){
@@ -230,14 +288,6 @@
                 this.getProjetos();
                 this.buscaTermo = "";
                 this.$refs.busca.value = "";
-            },
-            deleteProjeto(id) {
-                this.axios
-                    .delete(`/api/auth/painel/projeto/excluir/${id}`)
-                    .then(response => {
-                        let i = this.projetos.map(item => item.id).indexOf(id);
-                        this.projetos.splice(i, 1)
-                    });
             },
             userUrlAlt(event) {
                 event.target.src = "/storage/images/user.jpg"
@@ -287,6 +337,34 @@
                 // this.formData = Object.assign({}, this.projectData);
                 this.projectData.name = this.projectData.logo = '';
             },
+            editProject(project) {
+                this.editProjectData = project;
+                this.showEditProjectModal();
+            },
+            hideEditProjectModal(){
+                this.$refs.editProjectModal.hide();
+                this.resetForm();
+            },
+            showEditProjectModal(){
+                this.$refs.editProjectModal.show();
+            },
+            editAttachLogo() {
+                this.editProjectData.logo = this.$refs.editProjectLogo.files[0];
+                if(this.projectData.logo.type === 'image/jpeg' || this.projectData.logo.type === 'image/png' || this.projectData.logo.type === 'image/webp'){
+                    this.isImagem = true;
+                    let reader = new FileReader();
+                    reader.addEventListener('load', function() {
+                        this.$refs.editProjectLogoDisplay.src = reader.result;
+                    }.bind(this), false);
+
+                    reader.readAsDataURL(this.editProjectData.logo);
+                }else {
+                    this.isImagem = false;
+                }
+            },
+            updateProject: async function(){
+                console.log('atualização chamada');
+            }
         }
     }
 </script>

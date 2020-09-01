@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@smartweb/vue-flash-message": "^0.6.4",
         "bootstrap-vue": "^2.16.0",
         "element-ui": "^2.13.2",
         "moment": "^2.27.0",
