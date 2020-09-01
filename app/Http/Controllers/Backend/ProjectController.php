@@ -33,7 +33,7 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'logo' => 'nullable|sometimes|mimes:jpeg,png,jpg'
+            'logo' => 'nullable|sometimes|mimes:jpeg,png,jpg,webp'
         ],
         [
             'name.required' => 'O campo nome do Projeto é obrigatório',

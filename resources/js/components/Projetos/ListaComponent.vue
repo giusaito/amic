@@ -46,7 +46,7 @@
                             <table class="table table-hover">
                                 <tbody>
                                     <tr v-for="projeto in projetos" :key="projeto.id">
-                                        <td class="project-status">
+                                        <td class="project-status" @click="changeStatus(projeto.id)">
                                             <span v-if="projeto.status === 'TRUE'" class="label label-primary">Ativo</span>
                                             <span v-if="projeto.status === 'FALSE'" class="label label-default">Inativo</span>
                                         </td>
@@ -78,9 +78,7 @@
                                         <td class="project-actions">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar </a>
-                                            <!-- <router-link :to="{name: 'edit', params: { id: projeto.id }}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Editar
-                                            </router-link> -->
-                                            <button class="btn btn-danger" @click="deletePost(projeto.id)">Excluir</button>
+                                            <button class="btn btn-danger" @click="deleteProject(projeto.id)">Excluir</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -111,8 +109,9 @@
                     <label for="name">Logomarca</label>
                     <b-row>
                         <!-- <b-col cols="3" v-if="projectData.logo.type === 'image/jpg' || projectData.logo.type === 'image/png'"> -->
-                        <b-col cols="3" v-show="projectData.logo.type === 'image/jpg' || projectData.logo.type === 'image/png'">
-                            <b-img thumbnail fluid ref="newProjectLogoDisplay"></b-img>
+                        <b-col cols="3" v-if="isImagem">
+                            <!-- <b-img thumbnail fluid ref="newProjectLogoDisplay"></b-img> -->
+                            <img class="img-thumbnail img-fluid" src="" ref="newProjectLogoDisplay">
                         </b-col>
                         <b-col>
                             <input type="file" v-on:change="attachLogo" ref="newProjectLogo" class="form-control" id="logo" />
@@ -154,6 +153,7 @@
                 projetos: [],
                 pagination: {},
                 buscaTermo: "",
+                isImagem: false,
                 projectData: {
                     name: "",
                     logo: ""
@@ -210,6 +210,9 @@
                             break;
                     }
                 }
+            },
+            changeStatus(id){
+                alert(id);
             },
             paginator(meta) {
                 this.pagination = {
@@ -268,13 +271,16 @@
             },
             attachLogo() {
                 this.projectData.logo = this.$refs.newProjectLogo.files[0];
-                if(this.projectData.logo.type === 'image/jpeg' || this.projectData.logo.type === 'image/png'){
+                if(this.projectData.logo.type === 'image/jpeg' || this.projectData.logo.type === 'image/png' || this.projectData.logo.type === 'image/webp'){
+                    this.isImagem = true;
                     let reader = new FileReader();
                     reader.addEventListener('load', function() {
                         this.$refs.newProjectLogoDisplay.src = reader.result;
                     }.bind(this), false);
 
                     reader.readAsDataURL(this.projectData.logo);
+                }else {
+                    this.isImagem = false;
                 }
             },
             resetForm() {
