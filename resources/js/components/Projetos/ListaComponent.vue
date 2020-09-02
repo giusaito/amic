@@ -338,7 +338,7 @@
                 this.projectData.name = this.projectData.logo = '';
             },
             editProject(project) {
-                this.editProjectData = project;
+                this.editProjectData = {...project};
                 this.showEditProjectModal();
             },
             hideEditProjectModal(){
@@ -363,7 +363,32 @@
                 }
             },
             updateProject: async function(){
-                console.log('atualização chamada');
+                try {
+                    const formData = new FormData();
+                    formData.append('name', this.editProjectData.name);
+                    formData.append('logo', this.editProjectData.logo);
+                    formData.append('_method', 'put');
+
+                    const response = await projectService.updateProject(this.editProjectData.id, formData);
+                    this.projetos.map(projeto => {
+                        if(projeto.id == response.data.id){
+                            projeto = response.data;
+                        }
+                    });
+                    this.flashMessage.success({
+                        title: 'Sucesso!',
+                        message: 'O projeto '+this.editProjectData.name+' foi editado com sucesso!',
+                        time: 5000
+                    });
+                    this.getProjetos();
+                    this.hideEditProjectModal();
+                } catch (error) {
+                    this.flashMessage.error({
+                        title: 'Ops!',
+                        message: error.response.data.message,
+                        time: 5000
+                    });
+                }
             }
         }
     }

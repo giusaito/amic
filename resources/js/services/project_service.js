@@ -7,3 +7,7 @@ export function createProject(data) {
 export function deleteProject(id) {
     return http().delete(`painel/projetos/${id}`);
 }
+
+export function updateProject(id, data) {
+    return http().post(`painel/projetos/${id}`, data);
+}

@@ -34,11 +34,12 @@ class ProjectController extends Controller
     {
         $request->validate([
             'name' => 'required|min:3',
-            'logo' => 'nullable|sometimes|mimes:jpeg,png,jpg,webp'
+            'logo' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,webp'
         ],
         [
             'name.required' => 'O campo nome do Projeto é obrigatório',
             'name.min' => 'O campo nome do Projeto deve ter no mínimo 3 caracteres',
+            'logo.image' => 'A logomarca não é uma imagem',
             'logo.mimes' => 'A logomarca deve ter o formato JPG ou PNG'
         ]);
 
@@ -58,6 +59,41 @@ class ProjectController extends Controller
         if ($project->save()) {
             return response()->json($project, 200);
         } else {
+            return response()->json([
+                'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
+                'status_code' => 500
+            ], 500);
+        }
+    }
+    public function update(Request $request, Project $projeto){
+        $request->validate([
+            'name' => 'required|min:3',
+            'logo' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,webp'
+        ],
+        [
+            'name.required' => 'O campo nome do Projeto é obrigatório',
+            'name.min' => 'O campo nome do Projeto deve ter no mínimo 3 caracteres',
+            'logo.image' => 'A logomarca não é uma imagem',
+            'logo.mimes' => 'A logomarca deve ter o formato JPG ou PNG'
+        ]);
+
+        $projeto->name = $request->name;
+        $oldPath = $projeto->logo;
+        if($request->hasFile('logo')){
+            $logo = $request->file('logo');
+            $logoNome = time().uniqid(rand());
+            $logoExtensao = $logo->guessExtension();
+
+            $projeto->logo = $logoNome.".".$logoExtensao;
+            $path = $logo->storeAs('public/images/projects/logo', $logoNome.'.'.$logoExtensao,'local');
+
+            Storage::delete($oldPath);
+        }
+
+        if($projeto->save()){
+            return response()->json($projeto, 200);
+        }else {
+            Storage::delete($path);
             return response()->json([
                 'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
                 'status_code' => 500
