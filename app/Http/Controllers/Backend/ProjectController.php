@@ -114,4 +114,30 @@ class ProjectController extends Controller
             ], 500);
         }
     }
+    public function status($id){
+        $projeto = Project::find($id);
+        if($projeto->status == 'TRUE'){
+            $projeto->status = 'FALSE';
+            $bodyMessageSuccess = [
+                'message' => 'O status do projeto '.$projeto->name.' foi desativado com sucesso',
+                'status_code' => 200,
+                'status_type' => false
+            ];
+        }else {
+            $projeto->status = 'TRUE';
+            $bodyMessageSuccess = [
+                'message' => 'O status do projeto '.$projeto->name.' foi ativado com sucesso',
+                'status_code' => 200,
+                'status_type' => true
+            ];
+        }
+        if($projeto->save()){
+            return response()->json($bodyMessageSuccess, 200);
+        }else {
+            return response()->json([
+                'message' => 'Houve um problema para alterar o status do projeto '.$projeto->name.'. Por favor tente novamente.',
+                'status_code' => 500
+            ], 500);
+        }
+    }
 }

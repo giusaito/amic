@@ -46,7 +46,7 @@
                             <table class="table table-hover">
                                 <tbody>
                                     <tr v-for="projeto in projetos" :key="projeto.id">
-                                        <td class="project-status" @click="changeStatus(projeto.id)">
+                                        <td class="project-status" @click="changeStatus(projeto.id)" style="cursor:pointer;">
                                             <span v-if="projeto.status === 'TRUE'" class="label label-primary">Ativo</span>
                                             <span v-if="projeto.status === 'FALSE'" class="label label-default">Inativo</span>
                                         </td>
@@ -73,7 +73,7 @@
                                             </div>
                                         </td>
                                         <td class="project-people tooltip-screen" ref="tooltip">
-                                                <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="userUrlAlt"></a></strong></small>
+                                            <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="userUrlAlt"></a></strong></small>
                                         </td>
                                         <td class="project-actions">
                                             <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
@@ -138,10 +138,7 @@
                 <div class="form-group">
                     <label for="name">Logomarca</label>
                     <b-row>
-                        <!-- <b-col cols="3" v-if="projectData.logo.type === 'image/jpg' || projectData.logo.type === 'image/png'"> -->
                         <b-col cols="3">
-                            <!-- <b-img thumbnail fluid ref="newProjectLogoDisplay"></b-img> -->
-                            <!-- <img class="img-thumbnail img-fluid" :src="`${$store.state.serverPath}/storage/images/projects/logo/${editProjectData.logo}`" ref="editProjectLogoDisplay"> -->
                             <img class="img-thumbnail img-fluid" :src="`/storage/images/projects/logo/${editProjectData.logo}`" @error="logoUrlAlt" ref="editProjectLogoDisplay">
                         </b-col>
                         <b-col>
@@ -269,8 +266,30 @@
                     });
                 }
             },
-            changeStatus(id){
-                alert(id);
+            changeStatus: async function(id){
+                try {
+                    const response = await projectService.statusProject(id);
+                    if(response.data.status_type === true){
+                        this.flashMessage.success({
+                            title: 'Sucesso!',
+                            message: response.data.message,
+                            time: 5000
+                        });
+                    } else {
+                        this.flashMessage.info({
+                            title: 'Sucesso!',
+                            message: response.data.message,
+                            time: 5000
+                        });
+                    }
+                    this.getProjetos();
+                } catch (error) {
+                    this.flashMessage.error({
+                        title: 'Ops!',
+                        message: error.response.data.message,
+                        time: 5000
+                    });
+                }
             },
             paginator(meta) {
                 this.pagination = {
@@ -350,7 +369,7 @@
             },
             editAttachLogo() {
                 this.editProjectData.logo = this.$refs.editProjectLogo.files[0];
-                if(this.projectData.logo.type === 'image/jpeg' || this.projectData.logo.type === 'image/png' || this.projectData.logo.type === 'image/webp'){
+                if(this.editProjectData.logo.type === 'image/jpeg' || this.editProjectData.logo.type === 'image/png' || this.editProjectData.logo.type === 'image/webp'){
                     this.isImagem = true;
                     let reader = new FileReader();
                     reader.addEventListener('load', function() {

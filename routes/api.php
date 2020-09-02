@@ -43,5 +43,6 @@ Route::group(['namespace' => 'Auth', 'middleware' => 'api', 'prefix' => 'passwor
 
 // Route::resource('categories', 'CategoryController');
 Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'], function () {
+    Route::post('/projetos/status/{id}', 'ProjectController@status')->name('status');
     Route::resource('projetos', 'ProjectController');
 });
