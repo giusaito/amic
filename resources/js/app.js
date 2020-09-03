@@ -38,9 +38,12 @@ Vue.component('projetos-component', require('./components/Projetos/ListaComponen
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(FlashMessage);
+Vue.use(Vuetify);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50,4 +53,5 @@ Vue.use(FlashMessage);
 
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
 });
