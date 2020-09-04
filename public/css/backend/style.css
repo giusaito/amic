@@ -11654,3 +11654,13 @@ body.md-skin {
   }
 }
 
+.v-application {
+  background: none !important;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.v-application ol,
+.v-application ul {
+  padding-left: 0 !important;
+}
+

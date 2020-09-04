@@ -77,13 +77,7 @@
                                                 <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="userUrlAlt"></a></strong></small>
                                             </td>
                                             <td class="project-actions">
-                                                <v-btn
-                                                color="blue"
-                                                dark
-                                                @click="sheet = !sheet"
-                                                >
-                                                Edições
-                                                </v-btn>
+                                                <a href="#" class="btn btn-white btn-sm" @click="edicoes = !edicoes"><i class="fa fa-folder-open"></i> Edições</a>
                                                 <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
                                                 <a href="#" class="btn btn-white btn-sm" v-on:click="editProject(projeto)"><i class="fa fa-pencil"></i> Editar </a>
                                                 <button class="btn btn-danger" v-on:click="deleteProject(projeto)">Excluir</button>
@@ -163,15 +157,15 @@
                 </form>
             </div>
         </b-modal>
-        <v-bottom-sheet v-model="sheet">
+        <v-bottom-sheet v-model="edicoes">
             <v-sheet class="text-center" height="200px">
                 <v-btn
                 class="mt-6"
                 text
                 color="red"
-                @click="sheet = !sheet"
-                >close</v-btn>
-                <div class="py-3">This is a bottom sheet using the controlled by v-model instead of activator</div>
+                @click="edicoes = !edicoes"
+                >fechar</v-btn>
+                <div class="py-3">Edições</div>
             </v-sheet>
         </v-bottom-sheet>
         <FlashMessage :position="'right bottom'"></FlashMessage>
@@ -200,7 +194,7 @@
                 pagination: {},
                 buscaTermo: "",
                 isImagem: false,
-                sheet: false,
+                edicoes: false,
                 projectData: {
                     name: "",
                     logo: ""

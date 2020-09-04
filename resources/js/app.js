@@ -53,5 +53,16 @@ Vue.use(Vuetify);
 
 const app = new Vue({
     el: '#app',
-    vuetify: new Vuetify(),
+    vuetify: new Vuetify({
+        theme: {
+          themes: {
+            light: {
+              primary: '#676a6c',
+              secondary: '#b0bec5',
+              accent: '#8c9eff',
+              error: '#b71c1c',
+            },
+          },
+        },
+    }),
 });
