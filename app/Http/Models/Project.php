@@ -16,6 +16,6 @@ class Project extends Model
     	return $this->belongsTo('App\User','author_id','id');
 	}
 	public function edicoes(){
-    	return $this->hasMany('App\Models\ProjectEdition');
+    	return $this->hasMany('App\Http\Models\ProjectEdition');
 	}
 }

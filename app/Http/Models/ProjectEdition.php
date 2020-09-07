@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -13,18 +13,18 @@ class ProjectEdition extends Model
 	protected $guarded = [''];
 
 	public function user(){
-    	return $this->belongsTo('App\Models\User','author_id','id');
+    	return $this->belongsTo('App\Http\Models\User','author_id','id');
 	}
 	public function projeto(){
-    	return $this->belongsTo('App\Models\Project');
+    	return $this->belongsTo('App\Http\Models\Project');
     }
 	public function empresas(){
-    	return $this->hasMany('App\Models\ProjectCompany');
+    	return $this->hasMany('App\Http\Models\ProjectCompany');
     }
     public function galeria(){
-    	return $this->hasMany('App\Models\ProjectPhoto');
+    	return $this->hasMany('App\Http\Models\ProjectPhoto');
     }
     public function slideshow(){
-    	return $this->hasMany('App\Models\ProjectSlideshow');
+    	return $this->hasMany('App\Http\Models\ProjectSlideshow');
 	}
 }
