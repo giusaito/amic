@@ -77,7 +77,8 @@
                                                 <small><strong><a href="" v-b-tooltip.hover :title="projeto.user.name"><img alt="image" class="rounded-circle" :src="'/storage/images/avatars/'+projeto.user.id+'/avatar.png'" @error="userUrlAlt"></a></strong></small>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm" @click="edicoes = !edicoes"><i class="fa fa-folder-open"></i> Edições</a>
+                                                <!-- <a href="#" class="btn btn-white btn-sm" @click="edicoesSheet = !edicoesSheet"><i class="fa fa-folder-open"></i> Edições</a> -->
+                                                <a href="#" class="btn btn-white btn-sm" @click="openEditions(projeto)"><i class="fa fa-folder-open"></i> Edições</a>
                                                 <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> Visualizar </a>
                                                 <a href="#" class="btn btn-white btn-sm" v-on:click="editProject(projeto)"><i class="fa fa-pencil"></i> Editar </a>
                                                 <button class="btn btn-danger" v-on:click="deleteProject(projeto)">Excluir</button>
@@ -157,15 +158,35 @@
                 </form>
             </div>
         </b-modal>
-        <v-bottom-sheet v-model="edicoes">
-            <v-sheet class="text-center" height="200px">
-                <v-btn
-                class="mt-6"
-                text
-                color="red"
-                @click="edicoes = !edicoes"
-                >fechar</v-btn>
-                <div class="py-3">Edições</div>
+        <v-bottom-sheet v-model="edicoesSheet">
+            <v-sheet class="text-left" height="250px">
+                <!-- <v-btn class="mt-6" text color="red" @click="edicoesSheet = !edicoesSheet">fechar</v-btn> -->
+                <!-- <div class="py-3">Edições</div> -->
+                <v-btn class="mt-1 float-right close-bottom-sheet" text color="link" @click="edicoesSheet = !edicoesSheet" small>
+                    <v-icon small>mdi mdi-close</v-icon>fechar
+                </v-btn>
+                <v-card>
+                    <v-card-title>{{projetoAtual.name}}</v-card-title>
+                    <v-divider></v-divider>
+                    <v-card-text style="height: 200px;">
+                        <v-slide-group v-if="projetoAtual.edicoes.length" center-active show-arrows>
+                            <v-slide-item v-for="(edicao,n) in projetoAtual.edicoes" :key="n" v-slot:default="{ active, toggle }">
+                                <v-card :color="active ? 'primary' : 'grey lighten-1'" class="ma-4" height="100" width="100" @click="toggle">
+                                    <v-img :aspect-ratio="16/16" :src="edicao.logo">
+                                        <v-row class="fill-height" align="center" justify="center">
+                                            <v-scale-transition>
+                                                <v-icon v-if="active" color="white" size="48" v-text="'mdi-briefcase-edit'"></v-icon>
+                                            </v-scale-transition>
+                                        </v-row>
+                                    </v-img>
+                                </v-card>
+                            </v-slide-item>
+                        </v-slide-group>
+                        <v-alert class="text-center" prominent type="info" text v-else>
+                            Não há edições cadastradas no projeto <strong>{{projetoAtual.name}}</strong>
+                        </v-alert>
+                    </v-card-text>
+                </v-card>
             </v-sheet>
         </v-bottom-sheet>
         <FlashMessage :position="'right bottom'"></FlashMessage>
@@ -194,7 +215,7 @@
                 pagination: {},
                 buscaTermo: "",
                 isImagem: false,
-                edicoes: false,
+                edicoesSheet: false,
                 projectData: {
                     name: "",
                     logo: ""
@@ -207,6 +228,12 @@
                     width: 75, 
                     height: 75, 
                     class: 'm1' 
+                },
+                projetoAtual: {
+                    name: "",
+                    id: null,
+                    status: null,
+                    edicoes: []
                 }
             }
         },
@@ -423,6 +450,75 @@
                         time: 5000
                     });
                 }
+            },
+            openEditions(projeto){
+                // this.edicoesSheet = true;
+                this.edicoesSheet = !this.edicoesSheet;
+                this.projetoAtual.name = projeto.name;
+                this.projetoAtual.edicoes = projeto.edicoes;
+                // this.projetoAtual.edicoes = [
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+                //         },
+                //         {
+                //             logo: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+                //         },
+                //     ]
+                console.log(projeto);
             }
         }
     }

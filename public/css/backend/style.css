@@ -11512,7 +11512,7 @@ body.md-skin {
   }
 
   .navbar-static-side {
-    z-index: 2001;
+    z-index: 201;
     width: 220px;
   }
 
@@ -11662,5 +11662,14 @@ body.md-skin {
 .v-application ol,
 .v-application ul {
   padding-left: 0 !important;
+}
+
+.close-bottom-sheet {
+  z-index: 999 !important;
+}
+
+.blueimp-gallery .prev,
+.blueimp-gallery .next {
+  color: #fff !important;
 }
 

@@ -38,8 +38,10 @@ Vue.component('projetos-component', require('./components/Projetos/ListaComponen
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import "@mdi/font/scss/materialdesignicons.scss";
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(FlashMessage);

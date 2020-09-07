@@ -59,3 +59,12 @@
 .v-application ol, .v-application ul {
   padding-left:0 !important;
 }
+.close-bottom-sheet {
+  z-index: 999 !important;
+}
+.blueimp-gallery {
+  .prev, .next { color:#fff !important; }
+}
+// .v-overlay--active, .v-dialog__content--active {
+//   z-index: 2002 !important;
+// }
