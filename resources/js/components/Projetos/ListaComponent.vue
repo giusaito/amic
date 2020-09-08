@@ -167,22 +167,52 @@
                         </v-col>
                     </v-row> -->
                     <v-card>
-                        <v-tabs background-color="white" color="deep-orange accent-4" right>
-                            <v-tab>Detalhes da Edição</v-tab>
-                            <v-tab>Slideshow</v-tab>
-                            <v-tab>Fotos</v-tab>
-                            <v-tab>Empresas participantes</v-tab>
+                        <form v-on:submit.prevent="saveEdition">
+                        <v-form v-on:submit.prevent="saveEdition" ref="form" lazy-validation>
+                            <v-tabs background-color="white" color="deep-orange accent-4" right>
+                                <v-tab>Detalhes da Edição</v-tab>
+                                <v-tab>Slideshow</v-tab>
+                                <v-tab>Fotos</v-tab>
+                                <v-tab>Empresas participantes</v-tab>
 
-                            <v-tab-item v-for="n in 4" :key="n">
-                                <v-container fluid>
-                                    <v-row>
-                                        <v-col v-for="i in 36" :key="i" cols="12" md="1">
-                                            <v-img :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`" :lazy-src="`https://picsum.photos/10/6?image=${i * n * 5 + 10}`" aspect-ratio="1"></v-img>
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-tab-item>
-                        </v-tabs>
+                                <!-- <v-tab-item v-for="n in 4" :key="n">
+                                    {{projetoAtual.edicoes[edicaoAtual]}}
+                                    <v-container fluid>
+                                        <v-row>
+                                            <v-col v-for="i in 36" :key="i" cols="12" md="1">
+                                                <v-img :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`" :lazy-src="`https://picsum.photos/10/6?image=${i * n * 5 + 10}`" aspect-ratio="1"></v-img>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-tab-item> -->
+                                <v-tab-item>
+                                    <v-container fluid>
+                                        Detalhes da Edição 
+                                    </v-container>
+                                </v-tab-item>
+                                <v-tab-item>
+                                    <v-container fluid>
+                                        <v-row>
+                                            Slideshow
+                                        </v-row>
+                                    </v-container>
+                                </v-tab-item>
+                                <v-tab-item>
+                                    <v-container fluid>
+                                        <v-row>
+                                            Fotos
+                                        </v-row>
+                                    </v-container>
+                                </v-tab-item>
+                                <v-tab-item>
+                                    <v-container fluid>
+                                        <v-row>
+                                            Empresas participantes
+                                        </v-row>
+                                    </v-container>
+                                </v-tab-item>
+                            </v-tabs>
+                        </v-form>
                     </v-card>
                 </v-sheet>
             </v-expand-transition>
@@ -482,6 +512,9 @@
                         time: 5000
                     });
                 }
+            },
+            saveEdition: async function(){
+
             },
             openEditions(projeto){
                 this.edicaoAtual = null;
