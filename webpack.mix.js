@@ -23,4 +23,4 @@ mix.js('resources/js/app.js', 'public/js')
     ], 'public/css/backend/all.css')
     .combine(['resources/js/backend/*'], 'public/js/backend/all.js').version();
 
-// mix.browserSync("http://localhost:8000");
+mix.browserSync("http://localhost:8000");

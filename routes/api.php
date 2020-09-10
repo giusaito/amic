@@ -45,4 +45,7 @@ Route::group(['namespace' => 'Auth', 'middleware' => 'api', 'prefix' => 'passwor
 Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'], function () {
     Route::post('/projetos/status/{id}', 'ProjectController@status')->name('status');
     Route::resource('projetos', 'ProjectController');
+
+    // Tv Amic
+    Route::resource('tv-amic', 'TvAmicController');
 });

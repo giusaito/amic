@@ -35,6 +35,7 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue').default
 );
 Vue.component('projetos-component', require('./components/Projetos/ListaComponent.vue').default);
+Vue.component('tv-amic-component', require('./components/TvAmic/ListaComponent.vue').default);
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';

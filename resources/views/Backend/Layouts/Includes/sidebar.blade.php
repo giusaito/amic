@@ -24,6 +24,9 @@
             <li class="{{ (request()->is('painel/links-uteis*')) ? 'active' : '' }}">
                 <a href="{{route('backend.link.util.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Links Úteis</span></a>
             </li>
+            <li class="{{ (request()->is('painel/tv-amic*')) ? 'active' : '' }}">
+                <a href="{{route('backend.tvamic.index')}}"><i class="fa fa-tv"></i> <span class="nav-label">TV amic</span></a>
+            </li>
             <li>
             </li>
         </ul>
