@@ -167,7 +167,6 @@
                         </v-col>
                     </v-row> -->
                     <v-card>
-                        <form v-on:submit.prevent="saveEdition">
                         <v-form v-on:submit.prevent="saveEdition" ref="form" lazy-validation>
                             <v-tabs background-color="white" color="deep-orange accent-4" right>
                                 <v-tab>Detalhes da Edição</v-tab>
