@@ -46,7 +46,10 @@ class User extends Authenticatable
 
     public function projetos(){
     	return $this->hasMany('App\Models\Project');
-	}
+	}public
+     function tvAmics(){
+        return $this->hasMany('App\Models\TvAmic');
+    }
 
     protected $appends = ['avatar_url'];
     public function getAvatarUrlAttribute()
