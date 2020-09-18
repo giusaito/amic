@@ -65,6 +65,45 @@
 .blueimp-gallery {
   .prev, .next { color:#fff !important; }
 }
+
+@import url('https://fonts.googleapis.com/css?family=Special+Elite');
+blockquote {
+	font-weight: 100;
+  font-size: 1rem;
+  line-height: 1.4;
+  position: relative;
+  margin: 1rem;
+  padding: 0.5rem;
+  width: auto;
+  display: inline-block;
+}
+
+blockquote:before,
+blockquote:after {
+  position: absolute;
+  color: #afafaf;
+  font-size: 2rem;
+  width: 4rem;
+  height: 4rem;
+  font-family: 'Special Elite', cursive;
+}
+
+blockquote:before {
+	content: '“';
+	left: -0.5rem;
+	top: -0.1rem;
+}
+
+blockquote:after {
+	content: '”';
+	right: -4rem;
+	bottom: -1.5rem;
+}
+
+cite {
+	line-height: 3;
+	text-align: left;
+}
 // .v-overlay--active, .v-dialog__content--active {
 //   z-index: 2002 !important;
 // }
