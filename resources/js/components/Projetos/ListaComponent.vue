@@ -159,105 +159,7 @@
             </div>
         </b-modal>
         <v-bottom-sheet v-model="edicoesSheet">
-            <v-expand-transition>
-                <v-sheet v-if="edicaoAtual != null" color="grey lighten-4" height="600" tile>
-                    <!-- <v-row class="fill-height" align="center" justify="center">
-                        <v-col cols="10">
-                            <h3 class="title">{{projetoAtual.edicoes[edicaoAtual]}}</h3>
-                        </v-col>
-                    </v-row> -->
-                    <v-card>
-                        <v-form v-on:submit.prevent="saveEdition" ref="form" lazy-validation>
-                            <v-tabs background-color="white" color="deep-orange accent-4" right>
-                                <v-tab>Detalhes da Edição</v-tab>
-                                <v-tab>Slideshow</v-tab>
-                                <v-tab>Fotos</v-tab>
-                                <v-tab>Empresas participantes</v-tab>
-
-                                <!-- <v-tab-item v-for="n in 4" :key="n">
-                                    {{projetoAtual.edicoes[edicaoAtual]}}
-                                    <v-container fluid>
-                                        <v-row>
-                                            <v-col v-for="i in 36" :key="i" cols="12" md="1">
-                                                <v-img :src="`https://picsum.photos/500/300?image=${i * n * 5 + 10}`" :lazy-src="`https://picsum.photos/10/6?image=${i * n * 5 + 10}`" aspect-ratio="1"></v-img>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                </v-tab-item> -->
-                                <v-tab-item>
-                                    <v-container fluid>
-                                        <v-row>
-                                            <v-col>
-                                                <v-file-input label="Logo da Edição" filled prepend-icon="mdi-camera"></v-file-input>
-                                                <tiptap-vuetify v-model="content" :extensions="extensions" />
-                                            </v-col>
-                                        </v-row>
-                                        <v-row>
-                                            <v-col>
-                                                
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                </v-tab-item>
-                                <v-tab-item>
-                                    <v-container fluid>
-                                        <v-row>
-                                            Slideshow
-                                        </v-row>
-                                    </v-container>
-                                </v-tab-item>
-                                <v-tab-item>
-                                    <v-container fluid>
-                                        <v-row>
-                                            Fotos
-                                        </v-row>
-                                    </v-container>
-                                </v-tab-item>
-                                <v-tab-item>
-                                    <v-container fluid>
-                                        <v-row>
-                                            Empresas participantes
-                                        </v-row>
-                                    </v-container>
-                                </v-tab-item>
-                            </v-tabs>
-                        </v-form>
-                    </v-card>
-                </v-sheet>
-            </v-expand-transition>
-            <v-sheet class="text-left" height="250px">
-                <v-btn class="mt-1 float-right close-bottom-sheet" text color="link" @click="edicoesSheet = !edicoesSheet" small>
-                    <v-icon small>mdi mdi-close</v-icon>fechar
-                </v-btn>
-                <v-card>
-                    <v-card-title>
-                        {{projetoAtual.name}} 
-                        <v-btn rounded small color="blue-grey" class="ma-2 white--text" @click="edicaoAtual = {}">
-                            Adicionar
-                            <v-icon right dark>mdi-plus</v-icon>
-                        </v-btn>
-                    </v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text style="height: 200px;">
-                        <v-slide-group v-if="projetoAtual.edicoes.length" v-model="edicaoAtual" center-active show-arrows>
-                            <v-slide-item v-for="(edicao,n) in projetoAtual.edicoes" :key="n" v-slot:default="{ active, toggle }">
-                                <v-card :color="active ? 'primary' : 'grey lighten-1'" class="ma-4" height="100" width="100" @click="toggle">
-                                    <v-img :aspect-ratio="16/16" :src="edicao.logo">
-                                        <v-row class="fill-height" align="center" justify="center">
-                                            <v-scale-transition>
-                                                <v-icon v-if="active" color="white" size="48" v-text="'mdi-briefcase-edit'"></v-icon>
-                                            </v-scale-transition>
-                                        </v-row>
-                                    </v-img>
-                                </v-card>
-                            </v-slide-item>
-                        </v-slide-group>
-                        <v-alert class="text-center" prominent type="info" text v-else>
-                            Não há edições cadastradas no projeto <strong>{{projetoAtual.name}}</strong>
-                        </v-alert>
-                    </v-card-text>
-                </v-card>
-            </v-sheet>
+            <edicoes-component :projetoAtual="projetoAtual" :edicaoAtual="edicaoAtual"></edicoes-component>
         </v-bottom-sheet>
         <FlashMessage :position="'right bottom'"></FlashMessage>
     </div>
@@ -269,9 +171,7 @@
     // import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
     import * as projectService from '../../services/project_service';
-    import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify';
     export default {
-        components: { TiptapVuetify },
         props: ['homeRoute', 'listRoute'],
         filters: {
             format_date(value){
@@ -308,32 +208,6 @@
                     edicoes: []
                 },
                 edicaoAtual:null,
-                extensions: [
-                    History,
-                    Blockquote,
-                    Link,
-                    Underline,
-                    Strike,
-                    Italic,
-                    ListItem,
-                    BulletList,
-                    OrderedList,
-                    [Heading, {
-                        options: {
-                        levels: [1, 2, 3]
-                        }
-                    }],
-                    Bold,
-                    Code,
-                    HorizontalRule,
-                    Paragraph,
-                    HardBreak
-                ],
-                // starting editor's content
-                content: `
-                <h1>Yay Headlines!</h1>
-                <p>All these <strong>cool tags</strong> are working now.</p>
-                `
             }
         },
         created() {
@@ -550,15 +424,12 @@
                     });
                 }
             },
-            saveEdition: async function(){
-
-            },
             openEditions(projeto){
                 this.edicaoAtual = null;
                 this.edicoesSheet = !this.edicoesSheet;
                 this.projetoAtual.name = projeto.name;
                 this.projetoAtual.edicoes = projeto.edicoes;
-            }
+            },
         }
     }
 </script>

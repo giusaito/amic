@@ -35,20 +35,25 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue').default
 );
 Vue.component('projetos-component', require('./components/Projetos/ListaComponent.vue').default);
+Vue.component('edicoes-component', require('./components/Projetos/EdicoesComponent.vue').default);
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';
 import Vuetify from 'vuetify';
+import DatetimePicker from 'vuetify-datetime-picker';
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import "@mdi/font/scss/materialdesignicons.scss";
-import { TiptapVuetifyPlugin } from 'tiptap-vuetify';
-import 'tiptap-vuetify/dist/main.css';
-import 'vuetify/dist/vuetify.min.css';
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import '@ckeditor/ckeditor5-build-classic/build/translations/pt';
+import pt from 'vuetify/es5/locale/pt';
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(FlashMessage);
 Vue.use(Vuetify);
+Vue.use(DatetimePicker);
+Vue.use( CKEditor );
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -69,10 +74,9 @@ const app = new Vue({
             },
           },
         },
+        lang: {
+          locales: { pt },
+          current: 'pt',
+        },
     }),
-});
-const vuetify = app.$vuetify;
-Vue.use(TiptapVuetifyPlugin, {
-  vuetify,
-  iconsGroup: 'md'
 });
