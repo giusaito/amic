@@ -41,16 +41,19 @@ Vue.component('edicoes-component', require('./components/Projetos/EdicoesCompone
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';
 import Vuetify from 'vuetify';
+import DatetimePicker from 'vuetify-datetime-picker';
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import "@mdi/font/scss/materialdesignicons.scss";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import '@ckeditor/ckeditor5-build-classic/build/translations/pt';
+import pt from 'vuetify/es5/locale/pt';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(FlashMessage);
 Vue.use(Vuetify);
+Vue.use(DatetimePicker);
 Vue.use( CKEditor );
 
 /**
@@ -71,6 +74,10 @@ const app = new Vue({
               error: '#b71c1c',
             },
           },
+        },
+        lang: {
+          locales: { pt },
+          current: 'pt',
         },
     }),
 });
