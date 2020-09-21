@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\TvAmic;
 use Embed\Embed;
+use Illuminate\Support\Facades\Storage;
 
 class TvAmicController extends Controller
 {
@@ -27,8 +28,21 @@ class TvAmicController extends Controller
 
     public function process_video(Request $request){
         $process = Embed::create($request->url_video);
-        $response = $process->code;
-        return response()->json($response, 200);
+        $result = [
+           "url_video" => $request->url_video,
+           "title" => $process->title,
+           "description" => $process->description,
+           "image" => $process->image,
+           "iframe" => $process->code,
+           "width" => $process->width,
+           "height" => $process->height,
+           "provider_name" => $process->providerName,
+           "provider_url" => $process->providerUrl,
+           "license" => $process->license,
+           "status" => $process->status,
+           "author_id" => $process->author_id,
+        ];
+        return response()->json($result, 200);
     }
 
     public function create()
@@ -45,8 +59,8 @@ class TvAmicController extends Controller
     public function store(Request $request)
     {
         $tvamic = new TvAmic();
-        $tvamic->name = $request->name;
-        $tvamic->slug = \Str::slug($request->name);
+        $tvamic->title = $request->title;
+        $tvamic->slug = \Str::slug($request->title);
         $tvamic->url_video = $request->url_video;
         $tvamic->description = $request->description;
         $tvamic->image = $request->image;
@@ -77,7 +91,8 @@ class TvAmicController extends Controller
      */
     public function show($id)
     {
-        //
+        $tvamic = TvAmic::with(['user'])->orderBy('created_at', 'desc')->paginate(20);
+        return response()->json($tvamic, 200);
     }
 
     /**
@@ -132,19 +147,27 @@ class TvAmicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TvAmic $TvAmic)
+    public function destroy(TvAmic $tvAmic)
     {
-        if($TvAmic->delete()) {
-            Storage::delete('public/images/tvamic/'.$TvAmic->image);
+        if($tvAmic->delete()) {
+            Storage::delete('public/images/tvamic/'.$tvAmic->image);
             return response()->json([
-                'message' => 'O vídeo '.$tvamic->name.' foi excluído com sucesso',
+                'message' => 'O vídeo '.$tvAmic->title.' foi excluído com sucesso',
                 'status_code' => 200
             ], 200);
         }else {
             return response()->json([
-                'message' => 'Houve um problema para excluir o vídeo '.$TvAmic->name.'. Por favor tente novamente.',
+                'message' => 'Houve um problema para excluir o vídeo '.$tvAmic->title.'. Por favor tente novamente.',
                 'status_code' => 500
             ], 500);
         }
+    }
+
+     public function search($search = false){
+        $tvAmic = TvAmic::where(function($query) use($search){
+            $searchWildcard = '%' . $search . '%';
+            $query->orWhere('title', 'LIKE', $searchWildcard);
+        })->orderBy('created_at', 'desc')->paginate(20);
+        return response()->json($tvAmic, 200);
     }
 }

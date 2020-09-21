@@ -35,9 +35,8 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::group(['prefix' => 'links-uteis', 'as' => 'link.util.'], function () {
         Route::resource('/', 'LinkController');
     });
-    // Final rota link útil
-    Route::group(['prefix' => 'tv-amic', 'as' => 'tvamic.'], function () {
-        Route::resource('/', 'TvAmicController');
-    });
 
+    Route::get('tv-amic/show/{search?}', 'TvAmicController@search')->name('search');
+        Route::resource('tv-amic', 'TvAmicController');
+        Route::post('/tv-amic/process-video', 'TvAmicController@process_video');
 });

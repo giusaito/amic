@@ -15,7 +15,7 @@ class CreateTvAmicTable extends Migration
     {
         Schema::create('tv_amics', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 90);
+            $table->string('title', 90);
             $table->string('slug', 191);
             $table->string('url_video', 191);
             $table->string('description', 191);
