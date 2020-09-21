@@ -151,6 +151,18 @@
               <b-form-invalid-feedback :force-show="true" v-if="errors.provider_url">{{errors.provider_url[0]}}</b-form-invalid-feedback>
             </div>
             <div class="form-group">
+                <label for="name">Miniatura</label>
+                <b-row>
+                    <b-col cols="3" v-if="isImagem">
+                        <img class="img-thumbnail img-fluid" src="" ref="newProjectLogoDisplay">
+                    </b-col>
+                    <b-col>
+                        <input type="file" v-on:change="attachLogo" ref="newProjectLogo" class="form-control" id="logo" />
+                        <b-form-invalid-feedback :force-show="true" v-if="errors.logo">{{errors.logo[0]}}</b-form-invalid-feedback>
+                    </b-col>
+                </b-row>
+            </div>
+            <div class="form-group">
               <label for="statusVideo">statusVideo</label>
               <b-input type="text" required="required" v-model="infoData.statusVideo" id="statusVideo" placeholder="Insira o status do vídeo"  :counter="191"/>
               <b-form-invalid-feedback :force-show="true" v-if="errors.statusVideo">{{errors.statusVideo[0]}}</b-form-invalid-feedback>
@@ -197,6 +209,7 @@
         data() {
             return {
                 show: false,
+                isImagem: false,
                 ProcessVideoAnimation: false,
                 displayProcess: true,
                 displayForm: false,
@@ -205,6 +218,10 @@
                 buscaTermo: "",
                 isImagem: false,
                 edicoesSheet: false,
+                projectData: {
+                    name: "",
+                    logo: ""
+                },
                 infoData: {
                     url_video: "",
                     title: "",
@@ -363,6 +380,20 @@
                             });
                             break;
                     }
+                }
+            },
+            attachLogo() {
+                this.projectData.logo = this.$refs.newProjectLogo.files[0];
+                if(this.projectData.logo.type === 'image/jpeg' || this.projectData.logo.type === 'image/png' || this.projectData.logo.type === 'image/webp'){
+                    this.isImagem = true;
+                    let reader = new FileReader();
+                    reader.addEventListener('load', function() {
+                        this.$refs.newProjectLogoDisplay.src = reader.result;
+                    }.bind(this), false);
+
+                    reader.readAsDataURL(this.projectData.logo);
+                }else {
+                    this.isImagem = false;
                 }
             },
             deleteProject: async function(tv){

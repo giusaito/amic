@@ -36,6 +36,7 @@ Vue.component(
 );
 Vue.component('projetos-component', require('./components/Projetos/ListaComponent.vue').default);
 Vue.component('tv-amic-component', require('./components/TvAmic/ListaComponent.vue').default);
+Vue.component('edicoes-component', require('./components/Projetos/EdicoesComponent.vue').default);
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';
@@ -43,10 +44,14 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import "@mdi/font/scss/materialdesignicons.scss";
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import '@ckeditor/ckeditor5-build-classic/build/translations/pt';
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(FlashMessage);
 Vue.use(Vuetify);
+Vue.use( CKEditor );
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
