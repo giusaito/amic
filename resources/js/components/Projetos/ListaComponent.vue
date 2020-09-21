@@ -167,7 +167,6 @@
                         </v-col>
                     </v-row> -->
                     <v-card>
-                        <form v-on:submit.prevent="saveEdition">
                         <v-form v-on:submit.prevent="saveEdition" ref="form" lazy-validation>
                             <v-tabs background-color="white" color="deep-orange accent-4" right>
                                 <v-tab>Detalhes da Edição</v-tab>
@@ -187,7 +186,17 @@
                                 </v-tab-item> -->
                                 <v-tab-item>
                                     <v-container fluid>
-                                        Detalhes da Edição 
+                                        <v-row>
+                                            <v-col>
+                                                <v-file-input label="Logo da Edição" filled prepend-icon="mdi-camera"></v-file-input>
+                                                <tiptap-vuetify v-model="content" :extensions="extensions" />
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col>
+                                                
+                                            </v-col>
+                                        </v-row>
                                     </v-container>
                                 </v-tab-item>
                                 <v-tab-item>
@@ -260,7 +269,9 @@
     // import 'bootstrap/dist/css/bootstrap.css'
     import 'bootstrap-vue/dist/bootstrap-vue.css'
     import * as projectService from '../../services/project_service';
+    import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify';
     export default {
+        components: { TiptapVuetify },
         props: ['homeRoute', 'listRoute'],
         filters: {
             format_date(value){
@@ -297,6 +308,32 @@
                     edicoes: []
                 },
                 edicaoAtual:null,
+                extensions: [
+                    History,
+                    Blockquote,
+                    Link,
+                    Underline,
+                    Strike,
+                    Italic,
+                    ListItem,
+                    BulletList,
+                    OrderedList,
+                    [Heading, {
+                        options: {
+                        levels: [1, 2, 3]
+                        }
+                    }],
+                    Bold,
+                    Code,
+                    HorizontalRule,
+                    Paragraph,
+                    HardBreak
+                ],
+                // starting editor's content
+                content: `
+                <h1>Yay Headlines!</h1>
+                <p>All these <strong>cool tags</strong> are working now.</p>
+                `
             }
         },
         created() {

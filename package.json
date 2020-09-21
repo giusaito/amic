@@ -33,6 +33,7 @@
         "import": "0.0.6",
         "material-design-icons-iconfont": "^6.1.0",
         "moment": "^2.27.0",
+        "tiptap-vuetify": "^2.24.0",
         "vue-axios": "^2.1.5",
         "vue-resource": "^1.5.1",
         "vue-router": "^3.4.3",

@@ -42,6 +42,9 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import "@mdi/font/scss/materialdesignicons.scss";
+import { TiptapVuetifyPlugin } from 'tiptap-vuetify';
+import 'tiptap-vuetify/dist/main.css';
+import 'vuetify/dist/vuetify.min.css';
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(FlashMessage);
@@ -67,4 +70,9 @@ const app = new Vue({
           },
         },
     }),
+});
+const vuetify = app.$vuetify;
+Vue.use(TiptapVuetifyPlugin, {
+  vuetify,
+  iconsGroup: 'md'
 });
