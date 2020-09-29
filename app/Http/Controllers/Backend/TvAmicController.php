@@ -17,7 +17,8 @@ class TvAmicController extends Controller
      */
     public function index()
     {
-        return view('Backend.TvAmic.index');
+        $tvAmic = TvAmic::with('user')->orderBy('id', 'desc')->paginate(20);
+        return view('Backend.TvAmic.index', compact('tvAmic'));
     }
 
     /**
@@ -83,7 +84,7 @@ class TvAmicController extends Controller
         $tvamic->slug = \Str::slug($request->title);
         $tvamic->url_video = $request->url_video;
         $tvamic->description = $request->description;
-        $tvamic->image = $hashname;
+        // $tvamic->image = $hashname;
         $tvamic->iframe = $request->iframe;
         $tvamic->width = $request->width;
         $tvamic->height = $request->height;
@@ -91,7 +92,7 @@ class TvAmicController extends Controller
         $tvamic->provider_url = $request->provider_url;
         $tvamic->license = $request->license;
         $tvamic->status = $request->status;
-        $tvamic->author_id = $request->author_id;
+        $tvamic->author_id = Auth::id();
 
         if ($tvamic->save()) {
             return response()->json($tvamic, 200);
@@ -123,8 +124,9 @@ class TvAmicController extends Controller
      */
     public function edit($id)
     {
-        $tvamic = TvAmic::find($id);
-        return response()->json($tvamic, 200);
+        $tv = TvAmic::find($id);
+        return view('Backend.TvAmic.edit', compact('tv'));
+
     }
 
     /**
