@@ -38,6 +38,7 @@
         "tiptap": "^1.30.0",
         "tiptap-extensions": "^1.33.0",
         "vue-axios": "^2.1.5",
+        "vue-cropperjs": "^4.1.0",
         "vue-resource": "^1.5.1",
         "vue-router": "^3.4.3",
         "vuetify": "^2.3.10",

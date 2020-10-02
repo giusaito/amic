@@ -37,17 +37,21 @@ Vue.component(
 Vue.component('projetos-component', require('./components/Projetos/ListaComponent.vue').default);
 Vue.component('tv-amic-component', require('./components/TvAmic/ListaComponent.vue').default);
 Vue.component('edicoes-component', require('./components/Projetos/EdicoesComponent.vue').default);
+Vue.component('foto-component', require('./components/Global/FotoComponent.vue').default);
+Vue.component('foto-multiple-component', require('./components/Global/FotoMultipleComponent.vue').default);
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';
 import Vuetify from 'vuetify';
 import DatetimePicker from 'vuetify-datetime-picker';
+import VueCropper from 'vue-cropperjs';
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import "@mdi/font/scss/materialdesignicons.scss";
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import '@ckeditor/ckeditor5-build-classic/build/translations/pt';
 import pt from 'vuetify/es5/locale/pt';
+// import 'cropperjs/dist/cropper.css';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
@@ -55,6 +59,7 @@ Vue.use(FlashMessage);
 Vue.use(Vuetify);
 Vue.use(DatetimePicker);
 Vue.use( CKEditor );
+Vue.component(VueCropper);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

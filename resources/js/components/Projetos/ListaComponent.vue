@@ -159,7 +159,7 @@
             </div>
         </b-modal>
         <v-bottom-sheet v-model="edicoesSheet">
-            <edicoes-component :projetoAtual="projetoAtual" :edicaoAtual="edicaoAtual"></edicoes-component>
+            <edicoes-component ref="edicoesComponent" :projetoAtual="projetoAtual" :formSheet="formSheet" @fechar="onClickCloseBSheet"></edicoes-component>
         </v-bottom-sheet>
         <FlashMessage :position="'right bottom'"></FlashMessage>
     </div>
@@ -188,6 +188,7 @@
                 buscaTermo: "",
                 isImagem: false,
                 edicoesSheet: false,
+                formSheet: false,
                 projectData: {
                     name: "",
                     logo: ""
@@ -207,10 +208,9 @@
                     status: null,
                     edicoes: []
                 },
-                edicaoAtual:null,
             }
         },
-        created() {
+        created: function() {
             this.getProjetos();
         },
         methods: {
@@ -425,11 +425,21 @@
                 }
             },
             openEditions(projeto){
-                this.edicaoAtual = null;
                 this.edicoesSheet = !this.edicoesSheet;
                 this.projetoAtual.name = projeto.name;
                 this.projetoAtual.edicoes = projeto.edicoes;
             },
-        }
+            onClickCloseBSheet (value) {
+                this.edicoesSheet = !this.edicoesSheet;
+            },
+        },
+        watch: {
+            edicoesSheet: function () {
+                if (this.edicoesSheet == false) {
+                    // alert(this.$refs.edicoesComponent.openFormDialog);
+                    this.$refs.edicoesComponent.openFormDialog = false;
+                }
+            }
+        },
     }
 </script>
