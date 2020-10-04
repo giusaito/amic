@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="{{ URL::asset('favicon.png') }}">
     <link href="{{ URL::asset('css/backend/all.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/backend/style.css') }}" rel="stylesheet">
-
+    @yield('css')
 </head>
 
 <body>
@@ -52,6 +52,7 @@
             </div>
         </div>
     </div>
+    @yield('js')
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('js/backend/all.js') }}"></script>
 </html>

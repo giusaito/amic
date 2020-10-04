@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Models\TvAmic;
 use Embed\Embed;
 use Illuminate\Support\Facades\Storage;
-
+use Image;
 class TvAmicController extends Controller
 {
     /**
@@ -17,7 +17,8 @@ class TvAmicController extends Controller
      */
     public function index()
     {
-        return view('Backend.TvAmic.index');
+        $tvAmic = TvAmic::with('user')->orderBy('id', 'desc')->paginate(20);
+        return view('Backend.TvAmic.index', compact('tvAmic'));
     }
 
     /**
@@ -58,12 +59,32 @@ class TvAmicController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('logo');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
+
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "tv-amic/";
+
+            $this->storage->put($path. 'original/' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150/-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+
         $tvamic = new TvAmic();
         $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->title);
         $tvamic->url_video = $request->url_video;
         $tvamic->description = $request->description;
-        $tvamic->image = $request->image;
+        // $tvamic->image = $hashname;
         $tvamic->iframe = $request->iframe;
         $tvamic->width = $request->width;
         $tvamic->height = $request->height;
@@ -71,7 +92,7 @@ class TvAmicController extends Controller
         $tvamic->provider_url = $request->provider_url;
         $tvamic->license = $request->license;
         $tvamic->status = $request->status;
-        $tvamic->author_id = $request->author_id;
+        $tvamic->author_id = Auth::id();
 
         if ($tvamic->save()) {
             return response()->json($tvamic, 200);
@@ -103,8 +124,9 @@ class TvAmicController extends Controller
      */
     public function edit($id)
     {
-        $tvamic = TvAmic::find($id);
-        return response()->json($tvamic, 200);
+        $tv = TvAmic::find($id);
+        return view('Backend.TvAmic.edit', compact('tv'));
+
     }
 
     /**

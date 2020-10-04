@@ -352,6 +352,7 @@
                 formData.append('provider_name', this.infoData.provider_name);
                 formData.append('provider_url', this.infoData.provider_url);
                 formData.append('license', this.infoData.license);
+                formData.append('logo', this.projectData.logo);
                 formData.append('statusVideo', this.infoData.statusVideo);
                 formData.append('author_id', document.querySelector('meta[name="user-id"]').getAttribute('content'));
                     try {
