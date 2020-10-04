@@ -219,7 +219,7 @@
                 api_url = api_url || this.$props.listRoute;
                 axios.defaults.headers.common = {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': window.csrf_token
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 };
                 axios.get(api_url)
                 .then(response => {
