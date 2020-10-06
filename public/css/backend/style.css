@@ -1297,7 +1297,7 @@ h5 {
 .nav-header {
   padding: 33px 25px;
   background-color: #2F4050;
-  background-image: image-url("./../../public/css/global/patterns/header-profile.png");
+  background-image: image-url("../../public/css/global/patterns/header-profile.png");
 }
 
 .caret {
@@ -5407,7 +5407,7 @@ body.full-height-layout #page-wrapper {
 }
 
 body.boxed-layout {
-  background: image-url("./../../public/css/global/patterns/shattered.png");
+  background: image-url("../../public/css/global/patterns/shattered.png");
 }
 
 body.boxed-layout #wrapper {
