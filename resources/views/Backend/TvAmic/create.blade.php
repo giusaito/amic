@@ -8,30 +8,20 @@
 		<div class="col-md-9">
 			<div class="card" style="padding:15px;">
 				<div class="form-group">
-					<label for="url_video">Url Vídeo</label>
-					<input name="url_video" type="text" class="form-control" id="url_video" placeholder="Url do vídeo">
+					<label for="title">Título</label>
+					<input name="title" type="text" class="form-control" id="title" placeholder="Título do vídeo" required="required">
 				</div>
 				<div class="form-group">
-					<label for="title">Título do vídeo</label>
-					<input name="title" type="text" class="form-control" id="title" placeholder="Título do vídeo">
+					<label for="description">Descrição</label>
+					<input name="description" type="text" class="form-control" id="description" placeholder="Descrição curta do vídeo" required="required">
 				</div>
 				<div class="form-group">
-					<label for="description">Descrição do vídeo</label>
-					<input name="description" type="text" class="form-control" id="description" placeholder="Descrição do vídeo">
+					<label for="iframe">Iframe</label>
+					<input name="iframe" type="text" class="form-control" id="iframe" placeholder="Iframe do vídeo" required="required">
 				</div>
 				<div class="form-group">
-					<label for="iframe">Iframe do vídeo</label>
-					<input name="iframe" type="text" class="form-control" id="iframe" placeholder="Iframe do vídeo">
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="provider_name">Nome do provedor de vídeo</label>
-						<input name="provider_name" type="text" class="form-control" id="provider_name">
-					</div>
-						<div class="form-group col-md-6">
-							<label for="provider_url">Url do provedor de vídeo</label>
-							<input name="provider_url" type="text" class="form-control" id="provider_url">
-						</div>
+					<label for="iframe">Texto</label>
+					<textarea class="form-control" name="texto" required="required"></textarea>
 				</div>
 			</div>
 		</div>

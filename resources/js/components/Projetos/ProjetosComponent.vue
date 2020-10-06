@@ -260,6 +260,7 @@
                             break;
                     }
                 }
+                this.isImagem = false;
             },
             deleteProject: async function(project){
                 if(!window.confirm(`Você tem certeza que deseja excluir o projeto ${project.name}?`)){

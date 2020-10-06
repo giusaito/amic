@@ -17,15 +17,11 @@ class CreateTvAmicTable extends Migration
             $table->id();
             $table->string('title', 90);
             $table->string('slug', 191);
-            $table->string('url_video', 191);
             $table->string('description', 191);
             $table->string('image', 191)->nullable();
             $table->text('iframe');
-            $table->string('width', 10)->nullable();
-            $table->string('height', 10)->nullable();
             $table->string('provider_name', 191)->nullable();
             $table->string('provider_url', 191)->nullable();
-            $table->string('license', 191)->nullable();
             $table->enum('status', ['PUBLISHED', 'DRAFT'])->default('PUBLISHED')->nullable();
             $table->bigInteger('author_id')->unsigned()->nullable();
             $table->timestamps();

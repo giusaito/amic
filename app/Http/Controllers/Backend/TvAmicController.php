@@ -82,17 +82,11 @@ class TvAmicController extends Controller
         $tvamic = new TvAmic();
         $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->title);
-        $tvamic->url_video = $request->url_video;
         $tvamic->description = $request->description;
-        // $tvamic->image = $hashname;
         $tvamic->iframe = $request->iframe;
-        $tvamic->width = $request->width;
-        $tvamic->height = $request->height;
-        $tvamic->provider_name = $request->provider_name;
-        $tvamic->provider_url = $request->provider_url;
-        $tvamic->license = $request->license;
+        // $tvamic->image = $hashname;
         $tvamic->status = $request->status;
-        $tvamic->author_id = Auth::id();
+        $tvamic->author_id = \Auth::id();
 
         if ($tvamic->save()) {
             return response()->json($tvamic, 200);
@@ -141,15 +135,9 @@ class TvAmicController extends Controller
         $tvamic = TvAmic::find($id);
         $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->name);
-        $tvamic->url_video = $request->url_video;
         $tvamic->description = $request->description;
         $tvamic->image = $request->image;
         $tvamic->iframe = $request->iframe;
-        $tvamic->width = $request->width;
-        $tvamic->height = $request->height;
-        $tvamic->provider_name = $request->provider_name;
-        $tvamic->provider_url = $request->provider_url;
-        $tvamic->license = $request->license;
         $tvamic->status = $request->status;
 
         if ($tvamic->update()) {
