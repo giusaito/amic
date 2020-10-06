@@ -34,8 +34,9 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
 );
-Vue.component('projetos-component', require('./components/Projetos/ListaComponent.vue').default);
+Vue.component('projetos-component', require('./components/Projetos/ProjetosComponent.vue').default);
 Vue.component('tv-amic-component', require('./components/TvAmic/ListaComponent.vue').default);
+Vue.component('projeto-edicoes-component', require('./components/Projetos/ProjetoEdicoesComponent.vue').default);
 Vue.component('edicoes-component', require('./components/Projetos/EdicoesComponent.vue').default);
 Vue.component('foto-component', require('./components/Global/FotoComponent.vue').default);
 Vue.component('foto-multiple-component', require('./components/Global/FotoMultipleComponent.vue').default);
