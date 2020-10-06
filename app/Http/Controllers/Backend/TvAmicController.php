@@ -48,7 +48,7 @@ class TvAmicController extends Controller
 
     public function create()
     {
-        //
+        return view('Backend.TvAmic.create');
     }
 
     /**
@@ -138,8 +138,8 @@ class TvAmicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tvamic = new TvAmic();
-        $tvamic->name = $request->name;
+        $tvamic = TvAmic::find($id);
+        $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->name);
         $tvamic->url_video = $request->url_video;
         $tvamic->description = $request->description;
@@ -151,10 +151,9 @@ class TvAmicController extends Controller
         $tvamic->provider_url = $request->provider_url;
         $tvamic->license = $request->license;
         $tvamic->status = $request->status;
-        $tvamic->author_id = $request->author_id;
 
-        if ($tvamic->save()) {
-            return response()->json($tvamic, 200);
+        if ($tvamic->update()) {
+            return 'salvo';
         } else {
             return response()->json([
                 'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
