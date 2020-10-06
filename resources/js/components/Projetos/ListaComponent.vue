@@ -426,7 +426,9 @@
             },
             openEditions(projeto){
                 this.edicoesSheet = !this.edicoesSheet;
+                this.projetoAtual.id = projeto.id;
                 this.projetoAtual.name = projeto.name;
+                this.projetoAtual.status = projeto.status;
                 this.projetoAtual.edicoes = projeto.edicoes;
             },
             onClickCloseBSheet (value) {

@@ -97,10 +97,16 @@
         <v-card>
             <v-card-title>
                 {{projetoAtual.name}} 
-                <v-btn rounded small color="blue-grey" class="ma-2 white--text" @click="openDialog('add')">
+                <!-- <v-btn rounded small color="blue-grey" class="ma-2 white--text" @click="openDialog('add')">
                     Adicionar
                     <v-icon right dark>mdi-plus</v-icon>
-                </v-btn>
+                </v-btn> -->
+                <a :href="'/painel/projetos/edicoes/create/'+projetoAtual.id" class="ma-2 white--text v-btn v-btn--contained v-btn--rounded theme--light v-size--small blue-grey">
+                    <span class="v-btn__content">
+                        Adicionar
+                        <i aria-hidden="true" class="v-icon notranslate v-icon--right mdi mdi-plus theme--dark"></i>
+                    </span>
+                </a>
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text style="height: 200px;">
