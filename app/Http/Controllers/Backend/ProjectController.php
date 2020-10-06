@@ -18,7 +18,7 @@ class ProjectController extends Controller
     }
     
     // listar projetos
-    public function get($busca = false){
+    public function show($busca = false){
         if($busca){
             $projects = Project::with(['user','edicoes'])->where(function($query) use($busca){
                 $searchWildcard = '%' . $busca . '%';

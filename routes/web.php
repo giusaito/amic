@@ -26,10 +26,15 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::resource('/', 'DashboardController');
 
     // Início rota projetos
-    Route::group(['prefix' => 'projetos', 'as' => 'projects.'], function () {
-        Route::get('lista/{busca?}', 'ProjectController@get')->name('lista');
-        Route::resource('/', 'ProjectController');
-    });
+    Route::get('projetos/lista/{busca?}', 'ProjectController@show')->name('projetos.lista');
+    Route::post('projetos/status/{id}', 'ProjectController@status')->name('projetos.status');
+    Route::resource('projetos', 'ProjectController');
+
+    // Início rota projetos edições
+    Route::get('projetos/edicoes/lista/{busca?}', 'ProjectEditionController@show')->name('projetos.edicoes.lista');
+    Route::post('projetos/edicoes/status/{id}', 'ProjectEditionController@status')->name('projetos.edicoes.status');
+    Route::resource('projetos/edicoes', 'ProjectEditionController');
+    Route::get('projetos/edicoes/create/{id}', 'ProjectEditionController@create')->name('projetos.edicoes.create');
 
     // Início rota link útil
     Route::group(['prefix' => 'links-uteis', 'as' => 'link.util.'], function () {
