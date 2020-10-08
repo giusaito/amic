@@ -4,7 +4,7 @@
 
 <section id="link-util">
    {{-- {{dd($projeto)}} --}}
-    <edicoes-component home-route="{{ route('backend.index', [], false) }}" projetos-route="{{ route('backend.projetos.index', [], false) }}" :projeto="{{ $projeto }}"></edicoes-component>
+    <edicoes-component home-route="{{ route('backend.index', [], false) }}" projetos-route="{{ route('backend.projetos.index', [], false) }}" edicoes-save-route="{{ route('backend.projetos.store', [], false) }}" :projeto="{{ $projeto }}"></edicoes-component>
 </section>
 
 @endsection

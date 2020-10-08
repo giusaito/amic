@@ -28,7 +28,14 @@
                                 <h5>Edições <small>Adicionar</small></h5>
                             </div>
                             <div class="ibox-content">
-                                <form v-on:submit.prevent="createProject">
+                                <!-- <form v-on:submit.prevent="createProject"> -->
+                                    <p v-if="errors.length">
+                                        <b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
+                                        <ul>
+                                        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                                        </ul>
+                                    </p>
+                                <form @submit="checkForm" :action="edicoesSaveRoute" method="post">
                                     <div class="row">
                                         <div class="col-sm-6 b-r">
                                             <b-row>
@@ -65,17 +72,56 @@
                                                 <v-label>Descrição da Edição</v-label>
                                                 <ckeditor :editor="editor" v-model="editionData.description" :config="editorConfig"></ckeditor>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox">
+                                                <div class="ibox-title">
+                                                    <h5>Empresas participantes</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <td><strong>Empresa</strong></td>
+                                                                <td><strong>Site (URL)</strong></td>
+                                                                <td><strong>Logo</strong></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="(row, index) in rowsEmpresas" v-bind:key="index">
+
+                                                                <td><input type="text" v-model="row.empresa" name="empresa[]" class="form-control"></td>
+                                                                <td><input type="text" v-model="row.url" name="url[]" class="form-control"></td>
+                                                                <td>
+                                                                    <label class="fileContainer">
+                                                                        <!-- {{row.file.name}} -->
+                                                                        <input type="file" @change="setFilename($event, row)" :id="index" name="logo[]" class="form-control">
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <button v-show="index > 0" v-on:click="removeElement(index);" style="cursor: pointer" class="btn btn-danger btn-circle"><i class="fa fa-times"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <button class="btn btn-primary btn-rounded" @click="addRowEmpresa"><i class="fa fa-plus"></i> Adicionar Empresa</button>
+                                                </div>
+                                            </div>
                                             <div>
                                                 <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Salvar edição</strong></button>
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="_token" :value="csrf">
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox">
                             <div class="ibox-title">
@@ -98,45 +144,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5>Empresas participantes</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <td><strong>Title</strong></td>
-                                            <td><strong>Description</strong></td>
-                                            <td><strong>File</strong></td>
-                                            <td></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(row, index) in rowsEmpresas" v-bind:key="index">
-
-                                            <td><input type="text" v-model="row.title"></td>
-                                            <td><input type="text" v-model="row.description"></td>
-                                            <td>
-                                                <label class="fileContainer">
-                                                    {{row.file.name}}
-                                                    <input type="file" @change="setFilename($event, row)" :id="index">
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <a v-on:click="removeElement(index);" style="cursor: pointer" class="btn btn-danger btn-circle"><i class="fa fa-times"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <button class="button btn-primary" @click="addRowEmpresa">Add row</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </v-app>
@@ -145,15 +153,16 @@
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
     import * as projectEditionService from '../../services/project_edition_service';
     import moment from 'moment';
-    import vue2Dropzone from 'vue2-dropzone'
-    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+    //import vue2Dropzone from 'vue2-dropzone'
+    //import 'vue2-dropzone/dist/vue2Dropzone.min.css'
     export default {
-        props: ['homeRoute', 'projetosRoute', 'projeto'],
-        components: {
-            vueDropzone: vue2Dropzone
-        },
+        props: ['homeRoute', 'projetosRoute', 'projeto', 'edicoesSaveRoute'],
+        // components: {
+        //     vueDropzone: vue2Dropzone
+        // },
         data() {
             return {
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 isLogo: false,
                 isStarringPhoto: false,
                 editor: ClassicEditor,
@@ -172,25 +181,26 @@
                     date_event_finish: "",
                     author_id: ""
                 },
-                slideshowDropzoneOptions: {
-                    url: 'https://httpbin.org/post',
-                    thumbnailWidth: 150,
-                    maxFilesize: 0.5,
-                    addRemoveLinks: true,
-                    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>ARRASTE AS IMAGENS PARA CÁ OU CLIQUE AQUI",
-                    dictRemoveFile: "Remover",
-                    headers: { "My-Awesome-Header": "header value" }
-                },
-                fotosDropzoneOptions: {
-                    url: 'https://httpbin.org/post',
-                    thumbnailWidth: 150,
-                    maxFilesize: 0.5,
-                    addRemoveLinks: true,
-                    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>ARRASTE AS IMAGENS PARA CÁ OU CLIQUE AQUI",
-                    dictRemoveFile: "Remover",
-                    headers: { "My-Awesome-Header": "header value" }
-                },
-                rowsEmpresas: []
+                // slideshowDropzoneOptions: {
+                //     url: 'https://httpbin.org/post',
+                //     thumbnailWidth: 150,
+                //     maxFilesize: 0.5,
+                //     addRemoveLinks: true,
+                //     dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>ARRASTE AS IMAGENS PARA CÁ OU CLIQUE AQUI",
+                //     dictRemoveFile: "Remover",
+                //     headers: { "My-Awesome-Header": "header value" }
+                // },
+                // fotosDropzoneOptions: {
+                //     url: 'https://httpbin.org/post',
+                //     thumbnailWidth: 150,
+                //     maxFilesize: 0.5,
+                //     addRemoveLinks: true,
+                //     dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>ARRASTE AS IMAGENS PARA CÁ OU CLIQUE AQUI",
+                //     dictRemoveFile: "Remover",
+                //     headers: { "My-Awesome-Header": "header value" }
+                // },
+                rowsEmpresas: [],
+                errors: [],
             }
         },
         methods: {
@@ -228,10 +238,10 @@
             addRowEmpresa: function() {
                 var elem = document.createElement('tr');
                 this.rowsEmpresas.push({
-                    title: "",
-                    description: "",
+                    empresa: "",
+                    url: "",
                     file: {
-                        name: 'Choose File'
+                        name: 'Escolha a logo'
                     }
                 });
             },
@@ -241,7 +251,29 @@
             setFilename: function(event, row) {
                 var file = event.target.files[0];
                 row.file = file
+            },
+            checkForm: function (e) {
+                if (this.editionData.description && this.editionData.date_event && this.editionData.date_event_finish) {
+                    return true;
+                }
+
+                this.errors = [];
+
+                if (!this.editionData.description) {
+                    this.errors.push('A descrição é obrigatória.');
+                }
+                if (!this.editionData.date_event) {
+                    this.errors.push('A data do evento é obrigatória.');
+                }
+                if (!this.editionData.date_event_finish) {
+                    this.errors.push('A data do término do evento é obrigatória.');
+                }
+
+                e.preventDefault();
             }
+        },
+        mounted(){
+            this.addRowEmpresa();
         }
     }
 </script>
