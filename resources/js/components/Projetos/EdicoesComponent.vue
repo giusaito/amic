@@ -65,7 +65,7 @@
                                                 </v-col>
                                                 <v-col cols=12>
                                                     <v-datetime-picker label="Data final da Edição" v-model="editionData.date_event_finish" dateFormat="dd/MM/yyyy" clearText="Limpar data"></v-datetime-picker>
-                                                    {{ editionData.date_event_finish }}
+                                                    {{ new Date(editionData.date_event_finish).toLocaleString() }}
                                                     <p class="text-danger" v-if="errors.date_event_finish"> {{ errors.date_event_finish }}</p>
                                                 </v-col>
                                             </b-row>
@@ -182,7 +182,7 @@
                     description: "",
                     starring_photo: "",
                     date_event: "",
-                    date_event_finish: new Date().toISOString().substr(0, 10),
+                    date_event_finish: "",
                     author_id: ""
                 },
                 // slideshowDropzoneOptions: {
