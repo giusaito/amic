@@ -29,13 +29,13 @@
                             </div>
                             <div class="ibox-content">
                                 <!-- <form v-on:submit.prevent="createProject"> -->
-                                    <p v-if="errors.length">
+                                    <!-- <p v-if="errors.length">
                                         <b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
                                         <ul>
                                         <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
                                         </ul>
-                                    </p>
-                                <form @submit="checkForm" :action="edicoesSaveRoute" method="post">
+                                    </p> -->
+                                <form @submit="checkForm" :action="edicoesSaveRoute" method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-sm-6 b-r">
                                             <b-row>
@@ -44,7 +44,7 @@
                                                 </b-col>
                                                 <b-col>
                                                     <v-label>Logomarca</v-label>
-                                                    <input type="file" v-on:change="attachLogo" ref="newProjectEditionLogo" class="form-control" id="logo" />
+                                                    <input type="file" v-on:change="attachLogo" ref="newProjectEditionLogo" class="form-control" id="logo" name="logo" />
                                                     <b-form-invalid-feedback :force-show="true" v-if="errors.logo">{{errors.logo[0]}}</b-form-invalid-feedback>
                                                 </b-col>
                                             </b-row>
@@ -54,23 +54,27 @@
                                                 </b-col>
                                                 <b-col>
                                                     <v-label>Foto Principal</v-label>
-                                                    <input type="file" v-on:change="attachStarringPhoto" ref="newProjectEditionStarringPhoto" class="form-control" id="logo" />
+                                                    <input type="file" v-on:change="attachStarringPhoto" ref="newProjectEditionStarringPhoto" class="form-control" id="foto-principal" name="starring_picture" />
                                                     <b-form-invalid-feedback :force-show="true" v-if="errors.logo">{{errors.logo[0]}}</b-form-invalid-feedback>
                                                 </b-col>
                                             </b-row>
                                             <b-row>
                                                 <v-col cols=12>
                                                     <v-datetime-picker label="Data da Edição" v-model="editionData.date_event" dateFormat="dd/MM/yyyy" clearText="Limpar data" locale="pt"></v-datetime-picker>
+                                                    <p class="text-danger" v-if="errors.date_event"> {{ errors.date_event }}</p>
                                                 </v-col>
                                                 <v-col cols=12>
                                                     <v-datetime-picker label="Data final da Edição" v-model="editionData.date_event_finish" dateFormat="dd/MM/yyyy" clearText="Limpar data"></v-datetime-picker>
+                                                    {{ editionData.date_event_finish }}
+                                                    <p class="text-danger" v-if="errors.date_event_finish"> {{ errors.date_event_finish }}</p>
                                                 </v-col>
                                             </b-row>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <v-label>Descrição da Edição</v-label>
-                                                <ckeditor :editor="editor" v-model="editionData.description" :config="editorConfig"></ckeditor>
+                                                <ckeditor :editor="editor" v-model="editionData.description" :config="editorConfig" tag-name="textarea" name="description"></ckeditor>
+                                                <p class="text-danger" v-if="errors.description"> {{ errors.description }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -93,21 +97,21 @@
                                                         <tbody>
                                                             <tr v-for="(row, index) in rowsEmpresas" v-bind:key="index">
 
-                                                                <td><input type="text" v-model="row.empresa" name="empresa[]" class="form-control"></td>
-                                                                <td><input type="text" v-model="row.url" name="url[]" class="form-control"></td>
+                                                                <td><input type="text" v-model="row.empresa" name="participantes['empresa'][]" class="form-control"></td>
+                                                                <td><input type="text" v-model="row.url" name="participantes['url'][]" class="form-control"></td>
                                                                 <td>
                                                                     <label class="fileContainer">
                                                                         <!-- {{row.file.name}} -->
-                                                                        <input type="file" @change="setFilename($event, row)" :id="index" name="logo[]" class="form-control">
+                                                                        <input type="file" @change="setFilename($event, row)" :id="index" name="participantes['logo'][]" class="form-control">
                                                                     </label>
                                                                 </td>
                                                                 <td>
-                                                                    <button v-show="index > 0" v-on:click="removeElement(index);" style="cursor: pointer" class="btn btn-danger btn-circle"><i class="fa fa-times"></i></button>
+                                                                    <button type="button" v-show="index > 0" v-on:click="removeElement(index);" style="cursor: pointer" class="btn btn-danger btn-circle"><i class="fa fa-times"></i></button>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <button class="btn btn-primary btn-rounded" @click="addRowEmpresa"><i class="fa fa-plus"></i> Adicionar Empresa</button>
+                                                    <button type="button" class="btn btn-primary btn-rounded" @click="addRowEmpresa"><i class="fa fa-plus"></i> Adicionar Empresa</button>
                                                 </div>
                                             </div>
                                             <div>
@@ -178,7 +182,7 @@
                     description: "",
                     starring_photo: "",
                     date_event: "",
-                    date_event_finish: "",
+                    date_event_finish: new Date().toISOString().substr(0, 10),
                     author_id: ""
                 },
                 // slideshowDropzoneOptions: {
@@ -200,7 +204,14 @@
                 //     headers: { "My-Awesome-Header": "header value" }
                 // },
                 rowsEmpresas: [],
-                errors: [],
+                // errors: [],
+                errors: {
+                    logo: null,
+                    description: null,
+                    starring_photo: null,
+                    date_event: null,
+                    date_event_finish: null,
+                }
             }
         },
         methods: {
@@ -259,14 +270,22 @@
 
                 this.errors = [];
 
+                // logo: "",
+                //     description: "",
+                //     starring_photo: "",
+                //     date_event: "",
+                //     date_event_finish: "",
+
                 if (!this.editionData.description) {
-                    this.errors.push('A descrição é obrigatória.');
+                    // this.errors.push('A descrição é obrigatória.');
+                    this.errors.description = 'A descrição é obrigatória.';
                 }
                 if (!this.editionData.date_event) {
-                    this.errors.push('A data do evento é obrigatória.');
+                    // this.errors.push('A data do evento é obrigatória.');
+                    this.errors.date_event = 'A data do evento é obrigatória.';
                 }
                 if (!this.editionData.date_event_finish) {
-                    this.errors.push('A data do término do evento é obrigatória.');
+                    this.errors.date_event_finish = 'A data do término do evento é obrigatória.';
                 }
 
                 e.preventDefault();
