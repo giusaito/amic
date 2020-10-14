@@ -446,3 +446,8 @@
         },
     }
 </script>
+<style scoped>
+input[type="file"]{
+    display:block;
+}
+</style>

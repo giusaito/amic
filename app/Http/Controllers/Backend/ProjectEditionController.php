@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Project;
 use App\Http\Models\ProjectEdition;
+use App\Http\Models\ProjectCompany;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -25,5 +26,6 @@ class ProjectEditionController extends Controller
     }
     public function store(Request $request)
     {
+        dd($request->all());
     }
 }
