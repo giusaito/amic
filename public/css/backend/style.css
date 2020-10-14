@@ -11711,3 +11711,9 @@ cite {
   text-align: left;
 }
 
+.dropzone i {
+  font-size: 150px !important;
+  display: block !important;
+  color: #ccc !important;
+}
+
