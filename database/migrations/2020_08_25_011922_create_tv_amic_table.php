@@ -22,6 +22,7 @@ class CreateTvAmicTable extends Migration
             $table->text('iframe');
             $table->string('provider_name', 191)->nullable();
             $table->string('provider_url', 191)->nullable();
+            $table->timestamp('scheduling');
             $table->enum('status', ['PUBLISHED', 'DRAFT'])->default('PUBLISHED')->nullable();
             $table->bigInteger('author_id')->unsigned()->nullable();
             $table->timestamps();

@@ -52,7 +52,8 @@
             </div>
         </div>
     </div>
-    @yield('js')
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
     <script src="{{ URL::asset('js/backend/all.js') }}"></script>
+    @yield('js')
+
 </html>

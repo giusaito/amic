@@ -2,7 +2,7 @@
 @section('title', 'Adicionar vídeo')
 @section('content')
 
-<form action="{{ route('backend.tv-amic.store') }}" id="article-form" class=" form-bordered" method="post" enctype="multipart/form-data">
+<form action="{{ route('backend.tv-amic.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
 		<div class="col-md-9">
@@ -27,7 +27,7 @@
 		</div>
 		
 		<div class="col-md-3">
-			<button type="submit" class="btn btn-primary">Adicionar vídeo</button>
+			<button type="submit" id="submit-all" class="btn btn-primary">Adicionar vídeo</button>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
 					<h5>Status</h5>
@@ -50,7 +50,7 @@
 					<span>Capa do vídeo</span>
 				</div>
 				<div class="card-block">
-				<foto-component textUpload="Enviar Foto destaque" id="starring-photo"></foto-component>
+					FOTO
 				</div>
 			</div>
 		</div>

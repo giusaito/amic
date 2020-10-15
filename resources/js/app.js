@@ -40,6 +40,7 @@ Vue.component('projeto-edicoes-component', require('./components/Projetos/Projet
 Vue.component('edicoes-component', require('./components/Projetos/EdicoesComponent.vue').default);
 Vue.component('foto-component', require('./components/Global/FotoComponent.vue').default);
 Vue.component('foto-multiple-component', require('./components/Global/FotoMultipleComponent.vue').default);
+Vue.component('photo-component', require('./components/Global/PhotoComponent.vue').default);
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import FlashMessage from '@smartweb/vue-flash-message';

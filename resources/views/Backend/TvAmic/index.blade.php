@@ -7,7 +7,7 @@
         <a href="{{route('backend.tv-amic.create')}}" class="btn btn-primary right">Adicionar Vídeo</a>
     </div>
     <!-- <tv-amic-component home-route="{{ route('backend.index', [], false) }}" list-route="{{ route('backend.tv-amic.show', ['tv_amic' => 'show'], false) }}"></tv-amic-component>  -->
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
             <div class="card">
