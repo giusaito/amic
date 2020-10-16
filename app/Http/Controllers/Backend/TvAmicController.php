@@ -181,7 +181,10 @@ class TvAmicController extends Controller
         }
     }
 
-     public function search($search = false){
+     public function search(Request $request){
+        $category = $request->input('pesquisar');
+
+         dd($category);
         $tvAmic = TvAmic::where(function($query) use($search){
             $searchWildcard = '%' . $search . '%';
             $query->orWhere('title', 'LIKE', $searchWildcard);
