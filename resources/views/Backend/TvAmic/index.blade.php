@@ -7,7 +7,26 @@
         <a href="{{route('backend.tv-amic.create')}}" class="btn btn-primary right">Adicionar Vídeo</a>
     </div>
     <!-- <tv-amic-component home-route="{{ route('backend.index', [], false) }}" list-route="{{ route('backend.tv-amic.show', ['tv_amic' => 'show'], false) }}"></tv-amic-component>  -->
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card pt-2">
+                    <form class="{{route('backend.tv-amic.search')}}">
+                        <div class="form-row align-items-center">
+                            <div class="pl-5 col-10">
+                            <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Digite um termo para buscar">
+                            </div>
+                            <div class="col-1">
+                            <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
             <div class="card">

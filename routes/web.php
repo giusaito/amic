@@ -41,7 +41,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
         Route::resource('/', 'LinkController');
     });
 
-    Route::get('tv-amic/show/{search?}', 'TvAmicController@search')->name('search');
+    Route::get('tv-amic/show/{search?}', 'TvAmicController@search')->name('tv-amic.search');
         Route::resource('tv-amic', 'TvAmicController');
         Route::post('/tv-amic/process-video', 'TvAmicController@process_video');
 });

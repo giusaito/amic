@@ -44,14 +44,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['avatar_url'];
+
     public function projetos(){
     	return $this->hasMany('App\Models\Project');
-	}public
-     function tvAmics(){
+    }
+    
+    public function tvAmics(){
         return $this->hasMany('App\Models\TvAmic');
     }
+    
+    public function podcasts(){
+        return $this->hasMany('App\Models\Podcasts');
+    }
 
-    protected $appends = ['avatar_url'];
+    
     public function getAvatarUrlAttribute()
     {
         return Storage::url('/public/images/avatars/'.$this->id.'/'.$this->avatar);

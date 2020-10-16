@@ -18,6 +18,7 @@ class TvAmicController extends Controller
     public function index()
     {
         $tvAmic = TvAmic::with('user')->orderBy('id', 'desc')->paginate(20);
+
         return view('Backend.TvAmic.index', compact('tvAmic'));
     }
 
@@ -59,6 +60,7 @@ class TvAmicController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $file = $request->file('logo');
         if($file){
             $ext = $file->getClientOriginalExtension();
@@ -88,14 +90,21 @@ class TvAmicController extends Controller
         $tvamic->status = $request->status;
         $tvamic->author_id = \Auth::id();
 
-        if ($tvamic->save()) {
-            return response()->json($tvamic, 200);
-        } else {
-            return response()->json([
-                'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
-                'status_code' => 500
-            ], 500);
-        }
+        // if ($tvamic->save()) {
+        //     return response()->json($tvamic, 200);
+        // } else {
+        //     return response()->json([
+        //         'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
+        //         'status_code' => 500
+        //     ], 500);
+        // }
+
+        $notification = [
+            'message' => 'O vídeo ' . $tvamic->title . ' foi adicionado com sucesso',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('backend.tv-amic.index')->with($notification);
     }
 
     /**
