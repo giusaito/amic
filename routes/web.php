@@ -37,11 +37,19 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::get('projetos/edicoes/create/{id}', 'ProjectEditionController@create')->name('projetos.edicoes.create');
 
     // Início rota link útil
-    Route::group(['prefix' => 'links-uteis', 'as' => 'link.util.'], function () {
-        Route::resource('/', 'LinkController');
-    });
+        Route::get('site-util/pesquisar/', 'SiteUtilController@search')->name('site-util.search');
+        Route::resource('/site-util', 'SiteUtilController');
+    // Final Link útil
 
+    // Início Tv Amic
     Route::get('tv-amic/pesquisar/', 'TvAmicController@search')->name('tv-amic.search');
-        Route::resource('tv-amic', 'TvAmicController');
-        Route::post('/tv-amic/process-video', 'TvAmicController@process_video');
+    Route::resource('tv-amic', 'TvAmicController');
+    // Final Tv Amic
+
+    // Início Podcast
+    Route::get('podcast/pesquisar/', 'PodcastController@search')->name('podcast.search');
+    Route::resource('podcast', 'PodcastController');
+    //Final Podcast
+
+
 });

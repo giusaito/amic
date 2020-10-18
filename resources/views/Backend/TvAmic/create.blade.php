@@ -6,7 +6,10 @@
 	@csrf
 	<div class="row">
 		<div class="col-md-9">
-			<div class="card" style="padding:15px;">
+			<a class="btn btn-warning" href="{{route('backend.tv-amic.index')}}">	<i class="fa fa-arrow-left"></i> 
+					VOLTAR
+			</a>
+			<div class="card mt-3" style="padding:15px;">
 				<div class="form-group">
 					<label for="title">Título</label>
 					<input name="title" type="text" class="form-control" id="title" placeholder="Título do vídeo" required="required">
@@ -21,13 +24,30 @@
 				</div>
 				<div class="form-group">
 					<label for="iframe">Texto</label>
-					<textarea class="form-control" name="texto" required="required"></textarea>
+					<textarea class="form-control" name="text"></textarea>
 				</div>
 			</div>
 		</div>
 		
 		<div class="col-md-3">
-			<button type="submit" id="submit-all" class="btn btn-primary">Adicionar vídeo</button>
+			<button type="submit" id="submit-all" class="btn btn-primary">
+				<i class="fa fa-check"></i>
+					Adicionar
+			</button>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
+					<h5>Agendamento</h5>
+					<span>Defina a data de publicação</span>
+				</div>
+					<div class="card-block p-3">
+						<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+	                    <input type="text" class="form-control datetimepicker-input" name="published_at" data-target="#datetimepicker1">
+	                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+	                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+	                    </div>
+	                </div>
+				</div>
+			</div>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
 					<h5>Status</h5>
@@ -50,7 +70,7 @@
 					<span>Capa do vídeo</span>
 				</div>
 				<div class="card-block">
-					FOTO
+					oi
 				</div>
 			</div>
 		</div>
@@ -58,3 +78,5 @@
 </form>
 </section>
 @endsection
+
+@include('Backend.Includes.published_at')

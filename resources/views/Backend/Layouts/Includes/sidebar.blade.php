@@ -21,11 +21,14 @@
             <li class="{{ (request()->is('painel/projetos*')) ? 'active' : '' }}">
                 <a href="{{route('backend.projetos.index')}}"><i class="fa fa-list-alt"></i> <span class="nav-label">Projetos</span></a>
             </li>
-            <li class="{{ (request()->is('painel/links-uteis*')) ? 'active' : '' }}">
-                <a href="{{route('backend.link.util.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Links Úteis</span></a>
+            <li class="{{ (request()->is('painel/site-util*')) ? 'active' : '' }}">
+                <a href="{{route('backend.site-util.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Sites Úteis</span></a>
             </li>
             <li class="{{ (request()->is('painel/tv-amic*')) ? 'active' : '' }}">
                 <a href="{{route('backend.tv-amic.index')}}"><i class="fa fa-tv"></i> <span class="nav-label">TV amic</span></a>
+            </li>
+            <li class="{{ (request()->is('painel/podcast*')) ? 'active' : '' }}">
+                <a href="{{route('backend.podcast.index')}}"><i class="fa fa-play-circle"></i> <span class="nav-label">Podcast</span></a>
             </li>
             <li>
             </li>

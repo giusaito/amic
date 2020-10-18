@@ -57,6 +57,9 @@ class User extends Authenticatable
     public function podcasts(){
         return $this->hasMany('App\Models\Podcasts');
     }
+    public function siteUtils(){
+        return $this->hasMany('App\Models\SiteUtil');
+    }
 
     
     public function getAvatarUrlAttribute()

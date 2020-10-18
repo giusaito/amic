@@ -8,6 +8,8 @@ use App\Http\Models\TvAmic;
 use Embed\Embed;
 use Illuminate\Support\Facades\Storage;
 use Image;
+use DateTime;
+
 class TvAmicController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class TvAmicController extends Controller
      */
     public function index()
     {
-        $tvAmic = TvAmic::with('user')->orderBy('id', 'desc')->paginate(20);
+        $tvAmic = TvAmic::with('user')->orderBy('id', 'desc')->paginate(10);
 
         return view('Backend.TvAmic.index', compact('tvAmic'));
     }
@@ -27,25 +29,6 @@ class TvAmicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function process_video(Request $request){
-        $process = Embed::create($request->url_video);
-        $result = [
-           "url_video" => $request->url_video,
-           "title" => $process->title,
-           "description" => $process->description,
-           "image" => $process->image,
-           "iframe" => $process->code,
-           "width" => $process->width,
-           "height" => $process->height,
-           "provider_name" => $process->providerName,
-           "provider_url" => $process->providerUrl,
-           "license" => $process->license,
-           "status" => $process->status,
-           "author_id" => $process->author_id,
-        ];
-        return response()->json($result, 200);
-    }
 
     public function create()
     {
@@ -60,7 +43,7 @@ class TvAmicController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $file = $request->file('logo');
         if($file){
             $ext = $file->getClientOriginalExtension();
@@ -82,22 +65,23 @@ class TvAmicController extends Controller
         }
 
         $tvamic = new TvAmic();
+        if(!empty($request->published_at)){
+            $agendamento = DateTime::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
+        }else {
+            $agendamento = date('Y-m-d H:i:s');
+        }
+
         $tvamic->title = $request->title;
-        $tvamic->slug = \Str::slug($request->title);
+        $tvamic->slug = \Str::slug($request->name);
         $tvamic->description = $request->description;
+        $tvamic->image = $request->image;
         $tvamic->iframe = $request->iframe;
-        // $tvamic->image = $hashname;
+        $tvamic->content = $request->content;
+        $tvamic->published_at = $agendamento;
         $tvamic->status = $request->status;
         $tvamic->author_id = \Auth::id();
 
-        // if ($tvamic->save()) {
-        //     return response()->json($tvamic, 200);
-        // } else {
-        //     return response()->json([
-        //         'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
-        //         'status_code' => 500
-        //     ], 500);
-        // }
+        $tvamic->save();
 
         $notification = [
             'message' => 'O vídeo ' . $tvamic->title . ' foi adicionado com sucesso',
@@ -115,8 +99,7 @@ class TvAmicController extends Controller
      */
     public function show($id)
     {
-        $tvamic = TvAmic::with(['user'])->orderBy('created_at', 'desc')->paginate(20);
-        return response()->json($tvamic, 200);
+        
     }
 
     /**
@@ -141,22 +124,33 @@ class TvAmicController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
+
+        if(!empty($request->published_at)){
+            $agendamento = DateTime::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
+        }else {
+            $agendamento = date('Y-m-d H:i:s');
+        }
+
+
         $tvamic = TvAmic::find($id);
         $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->name);
         $tvamic->description = $request->description;
         $tvamic->image = $request->image;
         $tvamic->iframe = $request->iframe;
+        $tvamic->content = $request->content;
+        $tvamic->published_at = $agendamento;
         $tvamic->status = $request->status;
 
-        if ($tvamic->update()) {
-            return 'salvo';
-        } else {
-            return response()->json([
-                'message' => 'Ocorreu algum erro durante o processo! Por favor, tente novamente.',
-                'status_code' => 500
-            ], 500);
-        }
+        $tvamic->update();
+        
+        $notification = [
+            'message' => 'O vídeo ' . $tvamic->title . ' foi atualizado com sucesso',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('backend.tv-amic.index')->with($notification);
     }
 
     /**
@@ -167,28 +161,25 @@ class TvAmicController extends Controller
      */
     public function destroy(TvAmic $tvAmic)
     {
-        if($tvAmic->delete()) {
-            Storage::delete('public/images/tvamic/'.$tvAmic->image);
-            return response()->json([
-                'message' => 'O vídeo '.$tvAmic->title.' foi excluído com sucesso',
-                'status_code' => 200
-            ], 200);
-        }else {
-            return response()->json([
-                'message' => 'Houve um problema para excluir o vídeo '.$tvAmic->title.'. Por favor tente novamente.',
-                'status_code' => 500
-            ], 500);
-        }
+       $tvAmic->delete();
+       Storage::delete('public/images/tvamic/'.$tvAmic->image);
+
+        $notification = [
+            'message' => 'Vídeo deletado com sucesso',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('backend.tv-amic.index')->with($notification);
     }
 
-     public function search(Request $request){
-        $category = $request->input('pesquisar');
+    public function search(Request $request){
+        $search = $request->input('pesquisar');
 
-         dd($category);
         $tvAmic = TvAmic::where(function($query) use($search){
             $searchWildcard = '%' . $search . '%';
             $query->orWhere('title', 'LIKE', $searchWildcard);
-        })->orderBy('created_at', 'desc')->paginate(20);
-        return response()->json($tvAmic, 200);
+        })->orderBy('id', 'desc')->paginate(10);
+        return view('Backend.TvAmic.search', compact('tvAmic'));
+
     }
 }
