@@ -19,6 +19,10 @@ class CreateSiteUtilsTable extends Migration
             $table->string('slug', 191);
             $table->string('description', 191);
             $table->string('image', 191)->nullable();
+            $table->unsignedBigInteger('_lft');
+            $table->unsignedBigInteger('_rgt');
+            $table->unsignedBigInteger('parent_id');
+
             $table->timestamps();
         });
 

@@ -39,6 +39,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     // Início rota link útil
         Route::get('site-util/pesquisar/', 'SiteUtilController@search')->name('site-util.search');
         Route::resource('/site-util', 'SiteUtilController');
+        Route::resource('/categoria/site-util', 'CategorySiteUtilController');
     // Final Link útil
 
     // Início Tv Amic
