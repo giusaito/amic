@@ -1,7 +1,23 @@
 <?php
+/*
+ * Projeto: amic
+ * Arquivo: web.php
+ * ---------------------------------------------------------------------
+ * Autor: Leonardo Nascimento
+ * E-mail: oi@bewweb.com.br
+ * ---------------------------------------------------------------------
+ * Data da criação: 19/10/2020 9:02:37 pm
+ * Last Modified:  20/10/2020 12:01:00 am
+ * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2020 Bewweb
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
 
 use Illuminate\Support\Facades\Route;
-
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,11 +52,19 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::resource('projetos/edicoes', 'ProjectEditionController');
     Route::get('projetos/edicoes/create/{id}', 'ProjectEditionController@create')->name('projetos.edicoes.create');
 
+
     // Início rota link útil
         Route::get('site-util/pesquisar/', 'SiteUtilController@search')->name('site-util.search');
         Route::resource('/site-util', 'SiteUtilController');
-        Route::resource('/categoria/site-util', 'CategorySiteUtilController');
+        route::resource('categoria/site-util', 'CategorySiteUtilController')->names([
+            'index' => 'category.site.index',
+            'create' => 'category.site.create',
+            'update' => 'category.site.update',
+            'destroy' => 'category.site.destroy',
+        ]);
+
     // Final Link útil
+
 
     // Início Tv Amic
     Route::get('tv-amic/pesquisar/', 'TvAmicController@search')->name('tv-amic.search');

@@ -1,7 +1,22 @@
 <?php
+/*
+ * Projeto: amic
+ * Arquivo: TvAmicController.php
+ * ---------------------------------------------------------------------
+ * Autor: Leonardo Nascimento
+ * E-mail: oi@bewweb.com.br
+ * ---------------------------------------------------------------------
+ * Data da criação: 19/10/2020 9:02:37 pm
+ * Last Modified:  19/10/2020 11:54:40 pm
+ * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2020 Bewweb
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
 
-namespace App\Http\Controllers\Backend;
-
+namespace App\Http\Controllers\Backend; 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\TvAmic;
@@ -182,4 +197,5 @@ class TvAmicController extends Controller
         return view('Backend.TvAmic.search', compact('tvAmic'));
 
     }
+    
 }

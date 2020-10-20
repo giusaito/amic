@@ -21,6 +21,9 @@
             <li class="{{ (request()->is('painel/projetos*')) ? 'active' : '' }}">
                 <a href="{{route('backend.projetos.index')}}"><i class="fa fa-list-alt"></i> <span class="nav-label">Projetos</span></a>
             </li>
+            <li class="{{ (request()->is('painel/categoria/site-util*')) ? 'active' : '' }}">
+                <a href="{{route('backend.category.site.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Categoria Sites Úteis</span></a>
+            </li>
             <li class="{{ (request()->is('painel/site-util*')) ? 'active' : '' }}">
                 <a href="{{route('backend.site-util.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Sites Úteis</span></a>
             </li>
