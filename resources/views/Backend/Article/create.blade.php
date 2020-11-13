@@ -7,8 +7,8 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:02:26 am
- * Last Modified:  11/11/2020 2:43:46 pm
- * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * Last Modified:  12/11/2020 11:07:36 pm
+ * Modified By: Leonardo Nascimento
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
  * HISTORY:
@@ -145,8 +145,8 @@
 					<span>Capa do Podcast</span>
 				</div>
 				<div class="card-block p-3">
-					oi
-                    <input name="author_photo" type="text" class="form-control" id="author_photo" placeholder="Insira o nome do autor da foto">
+					<input name="author_photo" type="text" class="form-control" id="author_photo" placeholder="Insira o nome do autor da foto">
+					<input type="file" name="feature_image" class="dropify" data-max-file-size="1M" />
 				</div>
 			</div>
 		</div>
@@ -157,6 +157,8 @@
 
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
+
 <style>
 .form-control, .single-line {
     border-radius:5px;
@@ -187,8 +189,8 @@ input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-w
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-     <script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
-
+    <script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $(".editor").summernote({
@@ -229,6 +231,20 @@ input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-w
             codeviewIframeFilter: true
 
         });
+
+		$('.dropify').attr("data-default-file");
+			$('.dropify').dropify({
+				messages: {
+					default: 'Arraste e solte um arquivo aqui ou clique',
+					replace: 'Arraste e solte um arquivo ou clique para substituir',
+					remove:  'remover',
+					fileSize:   'Desculpe, o arquivo é muito grande'
+				}
+			});
+			var drEvent = $('#photoArtigo').dropify();
+			drEvent.on('dropify.beforeClear', function(event, element){
+				return confirm("Você tem certeza que deseja excluir a foto?");
+			});
     });
 </script>
 

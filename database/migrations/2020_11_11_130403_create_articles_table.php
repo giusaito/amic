@@ -7,8 +7,8 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:04:03 am
- * Last Modified:  11/11/2020 2:55:57 pm
- * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * Last Modified:  12/11/2020 10:41:00 pm
+ * Modified By: Leonardo Nascimento
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
  * HISTORY:
@@ -91,7 +91,7 @@ class CreateArticlesTable extends Migration
                     ->onDelete('cascade');
         });
 
-        DB::statement('ALTER TABLE articles ADD FULLTEXT fulltext_index (title, description, url)');
+        DB::statement('ALTER TABLE articles ADD FULLTEXT fulltext_index (title, description)');
 
     }
 

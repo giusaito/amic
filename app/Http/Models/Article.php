@@ -7,8 +7,8 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:00:46 am
- * Last Modified:  11/11/2020 3:08:40 pm
- * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * Last Modified:  12/11/2020 11:57:45 pm
+ * Modified By: Leonardo Nascimento
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
  * HISTORY:
@@ -26,6 +26,12 @@ class Article extends Model
 {
     protected $table = 'articles';
     protected $guarded = [''];
+
+    use FullTextSearch;
+    protected $searchable = [
+        'title',
+        'description'
+    ];
     
     public function user(){
         return $this->belongsTo('App\User','author_id','id');
