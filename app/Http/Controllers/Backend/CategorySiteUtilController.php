@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Models\CategorySiteUtil;
 
 class CategorySiteUtilController extends Controller
 {
@@ -14,7 +15,9 @@ class CategorySiteUtilController extends Controller
      */
     public function index()
     {
-        //
+        $categorySites = CategorySiteUtil::orderBy('id', 'desc')->paginate(10);
+        return view('Backend.SiteUtil.Category.index', compact('categorySites'));
+
     }
 
     /**

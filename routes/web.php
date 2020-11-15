@@ -56,7 +56,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     // Início rota link útil
         Route::get('site-util/pesquisar/', 'SiteUtilController@search')->name('site-util.search');
         Route::resource('/site-util', 'SiteUtilController');
-        route::resource('categoria/site-util', 'CategorySiteUtilController')->names([
+        route::resource('categoria-site-util', 'CategorySiteUtilController')->names([
             'index' => 'category.site.index',
             'create' => 'category.site.create',
             'update' => 'category.site.update',
