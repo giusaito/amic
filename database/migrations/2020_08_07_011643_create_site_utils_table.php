@@ -1,4 +1,20 @@
 <?php
+/*
+ * Projeto: amic
+ * Arquivo: 2020_08_07_011643_create_site_utils_table.php
+ * ---------------------------------------------------------------------
+ * Autor: Leonardo Nascimento
+ * E-mail: leonardo.nascimento21@gmail.com
+ * ---------------------------------------------------------------------
+ * Data da criação: 11/11/2020 9:29:59 am
+ * Last Modified:  11/11/2020 10:18:52 am
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2020 Leo
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +32,7 @@ class CreateSiteUtilsTable extends Migration
         Schema::create('category_site_utils', function (Blueprint $table) {
             $table->id();
             $table->string('title', 191);
-            $table->string('slug', 191);
+            $table->string('slug');
             $table->string('description', 191);
             $table->string('image', 191)->nullable();
             $table->unsignedBigInteger('_lft');
@@ -30,7 +46,7 @@ class CreateSiteUtilsTable extends Migration
         Schema::create('site_utils', function (Blueprint $table) {
             $table->id();
             $table->string('title', 191);
-            $table->string('slug', 191);
+            $table->string('slug');
             $table->string('description', 191);
             $table->string('image', 191)->nullable();
             $table->string('url', 191);

@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  20/10/2020 12:01:00 am
+ * Last Modified:  11/11/2020 10:27:33 am
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -64,6 +64,18 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
         ]);
 
     // Final Link útil
+    
+    // Início rota link útil
+        Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
+        Route::resource('/noticia', 'ArticleController');
+        route::resource('categoria-noticia', 'CategoryArticleController')->names([
+            'index' => 'category.site.index',
+            'create' => 'category.site.create',
+            'update' => 'category.site.update',
+            'destroy' => 'category.site.destroy',
+        ]);
+
+    // Final Link útil
 
 
     // Início Tv Amic
@@ -75,6 +87,16 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::get('podcast/pesquisar/', 'PodcastController@search')->name('podcast.search');
     Route::resource('podcast', 'PodcastController');
     //Final Podcast
+    
+    // Início eventos
+    Route::get('eventos/pesquisar/', 'EventController@search')->name('evento.search');
+    Route::resource('evento', 'EventController');
+    //Final eventos
+    
+    // Início partners
+    Route::get('patrocinador/pesquisar/', 'PartnerController@search')->name('patrocinador.search');
+    Route::resource('patrocinador', 'PartnerController');
+    //Final partners
 
 
 });

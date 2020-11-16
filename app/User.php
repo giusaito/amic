@@ -1,4 +1,24 @@
 <?php
+/*
+ * Projeto: amic
+ * Arquivo: User.php
+ * ---------------------------------------------------------------------
+ * Autor: Leonardo Nascimento
+ * E-mail: leonardo.nascimento21@gmail.com
+ * ---------------------------------------------------------------------
+ * Data da criação: 11/11/2020 9:29:59 am
+ * Last Modified:  11/11/2020 3:09:24 pm
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2020 Leo
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
+
+?>
+<?php
 
 namespace App;
 
@@ -59,6 +79,9 @@ class User extends Authenticatable
     }
     public function siteUtils(){
         return $this->hasMany('App\Models\SiteUtil');
+    }
+    public function article(){
+        return $this->hasMany('App\Models\Article');
     }
 
     

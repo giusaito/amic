@@ -1,4 +1,20 @@
 <?php
+/*
+ * Projeto: amic
+ * Arquivo: PodcastController.php
+ * ---------------------------------------------------------------------
+ * Autor: Leonardo Nascimento
+ * E-mail: leonardo.nascimento21@gmail.com
+ * ---------------------------------------------------------------------
+ * Data da criação: 11/11/2020 9:29:59 am
+ * Last Modified:  11/11/2020 10:34:03 am
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2020 Leo
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
 
 namespace App\Http\Controllers\Backend;
 
@@ -153,7 +169,7 @@ class PodcastController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Podcast $podcast)
     {
         $podcast->delete();
         Storage::delete('public/images/tvamic/'.$podcast->image);

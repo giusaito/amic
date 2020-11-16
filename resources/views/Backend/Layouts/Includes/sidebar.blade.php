@@ -1,3 +1,23 @@
+<?php
+/*
+ * Projeto: amic
+ * Arquivo: sidebar.blade.php
+ * ---------------------------------------------------------------------
+ * Autor: Leonardo Nascimento
+ * E-mail: leonardo.nascimento21@gmail.com
+ * ---------------------------------------------------------------------
+ * Data da criação: 11/11/2020 9:30:00 am
+ * Last Modified:  11/11/2020 10:28:06 am
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+ * ---------------------------------------------------------------------
+ * Copyright (c) 2020 Leo
+ * HISTORY:
+ * Date      	By	Comments
+ * ----------	---	---------------------------------------------------------
+ */
+
+
+?>
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
@@ -21,6 +41,9 @@
             <li class="{{ (request()->is('painel/projetos*')) ? 'active' : '' }}">
                 <a href="{{route('backend.projetos.index')}}"><i class="fa fa-list-alt"></i> <span class="nav-label">Projetos</span></a>
             </li>
+            <li class="{{ (request()->is('painel/noticia*')) ? 'active' : '' }}">
+                <a href="{{route('backend.noticia.index')}}"><i class="fa fa-list-alt"></i> <span class="nav-label">Notícias</span></a>
+            </li>
             <li class="{{ (request()->is('painel/categoria/site-util*')) ? 'active' : '' }}">
                 <a href="{{route('backend.category.site.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Categoria Sites Úteis</span></a>
             </li>
@@ -32,6 +55,12 @@
             </li>
             <li class="{{ (request()->is('painel/podcast*')) ? 'active' : '' }}">
                 <a href="{{route('backend.podcast.index')}}"><i class="fa fa-play-circle"></i> <span class="nav-label">Podcast</span></a>
+            </li>
+            <li class="{{ (request()->is('painel/evento*')) ? 'active' : '' }}">
+                <a href="{{route('backend.evento.index')}}"><i class="fa fa-calendar"></i> <span class="nav-label">Eventos</span></a>
+            </li>
+            <li class="{{ (request()->is('painel/patrocinador*')) ? 'active' : '' }}">
+                <a href="{{route('backend.patrocinador.index')}}"><i class="fa fa-money"></i> <span class="nav-label">Patrocinador</span></a>
             </li>
             <li>
             </li>
