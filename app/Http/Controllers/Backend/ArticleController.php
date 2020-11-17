@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:59:44 am
- * Last Modified:  13/11/2020 12:03:52 am
+ * Last Modified:  14/11/2020 3:19:20 pm
  * Modified By: Leonardo Nascimento
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -22,6 +22,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Article;
+use App\Http\Models\CategoryArticle;
 use DateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -46,7 +47,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('Backend.Article.create');
+        $editorias = CategoryArticle::all();
+        return view('Backend.Article.create', compact('editorias'));
     }
 
     /**

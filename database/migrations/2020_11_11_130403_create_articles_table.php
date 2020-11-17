@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:04:03 am
- * Last Modified:  12/11/2020 10:41:00 pm
+ * Last Modified:  14/11/2020 5:51:00 pm
  * Modified By: Leonardo Nascimento
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -76,13 +76,36 @@ class CreateArticlesTable extends Migration
         });
 
         Schema::create('category_article', function (Blueprint $table) {
-            $table->BigIncrements('id');
+            $table->id();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('article_id')->unsigned();
 
             $table->foreign('category_id')
                     ->references('id')
                     ->on('category_articles')
+                    ->onDelete('cascade');
+           
+           $table->foreign('article_id')
+                    ->references('id')
+                    ->on('articles')
+                    ->onDelete('cascade');
+        });
+
+        Schema::create('tag', function (Blueprint $table) {
+            $table->id();
+            $table->string('termo');
+            $table->string('slug');
+            $table->timestamps();
+        });
+
+        Schema::create('tag_article', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('tag_id')->nullable()->unsigned();
+            $table->bigInteger('article_id')->nullable()->unsigned();
+
+            $table->foreign('tag_id')
+                    ->references('id')
+                    ->on('tags')
                     ->onDelete('cascade');
            
            $table->foreign('article_id')
@@ -103,7 +126,9 @@ class CreateArticlesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('category_article');
+        Schema::dropIfExists('tag_article');
         Schema::dropIfExists('articles');
         Schema::dropIfExists('category_articles');
+        Schema::dropIfExists('tags');
     }
 }

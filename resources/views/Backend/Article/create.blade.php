@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:02:26 am
- * Last Modified:  12/11/2020 11:07:36 pm
+ * Last Modified:  14/11/2020 3:53:52 pm
  * Modified By: Leonardo Nascimento
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -115,6 +115,41 @@
 			</div>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
+					<h5>Editorias</h5>
+				</div>
+				<div class="card-block p-3">
+					@foreach($editorias as $editoria)
+							<div>
+								<div class="border-checkbox-group border-checkbox-group-primary">
+									<input class="border-checkbox" type="checkbox" id="{{$editoria->slug}}" name="editoria[]" value="{{$editoria->id}}" @if(is_array(old('editoria')) && in_array($editoria->id, old('editoria'))) checked @endif>
+									<label class="border-checkbox-label" for="{{$editoria->slug}}">{{$editoria->title}}</label>
+								</div>
+							</div>
+					@endforeach
+					@if($errors->first('editorias'))
+						<label for="feature" class="error">{{ $errors->first('editorias') }}</label>
+					@endif
+				</div>
+			</div>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
+					<h5>Tags</h5>
+				</div>
+				<div class="card-block p-3">
+					<select id="tag_list" name="tags[]" class="form-control" multiple>
+                      @if(Session::getOldInput('tags'))
+                        @foreach(Session::getOldInput('tags') as $tagOld)
+                          <option val="{{$tagOld}}" selected>{{$tagOld}}</option>
+                        @endforeach
+                      @endif
+                    </select>
+					@if($errors->first('tags'))
+						<label for="tags" class="error">{{ $errors->first('tags') }}</label>
+					@endif
+				</div>
+			</div>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
 					<h5>Destaque</h5>
 					<span>Defina se a publicação será fixada na primeira posição do site</span>
 				</div>
@@ -158,7 +193,7 @@
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
 <style>
 .form-control, .single-line {
     border-radius:5px;
@@ -184,13 +219,17 @@ ul.tagit input[type="text"] {
 
 input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-wrapper {
   text-transform: uppercase;
-}</style>
+}
+
+</style>
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/pt-BR.js" integrity="sha256-/pqU7mByO80szYr1JmBQCoGGTtAgj2viXKUnyEK7I5k=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $(".editor").summernote({
@@ -244,6 +283,34 @@ input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-w
 			var drEvent = $('#photoArtigo').dropify();
 			drEvent.on('dropify.beforeClear', function(event, element){
 				return confirm("Você tem certeza que deseja excluir a foto?");
+			});
+			$('#tag_list').select2({
+			    placeholder: "Comece a digitar...",
+			    language: 'pt-BR',
+			    minimumInputLength: 3,
+			    tags: true,
+			    tokenSeparators: ['/',',',';',' '],
+
+			    ajax: {
+			        url: '#',
+			        dataType: 'json',
+			        data: function (params) {
+			            return {
+			                query: $.trim(params.term)
+			            };
+			        },
+			        processResults: function (data) {
+			            return {
+			              results:  $.map(data, function (item) {
+			                  return {
+			                    text: item.text,
+			                    id: item.text
+			                  }
+			              })
+			            };
+			        },
+			        cache: true
+			    }
 			});
     });
 </script>
