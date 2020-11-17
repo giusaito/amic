@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Models\Phone;
 
 class PhoneController extends Controller
 {
@@ -14,7 +15,7 @@ class PhoneController extends Controller
      */
     public function index()
     {
-        $records = Slide::orderBy('id', 'desc')->paginate(10);
+        $records = Phone::orderBy('id', 'desc')->paginate(10);
         return view('Backend.Phone.index', compact('records'));
     }
 
