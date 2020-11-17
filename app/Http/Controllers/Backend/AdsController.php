@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Models\Phone;
+use App\Http\Models\Ads;
+use Illuminate\Support\Facades\Auth;
 
-class PhoneController extends Controller
+class AdsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class PhoneController extends Controller
      */
     public function index()
     {
-        $records = Phone::orderBy('id', 'desc')->paginate(10);
-        return view('Backend.Phone.index', compact('records'));
+        $records = Ads::orderBy('id', 'desc')->paginate(10);
+        return view('Backend.Ads.index', compact('records'));
     }
 
     /**
@@ -26,7 +27,7 @@ class PhoneController extends Controller
      */
     public function create()
     {
-        return view('Backend.Phone.create');
+        return view('Backend.Ads.create');
     }
 
     /**
@@ -37,11 +38,12 @@ class PhoneController extends Controller
      */
     public function store(Request $request)
     {
-        $record =   new Phone();
-        $record->name = $request->name;
-        $record->phone = $request->phone;
-        $record->url = $request->url;
-        $record->photo = $request->photo;
+        $record =   new Ads();
+        $record->title = $request->title;
+        $record->code = $request->code;
+        $record->position = $request->position;
+        $record->page = $request->page;
+        $record->created = Auth::user()->name;
 
         $record->save();
 
@@ -50,7 +52,7 @@ class PhoneController extends Controller
             'alert-type' => 'success'
         ];
 
-        return redirect()->route('backend.telefone.index')->with($notification);
+        return redirect()->route('backend.publicidade.index')->with($notification);
     }
 
     /**
@@ -72,8 +74,8 @@ class PhoneController extends Controller
      */
     public function edit($id)
     {
-        $record = Phone::find($id);
-        return view('Backend.Phone.edit', compact('record'));
+        $record = Ads::find($id);
+        return view('Backend.Ads.edit', compact('record'));
     }
 
     /**
@@ -85,20 +87,21 @@ class PhoneController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $record =   Phone::find($id);
-        $record->name = $request->name;
-        $record->phone = $request->phone;
-        $record->url = $request->url;
-        $record->photo = $request->photo;
+        $record =   Ads::find($id);
+        $record->title = $request->title;
+        $record->code = $request->code;
+        $record->position = $request->position;
+        $record->page = $request->page;
+        $record->last_updated = Auth::user()->name;
 
         $record->update();
 
         $notification = [
-            'message' =>  $record->title . ' atualizado com sucesso',
+            'message' =>  $record->name . ' atualizado com sucesso',
             'alert-type' => 'success'
         ];
 
-        return redirect()->route('backend.telefone.index')->with($notification);
+        return redirect()->route('backend.publicidade.index')->with($notification);
     }
 
     /**
@@ -109,21 +112,21 @@ class PhoneController extends Controller
      */
     public function destroy($id)
     {
-        Phone::find($id)->delete();
+        Ads::find($id)->delete();
         $notification = [
-            'message' => 'Telefone deletado com sucesso',
+            'message' => 'Publicidade deletado com sucesso',
             'alert-type' => 'success'
         ];
 
-        return redirect()->route('backend.telefone.index')->with($notification);
+        return redirect()->route('backend.publicidade.index')->with($notification);
     }
+
     public function search(Request $request){
         $search = $request->input('pesquisar');
-
-        $records = Phone::where(function($query) use($search){
+        $records = Ads::where(function($query) use($search){
             $searchWildcard = '%' . $search . '%';
-            $query->orWhere('name', 'LIKE', $searchWildcard);
+            $query->orWhere('title', 'LIKE', $searchWildcard);
         })->orderBy('id', 'desc')->paginate(10);
-        return view('Backend.Phone.search', compact('records'));
+        return view('Backend.Ads.search', compact('records'));
     }
 }

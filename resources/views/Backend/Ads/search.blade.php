@@ -1,17 +1,17 @@
 @extends('Backend.Layouts.layout')
-@section('title', 'Telefones úteis Amic')
+@section('title', 'Publicidade Amic')
 @section('content')
 
 <section id="RecordAmic">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>Telefones úteis AMIC</h2>
+            <h2>Publicidade AMIC</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="/painel">Painel</a>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Telefones úteis Amic</strong>
+                    <strong>Publicidade Amic</strong>
                 </li>
             </ol>
         </div>  
@@ -21,16 +21,16 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="ibox-title">
-                        <h5>Lista de telefones úteis cadastrados</h5>
+                        <h5>Lista de Publicidade cadastrados</h5>
                         <div class="ibox-tools">
-                            <a href="{{route('backend.telefone.create')}}/" class="btn btn-primary btn-sm right">
+                            <a href="{{route('backend.publicidade.create')}}/" class="btn btn-primary btn-sm right">
                                 <i class="fa fa-plus"></i> 
                                 Adicionar
                             </a>
                         </div>
                     </div>
                     <hr>
-                    <form action="{{route('backend.telefone.search')}}" method="GET">
+                    <form action="{{route('backend.publicidade.search')}}" method="GET">
                        <div class="col-12">
                            <div class="input-group">
                                 <input type="text" name="pesquisar" class="form-control mb-2" placeholder="Digite um termo para buscar" required="required">
@@ -45,28 +45,29 @@
                     </form> 
                     <table class="table">
                         <thead>
+                            <thead>
                             <tr>
-                            <th scope="col">Foto</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Telefone</th>
-                            <th scope="col">Link</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Posição</th>
+                            <th scope="col">Página</th>
                             <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($records as $record)
                                 <tr>
-                                    <th scope="row">{{$record->photo}}</th>
-                                    <th scope="row">{{$record->name}}</th>
-                                    <th scope="row">{{$record->phone}}</th>
-                                    <th scope="row"><a href="{{$record->url}}" target="_blank">{{$record->url}}</th>
+                                    <th scope="row">{{$record->title}}</th>
+                                    <th scope="row">{{$record->position}}</th>
+                                    <th scope="row">{{$record->page}}</th>
                                     {{-- <th scope="row">{{ Str::limit($record->description, 50) }}</th> --}}
                                     <th scope="row">
-                                        <a href="{{route('backend.telefone.edit', ['telefone' => $record->id])}}" class="btn btn-warning btn-sm">
+                                        <a href="{{route('backend.publicidade.edit', ['publicidade' => $record->id])}}" class="btn btn-warning btn-sm">
                                             <i class="fa fa-pencil"></i> 
                                             Editar
                                         </a>
-                                        <form  method="POST" action="{{route('backend.telefone.destroy', ['telefone' => $record->id])}}" style="display:inline-block">
+                                        <form  method="POST" action="{{route('backend.publicidade.destroy', ['publicidade' => $record->id])}}" style="display:inline-block">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <div class="form-group">

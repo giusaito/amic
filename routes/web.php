@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  16/11/2020 4:22:15 pm
+ * Last Modified:  17/11/2020 5:50:26 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -96,6 +96,11 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     // Início partners
     Route::get('patrocinador/pesquisar/', 'PartnerController@search')->name('patrocinador.search');
     Route::resource('patrocinador', 'PartnerController');
+    //Final partners
+    
+    // Início partners
+    Route::get('publicidade/pesquisar/', 'AdsController@search')->name('publicidade.search');
+    Route::resource('publicidade', 'AdsController');
     //Final partners
     
     // Início informativo
