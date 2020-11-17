@@ -38,4 +38,15 @@
 		locale: 'pt-br'
 	});
 </script>
+
+<script type="text/javascript">
+	$('#start_date').datetimepicker({
+		locale: 'pt-br'
+	});
+</script>
+<script type="text/javascript">
+	$('#finish_date').datetimepicker({
+		locale: 'pt-br'
+	});
+</script>
 @endsection

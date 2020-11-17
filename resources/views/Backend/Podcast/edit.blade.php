@@ -42,7 +42,7 @@
 				</div>
 					<div class="card-block p-3">
 						<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-	                    <input type="text" class="form-control datetimepicker-input" name="published_at" data-target="#datetimepicker1"/ value="{{date("d/m/Y H:i", strtotime($podcast->published_at))}}">
+	                    <input type="text" class="form-control datetimepicker-input" name="published_at" data-target="#datetimepicker1" value="{{date("d/m/Y H:i", strtotime($podcast->published_at))}}">
 	                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
 	                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 	                    </div>

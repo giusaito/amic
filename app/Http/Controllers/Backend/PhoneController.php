@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Models\CategorySiteUtil;
 
-class CategorySiteUtilController extends Controller
+class PhoneController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class CategorySiteUtilController extends Controller
      */
     public function index()
     {
-        $categorySites = CategorySiteUtil::orderBy('id', 'desc')->paginate(10);
-        return view('Backend.SiteUtil.Category.index', compact('categorySites'));
-
+        $records = Slide::orderBy('id', 'desc')->paginate(10);
+        return view('Backend.Phone.index', compact('records'));
     }
 
     /**
@@ -27,7 +25,7 @@ class CategorySiteUtilController extends Controller
      */
     public function create()
     {
-        //
+        return view('Backend.Phone.create');
     }
 
     /**
@@ -83,6 +81,21 @@ class CategorySiteUtilController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Phone::find($id)->delete();
+        $notification = [
+            'message' => 'Telefone deletado com sucesso',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('backend.telefone.index')->with($notification);
+    }
+    public function search(Request $request){
+        $search = $request->input('pesquisar');
+
+        $records = Phone::where(function($query) use($search){
+            $searchWildcard = '%' . $search . '%';
+            $query->orWhere('title', 'LIKE', $searchWildcard);
+        })->orderBy('id', 'desc')->paginate(10);
+        return view('Backend.Phone.search', compact('records'));
     }
 }

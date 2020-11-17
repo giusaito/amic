@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  11/11/2020 10:27:33 am
+ * Last Modified:  16/11/2020 4:22:15 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -87,6 +87,31 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::get('podcast/pesquisar/', 'PodcastController@search')->name('podcast.search');
     Route::resource('podcast', 'PodcastController');
     //Final Podcast
+    
+    // Início eventos
+    Route::get('eventos/pesquisar/', 'EventController@search')->name('evento.search');
+    Route::resource('evento', 'EventController');
+    //Final eventos
+    
+    // Início partners
+    Route::get('patrocinador/pesquisar/', 'PartnerController@search')->name('patrocinador.search');
+    Route::resource('patrocinador', 'PartnerController');
+    //Final partners
+    
+    // Início informativo
+    Route::get('informativo/pesquisar/', 'InformativeController@search')->name('informativo.search');
+    Route::resource('informativo', 'InformativeController');
+    //Final informativo
+    
+    // Início slide
+    Route::get('slide/pesquisar/', 'SlideController@search')->name('slide.search');
+    Route::resource('slide', 'SlideController');
+    //Final slide
+    
+    // Início phone
+    Route::get('telefone/pesquisar/', 'phoneController@search')->name('telefone.search');
+    Route::resource('telefone', 'phoneController');
+    //Final phone
 
 
 });
