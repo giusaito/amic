@@ -19,6 +19,7 @@ class CreatePartnersTable extends Migration
             $table->string('slug');
             $table->string('description')->nullable();
             $table->string('link')->nullable();
+            $table->string('path')->nullable();
             $table->string('image')->nullable();
             $table->enum('type', ['PATROCINADOR', 'PARCEIRO', 'AMBOS'])->nullable();
             $table->timestamps();

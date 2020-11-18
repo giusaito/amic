@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:30:00 am
- * Last Modified:  11/11/2020 2:34:20 pm
+ * Last Modified:  18/11/2020 3:32:27 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-@if(Route::currentRouteName() != "backend.noticia.create")
+@if(request()->is('painel/projetos*'))
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 @endif
     <script src="{{ URL::asset('js/backend/all.js') }}"></script>

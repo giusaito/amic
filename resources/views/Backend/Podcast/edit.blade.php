@@ -25,7 +25,8 @@
 				</div>
 				<div class="form-group">
 					<label for="iframe">Texto</label>
-					<textarea class="form-control" name="content">{{$podcast->text}}</textarea>
+					<textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">{{old('content', $podcast->content)}}</textarea>
+                        {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
 				</div>
 			</div>
 		</div>
@@ -71,13 +72,85 @@
 					<span>Capa do vídeo</span>
 				</div>
 				<div class="card-block">
-				<foto-component textUpload="Enviar Foto destaque" id="starring-photo"></foto-component>
+					<input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" />
 				</div>
 			</div>
 		</div>
 	</div>
 </form>
 </section>
+@endsection
+
+@section('css-include')
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
+@endsection
+
+
+
+@section('js-include')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
+
+
+<script>
+$(document).ready(function() {
+	$(".editor").summernote({
+		height:$(".editor").attr("data-height"),
+		fontNamesIgnoreCheck: ['Advent Pro', 'Anton', 'Open Sans', 'Oswald','PT Serif','Roboto'],
+		lang: 'pt-BR',
+		toolbar: [
+			['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+			['font', ['strikethrough', 'superscript', 'subscript']],
+			['color', ['color']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['table', ['table']],
+			['insert', ['link', 'picture', 'video', 'hr']],
+			['view', ['fullscreen', 'help']]
+		],
+		opover: {
+			image: [
+				['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+				['float', ['floatLeft', 'floatRight', 'floatNone']],
+				['remove', ['removeMedia']]
+			],
+			link: [
+				['link', ['linkDialogShow', 'unlink']]
+			],
+			table: [
+				['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+				['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+			],
+			air: [
+				['color', ['color']],
+				['font', ['bold', 'underline', 'clear']],
+				['para', ['ul', 'paragraph']],
+				['table', ['table']],
+				['insert', ['link', 'picture']]
+			]
+		},
+		codeviewFilter: false,
+		codeviewIframeFilter: true
+
+	});
+});
+
+$('.dropify').attr("data-default-file");
+	$('.dropify').dropify({
+		messages: {
+			default: 'Arraste e solte um arquivo aqui ou clique',
+			replace: 'Arraste e solte um arquivo ou clique para substituir',
+			remove:  'remover',
+			fileSize:   'Desculpe, o arquivo é muito grande'
+		}
+	});
+	var drEvent = $('#photoArtigo').dropify();
+	drEvent.on('dropify.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir a foto?");
+	});
+</script>
+
 @endsection
 
 @include('Backend.Includes.published_at')

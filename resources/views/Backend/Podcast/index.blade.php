@@ -58,8 +58,8 @@
                             @foreach($podcasts as $podcast)
                                 <tr>
                                     <th scope="row">
-                                        <a href="{{$podcast->image}}" target="_blank">
-                                            <img src="{{$podcast->image}}" class="img-fluid" width="80">
+                                        <a href="{{asset('storage')}}/{{$podcast->path}}150x150-{{$podcast->image}}" target="_blank">
+                                            <img src="{{asset('storage')}}/{{$podcast->path}}150x150-{{$podcast->image}}" class="img-fluid" width="80">
                                         </a>
                                     </th>
                                     @if($podcast->status == "PUBLISHED")

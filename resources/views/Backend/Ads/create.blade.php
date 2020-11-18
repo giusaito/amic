@@ -16,7 +16,7 @@
 				</div>
 				<div class="form-group">
 					<label for="url">Código</label>
-					<textarea name="code" placeholder="Cole o código gerado no DFP" class="form-control"></textarea>
+					<textarea name="code" placeholder="Cole o código gerado no DFP" class="form-control" rows="6" ></textarea>
 				</div>
 			</div>
 		</div>

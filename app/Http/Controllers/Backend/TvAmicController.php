@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  19/10/2020 11:54:40 pm
+ * Last Modified:  18/11/2020 5:11:20 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -32,6 +32,14 @@ class TvAmicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $image_ext = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'];
+
+    public function __construct()
+    {
+      $this->storage = Storage::disk('public');
+    }
+
     public function index()
     {
         $tvAmic = TvAmic::with('user')->orderBy('id', 'desc')->paginate(10);
@@ -58,8 +66,7 @@ class TvAmicController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        $file = $request->file('logo');
+        $file = $request->file('feature_image');
         if($file){
             $ext = $file->getClientOriginalExtension();
 
@@ -70,11 +77,11 @@ class TvAmicController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
-            $path = "tv-amic/";
+            $path = "tvamic/" . date('Y/m/d/');
 
-            $this->storage->put($path. 'original/' . $file->hashName(),  $original);
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
-            $this->storage->put($path. '150x150/-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
 
            $hashname = $file->hashName();
         }
@@ -87,9 +94,10 @@ class TvAmicController extends Controller
         }
 
         $tvamic->title = $request->title;
-        $tvamic->slug = \Str::slug($request->name);
+        $tvamic->slug = \Str::slug($request->title);
         $tvamic->description = $request->description;
-        $tvamic->image = $request->image;
+        $tvamic->path = $path;
+        $tvamic->image = $hashname;
         $tvamic->iframe = $request->iframe;
         $tvamic->content = $request->content;
         $tvamic->published_at = $agendamento;
@@ -176,8 +184,9 @@ class TvAmicController extends Controller
      */
     public function destroy(TvAmic $tvAmic)
     {
+       $this->storage->delete($tvAmic->path . 'original-' . $tvAmic->image);
+       $this->storage->delete($tvAmic->path . '150x150-' . $tvAmic->image);
        $tvAmic->delete();
-       Storage::delete('public/images/tvamic/'.$tvAmic->image);
 
         $notification = [
             'message' => 'Vídeo deletado com sucesso',

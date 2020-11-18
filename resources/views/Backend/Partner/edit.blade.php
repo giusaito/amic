@@ -48,11 +48,45 @@
 					@endif
 				</div>
 			</div>
+			<div class="card">
+				<div class="card-header">
+					<h5>Foto</h5>
+					<span>Logo do parceiro ou patrocinador</span>
+				</div>
+				<div class="card-block">
+					<input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" />
+				</div>
+			</div>
 		</div>
 	</div>
 </form>
 </form>
 </section>
+@endsection
+
+@section('css-include')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
+@endsection
+
+@section('js-include')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
+
+
+<script>
+$('.dropify').attr("data-default-file");
+	$('.dropify').dropify({
+		messages: {
+			default: 'Arraste e solte um arquivo aqui ou clique',
+			replace: 'Arraste e solte um arquivo ou clique para substituir',
+			remove:  'remover',
+			fileSize:   'Desculpe, o arquivo é muito grande'
+		}
+	});
+	var drEvent = $('#photoArtigo').dropify();
+	drEvent.on('dropify.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir a foto?");
+	});
+</script>
 @endsection
 
 @include('Backend.Includes.published_at')

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Partner;
-
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class PartnerController extends Controller
 {
@@ -14,6 +15,14 @@ class PartnerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $image_ext = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'];
+
+    public function __construct()
+    {
+      $this->storage = Storage::disk('public');
+    }
+
     public function index()
     {
         $partners = Partner::orderBy('id', 'desc')->paginate(10);
@@ -38,11 +47,33 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('feature_image');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
+
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "partner/" . date('Y/m/d/');
+
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+
         $partner = new Partner();
         $partner->title = $request->title;
         $partner->slug = \Str::slug($request->title);
         $partner->description = $request->description;
         $partner->link = $request->link;
+        $partner->path = $path;
+        $partner->image = $hashname;
         $partner->type = $request->type;
 
         $partner->save();
@@ -110,9 +141,12 @@ class PartnerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Partner $parceiro)
+    public function destroy(Partner $patrocinador)
     {
-        $parceiro->delete();
+        $this->storage->delete($patrocinador->path . 'original-' . $patrocinador->image);
+        $this->storage->delete($patrocinador->path . '150x150-' . $patrocinador->image);
+        $patrocinador->delete();
+
         $notification = [
             'message' => 'Patrocinador deletado com sucesso',
             'alert-type' => 'success'

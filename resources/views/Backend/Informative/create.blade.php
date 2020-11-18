@@ -45,13 +45,40 @@
 					<span>Faça upload do informativo em PDF, WORLD, OU EXCEL</span>
 				</div>
 					<div class="card-block p-3">
-						Informativo
+						<input type="file" name="archive" class="dropify" data-allowed-file-extensions="pdf xlsx xltx excel word"  data-max-file-size="1M" />
 					</div>
 				</div>
 		</div>
 	</div>
 </form>
 </section>
+@endsection
+
+
+@section('css-include')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
+@endsection
+
+@section('js-include')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
+
+
+<script>
+$('.dropify').attr("data-default-file");
+	$('.dropify').dropify({
+		messages: {
+			default: 'Arraste e solte um arquivo aqui ou clique',
+			replace: 'Arraste e solte um arquivo ou clique para substituir',
+			remove:  'remover',
+			fileSize:   'Desculpe, o arquivo é muito grande'
+		}
+	});
+	var drEvent = $('#photoArtigo').dropify();
+	drEvent.on('dropify.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir a foto?");
+	});
+</script>
+
 @endsection
 
 @include('Backend.Includes.published_at')

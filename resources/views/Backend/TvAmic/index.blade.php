@@ -58,8 +58,8 @@
                             @foreach($tvAmic as $tv)
                                 <tr>
                                     <th scope="row">
-                                        <a href="{{$tv->image}}" target="_blank">
-                                            <img src="{{$tv->image}}" class="img-fluid" width="80">
+                                        <a href="{{asset('storage')}}/{{$tv->path}}150x150-{{$tv->image}}" target="_blank">
+                                            <img src="{{asset('storage')}}/{{$tv->path}}150x150-{{$tv->image}}" class="img-fluid" width="80">
                                         </a>
                                     </th>
                                     @if($tv->status == "PUBLISHED")

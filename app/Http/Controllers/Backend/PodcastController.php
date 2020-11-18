@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:29:59 am
- * Last Modified:  11/11/2020 10:34:03 am
+ * Last Modified:  18/11/2020 4:38:53 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -21,6 +21,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Podcast;
+use Illuminate\Support\Facades\Storage;
 use Image;
 use DateTime;
 
@@ -31,6 +32,13 @@ class PodcastController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $image_ext = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'];
+
+    public function __construct()
+    {
+      $this->storage = Storage::disk('public');
+    }
     public function index()
     {
         $podcasts = Podcast::with('user')->orderBy('id', 'desc')->paginate(10);
@@ -56,8 +64,7 @@ class PodcastController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $file = $request->file('thumbnail');
+        $file = $request->file('feature_image');
         if($file){
             $ext = $file->getClientOriginalExtension();
 
@@ -68,11 +75,11 @@ class PodcastController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
-            $path = "podcast/";
+            $path = "podcast/" . date('Y/m/d/');
 
-            $this->storage->put($path. 'original/' . $file->hashName(),  $original);
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
-            $this->storage->put($path. '150x150/-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
 
            $hashname = $file->hashName();
         }
@@ -85,9 +92,10 @@ class PodcastController extends Controller
         }
 
         $podcast->title = $request->title;
-        $podcast->slug = \Str::slug($request->name);
+        $podcast->slug = \Str::slug($request->title);
         $podcast->description = $request->description;
-        $podcast->image = $request->image;
+        $podcast->path = $path;
+        $podcast->image = $hashname;
         $podcast->iframe = $request->iframe;
         $podcast->content = $request->content;
         $podcast->published_at = $agendamento;
@@ -142,16 +150,37 @@ class PodcastController extends Controller
             $agendamento = date('Y-m-d H:i:s');
         }
 
+        $file = $request->file('feature_image');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
 
-        $podcast = Podcast::find($id);
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "podcast/" . date('Y/m/d/');
+
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+
+
         $podcast->title = $request->title;
-        $podcast->slug = \Str::slug($request->name);
+        $podcast->slug = \Str::slug($request->title);
         $podcast->description = $request->description;
-        $podcast->image = $request->image;
+        $podcast->path = $path;
+        $podcast->image = $hashname;
         $podcast->iframe = $request->iframe;
         $podcast->content = $request->content;
         $podcast->published_at = $agendamento;
         $podcast->status = $request->status;
+
 
         $podcast->update();
         
@@ -171,9 +200,11 @@ class PodcastController extends Controller
      */
     public function destroy(Podcast $podcast)
     {
+        $this->storage->delete($podcast->path . 'original-' . $podcast->image);
+        $this->storage->delete($podcast->path . '150x150-' . $podcast->image);
+        
         $podcast->delete();
-        Storage::delete('public/images/tvamic/'.$podcast->image);
-
+        
         $notification = [
             'message' => 'Podcast deletado com sucesso',
             'alert-type' => 'success'

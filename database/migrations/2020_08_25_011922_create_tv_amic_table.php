@@ -18,6 +18,7 @@ class CreateTvAmicTable extends Migration
             $table->string('title', 90);
             $table->string('slug', 191);
             $table->string('description', 191);
+            $table->string('hash', 191)->nullable();
             $table->string('image', 191)->nullable();
             $table->text('iframe');
             $table->text('content')->nullable();;
