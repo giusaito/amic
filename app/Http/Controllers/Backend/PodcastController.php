@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:29:59 am
- * Last Modified:  18/11/2020 4:38:53 pm
+ * Last Modified:  19/11/2020 10:41:11 am
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -94,8 +94,8 @@ class PodcastController extends Controller
         $podcast->title = $request->title;
         $podcast->slug = \Str::slug($request->title);
         $podcast->description = $request->description;
-        $podcast->path = $path;
-        $podcast->image = $hashname;
+        $podcast->path = isset($path) ? $path : NULL;
+        $podcast->image = isset($hashname) ? $hashname : NULL;
         $podcast->iframe = $request->iframe;
         $podcast->content = $request->content;
         $podcast->published_at = $agendamento;
@@ -144,6 +144,8 @@ class PodcastController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $podcast = Podcast::find($id);
+
         if(!empty($request->published_at)){
             $agendamento = DateTime::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
         }else {
@@ -169,19 +171,35 @@ class PodcastController extends Controller
 
            $hashname = $file->hashName();
         }
-
+        
+        $isPhoto = (int)$request->isPhoto;
+        /* 1 A foto não foi alterada
+           2 Foto deletada
+           3 Foto alterada 
+        */
+        if($isPhoto == 1) {
+            $path = $podcast->path;
+            $hashname = $podcast->image;
+            
+        }else if($isPhoto == 2){
+            $path = NULL;
+            $hashname = NULL;
+        }
+        else if($isPhoto == 3){
+            $path = $path;
+            $hashname = $hashname;
+        }
 
         $podcast->title = $request->title;
         $podcast->slug = \Str::slug($request->title);
         $podcast->description = $request->description;
-        $podcast->path = $path;
-        $podcast->image = $hashname;
+        $podcast->path = isset($path) ? $path : NULL;
+        $podcast->image = isset($hashname) ? $hashname : NULL;
         $podcast->iframe = $request->iframe;
         $podcast->content = $request->content;
         $podcast->published_at = $agendamento;
         $podcast->status = $request->status;
-
-
+        
         $podcast->update();
         
         $notification = [

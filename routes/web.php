@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  17/11/2020 5:50:26 pm
+ * Last Modified:  19/11/2020 5:19:11 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -117,6 +117,11 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::get('telefone/pesquisar/', 'phoneController@search')->name('telefone.search');
     Route::resource('telefone', 'phoneController');
     //Final phone
+    
+    // Início team
+    Route::get('equipe/pesquisar/', 'teamController@search')->name('equipe.search');
+    Route::resource('equipe', 'teamController');
+    //Final team
 
 
 });

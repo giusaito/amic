@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Models\Slide;
+use App\Http\Models\Team;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
-class SlideController extends Controller
+
+class TeamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,8 +26,8 @@ class SlideController extends Controller
 
     public function index()
     {
-        $records = Slide::orderBy('id', 'desc')->paginate(10);
-        return view('Backend.Slide.index', compact('records'));
+        $records = Team::orderBy('id', 'desc')->paginate(10);
+        return view('Backend.Team.index', compact('records'));
     }
 
     /**
@@ -36,7 +37,7 @@ class SlideController extends Controller
      */
     public function create()
     {
-        return view('Backend.Slide.create');
+        return view('Backend.Team.create');
     }
 
     /**
@@ -58,7 +59,7 @@ class SlideController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
-            $path = "slide/" . date('Y/m/d/');
+            $path = "team/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
@@ -67,14 +68,15 @@ class SlideController extends Controller
            $hashname = $file->hashName();
         }
         
-        $record =   new Slide();
-        $record->title = $request->title;
+        $record =  new Team();
+        $record->name = $request->name;
         $record->description = $request->description;
+        $record->office = $request->office;
+        $record->whatsapp = $request->whatsapp;
+        $record->email = $request->email;
         $record->path = isset($path) ? $path : NULL;
         $record->image = isset($hashname) ? $hashname : NULL;
-        $record->btn_txt = $request->btn_txt;
-        $record->url = $request->url;
-
+        $record->director = $request->director;
 
         $record->save();
 
@@ -83,7 +85,7 @@ class SlideController extends Controller
             'alert-type' => 'success'
         ];
 
-        return redirect()->route('backend.slide.index')->with($notification);
+        return redirect()->route('backend.equipe.index')->with($notification);
     }
 
     /**
@@ -105,8 +107,8 @@ class SlideController extends Controller
      */
     public function edit($id)
     {
-        $record = Slide::find($id);
-        return view('Backend.Slide.edit', compact('record'));
+        $record = Team::find($id);
+        return view('Backend.Team.edit', compact('record'));
     }
 
     /**
@@ -118,7 +120,7 @@ class SlideController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $record =   Slide::find($id);
+        $record = Team::find($id);
 
         $file = $request->file('feature_image');
         if($file){
@@ -131,7 +133,7 @@ class SlideController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
-            $path = "slide/" . date('Y/m/d/');
+            $path = "team/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
@@ -140,6 +142,7 @@ class SlideController extends Controller
            $hashname = $file->hashName();
         }
         
+
         $isPhoto = (int)$request->isPhoto;
         /* 1 A foto não foi alterada
            2 Foto deletada
@@ -158,21 +161,23 @@ class SlideController extends Controller
             $hashname = $hashname;
         }
 
-        $record->title = $request->title;
+        $record->name = $request->name;
         $record->description = $request->description;
+        $record->office = $request->office;
+        $record->whatsapp = $request->whatsapp;
+        $record->email = $request->email;
         $record->path = isset($path) ? $path : NULL;
         $record->image = isset($hashname) ? $hashname : NULL;
-        $record->btn_txt = $request->btn_txt;
-        $record->url = $request->url;
+        $record->director = $request->director;
 
-        $record->update();
+        $record->save();
 
         $notification = [
-            'message' =>  $record->title . ' atualizado com sucesso',
+            'message' =>  $record->title . ' adicionado com sucesso',
             'alert-type' => 'success'
         ];
 
-        return redirect()->route('backend.slide.index')->with($notification);
+        return redirect()->route('backend.equipe.index')->with($notification);
     }
 
     /**
@@ -181,27 +186,27 @@ class SlideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Slide $slide)
+    public function destroy(Team $equipe)
     {
-       $this->storage->delete($slide->path . 'original-' . $slide->image);
-       $this->storage->delete($slide->path . '150x150-' . $slide->image);
-       $slide->delete();
+        $this->storage->delete($equipe->path . 'original-' . $equipe->image);
+        $this->storage->delete($equipe->path . '150x150-' . $equipe->image);
+        $equipe->delete();
 
         $notification = [
-            'message' => 'Slide deletado com sucesso',
+            'message' => 'Colaborador deletado com sucesso',
             'alert-type' => 'success'
         ];
 
-        return redirect()->route('backend.slide.index')->with($notification);
+        return redirect()->route('backend.equipe.index')->with($notification);
     }
 
     public function search(Request $request){
         $search = $request->input('pesquisar');
 
-        $records = Slide::where(function($query) use($search){
+        $records = Team::where(function($query) use($search){
             $searchWildcard = '%' . $search . '%';
-            $query->orWhere('title', 'LIKE', $searchWildcard);
+            $query->orWhere('name', 'LIKE', $searchWildcard);
         })->orderBy('id', 'desc')->paginate(10);
-        return view('Backend.Slide.search', compact('records'));
+        return view('Backend.Team.search', compact('records'));
     }
 }

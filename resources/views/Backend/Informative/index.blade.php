@@ -56,7 +56,13 @@
                         <tbody>
                             @foreach($records as $record)
                                 <tr>
-                                    <th scope="row">{{$record->capa}}</th>
+                                    <th scope="row">
+                                        @if($record->path)
+                                        <a href="{{asset('storage')}}/{{$record->path}}150x150-{{$record->image}}" target="_blank">
+                                            <img src="{{asset('storage')}}/{{$record->path}}150x150-{{$record->image}}" class="img-fluid" width="80">
+                                        </a>
+                                        @endif
+                                    </th>
                                     <th scope="row">{{$record->title}}</th>
                                     <th scope="row">{{$record->description}}</th>
                                     <th scope="row">{{$record->link}}</th>

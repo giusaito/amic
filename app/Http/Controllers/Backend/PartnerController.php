@@ -72,8 +72,8 @@ class PartnerController extends Controller
         $partner->slug = \Str::slug($request->title);
         $partner->description = $request->description;
         $partner->link = $request->link;
-        $partner->path = $path;
-        $partner->image = $hashname;
+        $partner->path = isset($path) ? $path : NULL;
+        $partner->image = isset($hashname) ? $hashname : NULL;
         $partner->type = $request->type;
 
         $partner->save();
@@ -119,9 +119,50 @@ class PartnerController extends Controller
     public function update(Request $request, $id)
     {
         $partner = Partner::find($id);
+
+        $file = $request->file('feature_image');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
+
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "partner/" . date('Y/m/d/');
+
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+
+        $isPhoto = (int)$request->isPhoto;
+        /* 1 A foto não foi alterada
+           2 Foto deletada
+           3 Foto alterada 
+        */
+        if($isPhoto == 1) {
+            $path = $partner->path;
+            $hashname = $partner->image;
+            
+        }else if($isPhoto == 2){
+            $path = NULL;
+            $hashname = NULL;
+        }
+        else if($isPhoto == 3){
+            $path = $path;
+            $hashname = $hashname;
+        }
+
         $partner->title = $request->title;
         $partner->slug = \Str::slug($request->title);
         $partner->description = $request->description;
+        $partner->path = isset($path) ? $path : NULL;
+        $partner->image = isset($hashname) ? $hashname : NULL;
         $partner->link = $request->link;
         $partner->type = $request->type;
 

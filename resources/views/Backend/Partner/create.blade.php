@@ -5,7 +5,7 @@
 <form action="{{ route('backend.patrocinador.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-9 mt-3">
 			<a class="btn btn-warning" href="{{route('backend.patrocinador.index')}}">	<i class="fa fa-arrow-left"></i> 
 					VOLTAR
 			</a>
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-3">
+		<div class="col-md-3 mt-3">
 			<button type="submit" id="submit-all" class="btn btn-primary">
 				<i class="fa fa-check"></i>
 					Adicionar
@@ -62,11 +62,11 @@
 </section>
 @endsection
 
-@section('css-include')
+@section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
 @endsection
 
-@section('js-include')
+@section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
 
 

@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  18/11/2020 5:11:20 pm
+ * Last Modified:  19/11/2020 10:53:21 am
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -96,8 +96,8 @@ class TvAmicController extends Controller
         $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->title);
         $tvamic->description = $request->description;
-        $tvamic->path = $path;
-        $tvamic->image = $hashname;
+        $tvamic->path = isset($path) ? $path : NULL;
+        $tvamic->image = isset($hashname) ? $hashname : NULL;
         $tvamic->iframe = $request->iframe;
         $tvamic->content = $request->content;
         $tvamic->published_at = $agendamento;
@@ -147,7 +147,7 @@ class TvAmicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        $tvamic = TvAmic::find($id);
 
         if(!empty($request->published_at)){
             $agendamento = DateTime::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
@@ -155,12 +155,49 @@ class TvAmicController extends Controller
             $agendamento = date('Y-m-d H:i:s');
         }
 
+        $file = $request->file('feature_image');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
 
-        $tvamic = TvAmic::find($id);
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "tvamic/" . date('Y/m/d/');
+
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+
+        $isPhoto = (int)$request->isPhoto;
+        /* 1 A foto não foi alterada
+           2 Foto deletada
+           3 Foto alterada 
+        */
+        if($isPhoto == 1) {
+            $path = $tvamic->path;
+            $hashname = $tvamic->image;
+            
+        }else if($isPhoto == 2){
+            $path = NULL;
+            $hashname = NULL;
+        }
+        else if($isPhoto == 3){
+            $path = $path;
+            $hashname = $hashname;
+        }
+
         $tvamic->title = $request->title;
         $tvamic->slug = \Str::slug($request->name);
         $tvamic->description = $request->description;
-        $tvamic->image = $request->image;
+        $tvamic->path = isset($path) ? $path : NULL;
+        $tvamic->image = isset($hashname) ? $hashname : NULL;
         $tvamic->iframe = $request->iframe;
         $tvamic->content = $request->content;
         $tvamic->published_at = $agendamento;

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSlidesTable extends Migration
+class CreateTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateSlidesTable extends Migration
      */
     public function up()
     {
-        Schema::create('slides', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('name');
             $table->string('description');
-            $table->string('btn_txt');
+            $table->string('office');
+            $table->string('whatsapp');
+            $table->string('email');
             $table->string('path');
             $table->string('image');
-            $table->string('url');
+            $table->enum('director', ['SIM', 'NAO'])->default('NAO')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ class CreateSlidesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slides');
+        Schema::dropIfExists('teams');
     }
 }

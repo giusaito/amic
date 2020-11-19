@@ -43,40 +43,11 @@ class SiteUtilController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('thumbnail');
-        if($file){
-            $ext = $file->getClientOriginalExtension();
-
-            $height = Image::make($file)->height();
-            $width = Image::make($file)->width();
-
-            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
-
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
-
-            $path = "site-util/";
-
-            $this->storage->put($path. 'original/' . $file->hashName(),  $original);
-
-            $this->storage->put($path. '150x150/-'.  $file->hashName(),  $thumb1);
-
-           $hashname = $file->hashName();
-        }
-
-        $siteUtil = new SiteUtil();
-        if(!empty($request->published_at)){
-            $agendamento = DateTime::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
-        }else {
-            $agendamento = date('Y-m-d H:i:s');
-        }
-
+        $siteUtil = new SiteUtil;
         $siteUtil->title = $request->title;
         $siteUtil->slug = \Str::slug($request->name);
         $siteUtil->description = $request->description;
-        $siteUtil->image = $request->image;
         $siteUtil->url = $request->url;
-        $siteUtil->published_at = $agendamento;
-        $siteUtil->status = $request->status;
         $siteUtil->author_id = \Auth::id();
 
         $siteUtil->save();
@@ -109,7 +80,8 @@ class SiteUtilController extends Controller
     public function edit($id)
     {
         $siteUtil = SiteUtil::find($id);
-        return view('Backend.SiteUtil.edit', compact('siteUtil'));
+        $categories = CategorySiteUtil::orderBy('title', 'asc')->get();
+        return view('Backend.SiteUtil.edit', compact('siteUtil', 'categories'));
     }
 
     /**
@@ -121,21 +93,14 @@ class SiteUtilController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!empty($request->published_at)){
-            $agendamento = DateTime::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
-        }else {
-            $agendamento = date('Y-m-d H:i:s');
-        }
-
 
         $siteUtil = SiteUtil::find($id);
+        $siteUtil = new SiteUtil;
         $siteUtil->title = $request->title;
         $siteUtil->slug = \Str::slug($request->name);
         $siteUtil->description = $request->description;
-        $siteUtil->image = $request->image;
         $siteUtil->url = $request->url;
-        $siteUtil->published_at = $agendamento;
-        $siteUtil->status = $request->status;
+        $siteUtil->author_id = \Auth::id();
 
         $siteUtil->update();
         
@@ -155,9 +120,7 @@ class SiteUtilController extends Controller
      */
     public function destroy(SiteUtil $siteUtil)
     {
-        
         $siteUtil->delete();
-        Storage::delete('public/images/tvamic/'.$siteUtil->image);
 
         $notification = [
             'message' => 'Site deletado com sucesso',

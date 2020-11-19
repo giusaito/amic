@@ -6,7 +6,7 @@
 	@method('PUT')
 	@csrf
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-9 mt-3">
 			<a class="btn btn-warning" href="{{route('backend.podcast.index')}}">	<i class="fa fa-arrow-left"></i> 
 					VOLTAR
 			</a>
@@ -31,7 +31,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-3">
+		<div class="col-md-3 mt-3">
 			<button type="submit" class="btn btn-primary">
 				<i class="fa fa-refresh"></i> 
 				ATUALIZAR
@@ -72,7 +72,8 @@
 					<span>Capa do vídeo</span>
 				</div>
 				<div class="card-block">
-					<input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" />
+					<input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($podcast->path) value="{{asset('storage')}}/{{$podcast->path}}original-{{$podcast->image}}" data-default-file="{{asset('storage')}}/{{$podcast->path}}original-{{$podcast->image}}" @endif />
+					<input type="hidden" name="isPhoto" id="isPhoto" value="{{!empty($podcast->path) ? 1 : 0}}">
 				</div>
 			</div>
 		</div>
@@ -81,14 +82,14 @@
 </section>
 @endsection
 
-@section('css-include')
+@section('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
 @endsection
 
 
 
-@section('js-include')
+@section('js')
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
@@ -148,6 +149,19 @@ $('.dropify').attr("data-default-file");
 	var drEvent = $('#photoArtigo').dropify();
 	drEvent.on('dropify.beforeClear', function(event, element){
 		return confirm("Você tem certeza que deseja excluir a foto?");
+	});
+
+	var drEvent = $('.dropify').dropify();
+	drEvent.on('dropify.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir a foto?");
+	});
+
+	drEvent.on('dropify.afterClear', function(event, element){
+		$('#isPhoto').attr('value', 2);
+	});
+
+	$(".dropify").change(function(){
+		$('#isPhoto').attr('value', 3);
 	});
 </script>
 

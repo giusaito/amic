@@ -6,7 +6,7 @@
 	@method('PUT')
 	@csrf
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-9 mt-3">
 			<a class="btn btn-warning" href="{{route('backend.publicidade.index')}}">	<i class="fa fa-arrow-left"></i> 
 					VOLTAR
 			</a>
@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-3">
+		<div class="col-md-3 mt-3">
 			<button type="submit" id="submit-all" class="btn btn-primary">
 				<i class="fa fa-check"></i>
 					Adicionar

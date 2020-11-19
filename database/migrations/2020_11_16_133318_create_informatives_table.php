@@ -19,8 +19,8 @@ class CreateInformativesTable extends Migration
             $table->string('slug');
             $table->string('description');
             $table->string('archive');
-            $table->string('link');
-            $table->string('capa')->nullable();
+            $table->string('path')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

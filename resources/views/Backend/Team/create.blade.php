@@ -1,22 +1,34 @@
 @extends('Backend.Layouts.layout')
-@section('title', 'Adicionar Informativo')
+@section('title', 'Adicionar Equipe')
 @section('content')
 
-<form action="{{ route('backend.informativo.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
+<form action="{{ route('backend.equipe.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
 		<div class="col-md-9 mt-3">
-			<a class="btn btn-warning" href="{{route('backend.informativo.index')}}">	<i class="fa fa-arrow-left"></i> 
+			<a class="btn btn-warning" href="{{route('backend.equipe.index')}}">	<i class="fa fa-arrow-left"></i> 
 					VOLTAR
 			</a>
 			<div class="card mt-3" style="padding:15px;">
 				<div class="form-group">
-					<label for="title">Título</label>
-					<input name="title" type="text" class="form-control" id="title" placeholder="Título" required="required">
+					<label for="name">Nome</label>
+					<input name="name" type="text" class="form-control" id="name" placeholder="Nome completo" required="required">
 				</div>
 				<div class="form-group">
 					<label for="description">Descrição</label>
 					<input name="description" type="text" class="form-control" id="description" placeholder="Descrição curta" required="required">
+				</div>
+				<div class="form-group">
+					<label for="office">Cargo</label>
+					<input name="office" type="text" class="form-control" id="office" placeholder="Cargo ex: Supervisor" required="required">
+				</div>
+				<div class="form-group">
+					<label for="email">E-mail</label>
+					<input name="email" type="email" class="form-control" id="email" placeholder="E-mail" required="required">
+				</div>
+				<div class="form-group">
+					<label for="whatsapp">Whatsapp</label>
+					<input name="whatsapp" type="tel" class="form-control" id="whatsapp" placeholder="Whats" required="required">
 				</div>
 			</div>
 		</div>
@@ -28,22 +40,28 @@
 			</button>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
-					<h5>Capa</h5>
-					<span>Defina a capa do informativo</span>
+						<h5>Diretor</h5>
+						<span>Escolha se o colaborador faz parte da diretoria</span>
+					</div>
+					<div class="card-block p-3">
+						<select name="director" id="director" class="form-control" required="required">
+							<option value="NAO">Não</option>
+							<option value="SIM">Sim</option>
+						</select>
+						@if($errors->first('status'))
+							<label for="status" class="error">{{ $errors->first('status') }}</label>
+						@endif
+					</div>
+				</div>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
+					<h5>Foto</h5>
+					<span>Defina a foto</span>
 				</div>
 					<div class="card-block p-3">
 						<input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" required="required"/>
 					</div>
 			</div>
-			<div class="card mt-3 mb-3">
-				<div class="card-header">
-					<h5>Arquivo</h5>
-					<span>Faça upload do informativo em PDF, WORLD, OU EXCEL</span>
-				</div>
-					<div class="card-block p-3">
-						<input type="file" name="archive" class="dropify" data-allowed-file-extensions="pdf xlsx xltx excel word"  data-max-file-size="1M" required="required"/>
-					</div>
-				</div>
 		</div>
 	</div>
 </form>

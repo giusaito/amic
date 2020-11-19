@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:29:59 am
- * Last Modified:  11/11/2020 10:18:52 am
+ * Last Modified:  19/11/2020 4:05:00 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -34,7 +34,6 @@ class CreateSiteUtilsTable extends Migration
             $table->string('title', 191);
             $table->string('slug');
             $table->string('description', 191);
-            $table->string('image', 191)->nullable();
             $table->unsignedBigInteger('_lft');
             $table->unsignedBigInteger('_rgt');
             $table->unsignedBigInteger('parent_id');
@@ -48,7 +47,6 @@ class CreateSiteUtilsTable extends Migration
             $table->string('title', 191);
             $table->string('slug');
             $table->string('description', 191);
-            $table->string('image', 191)->nullable();
             $table->string('url', 191);
             $table->enum('status', ['PUBLISHED', 'DRAFT'])->default('PUBLISHED')->nullable();
             $table->bigInteger('author_id')->unsigned()->nullable();

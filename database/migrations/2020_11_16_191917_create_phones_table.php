@@ -17,7 +17,6 @@ class CreatePhonesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone');
-            $table->string('photo')->nullable();
             $table->string('url')->nullable();
             $table->timestamps();
         });

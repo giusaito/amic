@@ -58,9 +58,11 @@
                             @foreach($partners as $partner)
                                 <tr>
                                     <th scope="row">
-                                        <a href="{{asset('storage')}}/{{$partner->path}}150x150-{{$partner->image}}" target="_blank">
-                                            <img src="{{asset('storage')}}/{{$partner->path}}150x150-{{$partner->image}}" class="img-fluid" width="80">
-                                        </a>    
+                                        @if($partner->path)
+                                            <a href="{{asset('storage')}}/{{$partner->path}}150x150-{{$partner->image}}" target="_blank">
+                                                <img src="{{asset('storage')}}/{{$partner->path}}150x150-{{$partner->image}}" class="img-fluid" width="80">
+                                            </a>  
+                                        @endif  
                                     </th>
                                     <th scope="row">{{$partner->title}}</th>
                                    <th scope="row">{{ Str::limit($partner->description, 50) }}</th>

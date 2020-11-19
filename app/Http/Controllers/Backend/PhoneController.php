@@ -41,7 +41,6 @@ class PhoneController extends Controller
         $record->name = $request->name;
         $record->phone = $request->phone;
         $record->url = $request->url;
-        $record->photo = $request->photo;
 
         $record->save();
 
@@ -89,7 +88,6 @@ class PhoneController extends Controller
         $record->name = $request->name;
         $record->phone = $request->phone;
         $record->url = $request->url;
-        $record->photo = $request->photo;
 
         $record->update();
 

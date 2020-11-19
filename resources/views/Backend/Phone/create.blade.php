@@ -5,10 +5,14 @@
 <form action="{{ route('backend.telefone.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-12 mt-3">
 			<a class="btn btn-warning" href="{{route('backend.telefone.index')}}">	<i class="fa fa-arrow-left"></i> 
 					VOLTAR
 			</a>
+			<button type="submit" id="submit-all" class="btn btn-primary pull-right">
+				<i class="fa fa-check"></i>
+					Adicionar
+			</button>
 			<div class="card mt-3" style="padding:15px;">
 				<div class="form-group">
 					<label for="title">Nome completo</label>
@@ -20,25 +24,10 @@
 				</div>
 				<div class="form-group">
 					<label for="url">Url</label>
-					<input name="url" type="url" class="form-control" id="url" placeholder="Url" required="required">
+					<input name="url" type="url" class="form-control" id="url" placeholder="Url">
 				</div>
 			</div>
 		</div>
-		
-		<div class="col-md-3">
-			<button type="submit" id="submit-all" class="btn btn-primary">
-				<i class="fa fa-check"></i>
-					Adicionar
-			</button>
-			<div class="card mt-3 mb-3">
-				<div class="card-header">
-					<h5>Foto</h5>
-					<span>Defina uma foto</span>
-				</div>
-					<div class="card-block p-3">
-						Capa
-					</div>
-			</div>
 	</div>
 </form>
 </section>
