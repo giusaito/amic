@@ -77,7 +77,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
         'destroy' => 'category.noticias.destroy',
     ]);
 
-    // Final Link útil
+    // Final rota notícias
 
 
     // Início Tv Amic
@@ -124,6 +124,82 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::get('equipe/pesquisar/', 'teamController@search')->name('equipe.search');
     Route::resource('equipe', 'teamController');
     //Final team
+
+    // Início Terra do Sol
+    Route::name('terra-do-sol.')->group(function () {
+        route::resource('edicoes', 'EditionsController')->names([
+            'index' => 'ts.editions.index',
+            'create' => 'ts.editions.create',
+            'store' => 'ts.editions.store',
+            'update' => 'ts.editions.update',
+            'destroy' => 'ts.editions.destroy',
+        ]);
+        route::resource('sobre', 'AboutController')->names([
+            'index' => 'ts.about.index',
+            'create' => 'ts.about.create',
+            'store' => 'ts.about.store',
+            'update' => 'ts.about.update',
+            'destroy' => 'ts.about.destroy',
+        ]);
+        route::resource('checklist', 'ChecklistController')->names([
+            'index' => 'ts.checklist.index',
+            'create' => 'ts.checklist.create',
+            'store' => 'ts.checklist.store',
+            'update' => 'ts.checklist.update',
+            'destroy' => 'ts.checklist.destroy',
+        ]);
+        route::resource('dias', 'DaysController')->names([
+            'index' => 'ts.days.index',
+            'create' => 'ts.days.create',
+            'store' => 'ts.days.store',
+            'update' => 'ts.days.update',
+            'destroy' => 'ts.days.destroy',
+        ]);
+        route::resource('percurso', 'PathsController')->names([
+            'index' => 'ts.paths.index',
+            'create' => 'ts.paths.create',
+            'store' => 'ts.paths.store',
+            'update' => 'ts.paths.update',
+            'destroy' => 'ts.paths.destroy',
+        ]);
+        route::resource('fotos', 'PicturesController')->names([
+            'index' => 'ts.pictures.index',
+            'create' => 'ts.pictures.create',
+            'store' => 'ts.pictures.store',
+            'update' => 'ts.pictures.update',
+            'destroy' => 'ts.pictures.destroy',
+        ]);
+        route::resource('recomendacoes', 'RecomendationsController')->names([
+            'index' => 'ts.recomendations.index',
+            'create' => 'ts.recomendations.create',
+            'store' => 'ts.recomendations.store',
+            'update' => 'ts.recomendations.update',
+            'destroy' => 'ts.recomendations.destroy',
+        ]);
+        route::resource('slideshow', 'SlideshowController')->names([
+            'index' => 'ts.slideshow.index',
+            'create' => 'ts.slideshow.create',
+            'store' => 'ts.slideshow.store',
+            'update' => 'ts.slideshow.update',
+            'destroy' => 'ts.slideshow.destroy',
+        ]);
+        route::resource('patrocinadores', 'SponsorsController')->names([
+            'index' => 'ts.sponsors.index',
+            'create' => 'ts.sponsors.create',
+            'store' => 'ts.sponsors.store',
+            'update' => 'ts.sponsors.update',
+            'destroy' => 'ts.sponsors.destroy',
+        ]);
+        route::resource('videos', 'VideosController')->names([
+            'index' => 'ts.videos.index',
+            'create' => 'ts.videos.create',
+            'store' => 'ts.videos.store',
+            'update' => 'ts.videos.update',
+            'destroy' => 'ts.videos.destroy',
+        ]);
+    });
+
+    // Final Terra do Sol
 
 
 });
