@@ -1,7 +1,7 @@
 <?php
-namespace App\Http\Models;
+namespace App\Http\Models\TerraDoSol;
 
-use Illuminate\Database\Eloquent\Model\TerraDoSol;
+use Illuminate\Database\Eloquent\Model;
 use App\Http\Models\FullTextSearch;
 
 
