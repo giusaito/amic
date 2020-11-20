@@ -126,76 +126,76 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     //Final team
 
     // Início Terra do Sol
-    Route::name('terra-do-sol.')->group(function () {
+    Route::group(['prefix' => 'terra-do-sol', 'namespace' => 'TerraDoSol', 'as' => 'ts.'], function () {
         route::resource('edicoes', 'EditionsController')->names([
-            'index' => 'ts.editions.index',
-            'create' => 'ts.editions.create',
-            'store' => 'ts.editions.store',
-            'update' => 'ts.editions.update',
-            'destroy' => 'ts.editions.destroy',
+            'index' => 'editions.index',
+            'create' => 'editions.create',
+            'store' => 'editions.store',
+            'update' => 'editions.update',
+            'destroy' => 'editions.destroy',
         ]);
         route::resource('sobre', 'AboutController')->names([
-            'index' => 'ts.about.index',
-            'create' => 'ts.about.create',
-            'store' => 'ts.about.store',
-            'update' => 'ts.about.update',
-            'destroy' => 'ts.about.destroy',
+            'index' => 'about.index',
+            'create' => 'about.create',
+            'store' => 'about.store',
+            'update' => 'about.update',
+            'destroy' => 'about.destroy',
         ]);
         route::resource('checklist', 'ChecklistController')->names([
-            'index' => 'ts.checklist.index',
-            'create' => 'ts.checklist.create',
-            'store' => 'ts.checklist.store',
-            'update' => 'ts.checklist.update',
-            'destroy' => 'ts.checklist.destroy',
+            'index' => 'checklist.index',
+            'create' => 'checklist.create',
+            'store' => 'checklist.store',
+            'update' => 'checklist.update',
+            'destroy' => 'checklist.destroy',
         ]);
         route::resource('dias', 'DaysController')->names([
-            'index' => 'ts.days.index',
-            'create' => 'ts.days.create',
-            'store' => 'ts.days.store',
-            'update' => 'ts.days.update',
-            'destroy' => 'ts.days.destroy',
+            'index' => 'days.index',
+            'create' => 'days.create',
+            'store' => 'days.store',
+            'update' => 'days.update',
+            'destroy' => 'days.destroy',
         ]);
         route::resource('percurso', 'PathsController')->names([
-            'index' => 'ts.paths.index',
-            'create' => 'ts.paths.create',
-            'store' => 'ts.paths.store',
-            'update' => 'ts.paths.update',
-            'destroy' => 'ts.paths.destroy',
+            'index' => 'paths.index',
+            'create' => 'paths.create',
+            'store' => 'paths.store',
+            'update' => 'paths.update',
+            'destroy' => 'paths.destroy',
         ]);
         route::resource('fotos', 'PicturesController')->names([
-            'index' => 'ts.pictures.index',
-            'create' => 'ts.pictures.create',
-            'store' => 'ts.pictures.store',
-            'update' => 'ts.pictures.update',
-            'destroy' => 'ts.pictures.destroy',
+            'index' => 'pictures.index',
+            'create' => 'pictures.create',
+            'store' => 'pictures.store',
+            'update' => 'pictures.update',
+            'destroy' => 'pictures.destroy',
         ]);
         route::resource('recomendacoes', 'RecomendationsController')->names([
-            'index' => 'ts.recomendations.index',
-            'create' => 'ts.recomendations.create',
-            'store' => 'ts.recomendations.store',
-            'update' => 'ts.recomendations.update',
-            'destroy' => 'ts.recomendations.destroy',
+            'index' => 'recomendations.index',
+            'create' => 'recomendations.create',
+            'store' => 'recomendations.store',
+            'update' => 'recomendations.update',
+            'destroy' => 'recomendations.destroy',
         ]);
         route::resource('slideshow', 'SlideshowController')->names([
-            'index' => 'ts.slideshow.index',
-            'create' => 'ts.slideshow.create',
-            'store' => 'ts.slideshow.store',
-            'update' => 'ts.slideshow.update',
-            'destroy' => 'ts.slideshow.destroy',
+            'index' => 'slideshow.index',
+            'create' => 'slideshow.create',
+            'store' => 'slideshow.store',
+            'update' => 'slideshow.update',
+            'destroy' => 'slideshow.destroy',
         ]);
         route::resource('patrocinadores', 'SponsorsController')->names([
-            'index' => 'ts.sponsors.index',
-            'create' => 'ts.sponsors.create',
-            'store' => 'ts.sponsors.store',
-            'update' => 'ts.sponsors.update',
-            'destroy' => 'ts.sponsors.destroy',
+            'index' => 'sponsors.index',
+            'create' => 'sponsors.create',
+            'store' => 'sponsors.store',
+            'update' => 'sponsors.update',
+            'destroy' => 'sponsors.destroy',
         ]);
         route::resource('videos', 'VideosController')->names([
-            'index' => 'ts.videos.index',
-            'create' => 'ts.videos.create',
-            'store' => 'ts.videos.store',
-            'update' => 'ts.videos.update',
-            'destroy' => 'ts.videos.destroy',
+            'index' => 'videos.index',
+            'create' => 'videos.create',
+            'store' => 'videos.store',
+            'update' => 'videos.update',
+            'destroy' => 'videos.destroy',
         ]);
     });
 
