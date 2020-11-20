@@ -14,8 +14,6 @@ class Edition extends Model
     protected $searchable = [
         'title',
         'subtitle',
-        'logo',
-        'slug',
         'subscription_start',
         'subscription_finish',
         'event_start',
