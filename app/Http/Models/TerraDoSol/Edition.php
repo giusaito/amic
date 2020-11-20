@@ -3,7 +3,7 @@ namespace App\Http\Models\TerraDoSol;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Models\FullTextSearch;
-
+use Kyslik\ColumnSortable\Sortable;
 
 class Edition extends Model
 {
@@ -11,6 +11,7 @@ class Edition extends Model
     protected $guarded = [''];
 
     use FullTextSearch;
+    use Sortable;
     protected $searchable = [
         'title',
         'subtitle',
@@ -20,6 +21,17 @@ class Edition extends Model
         'event_finish',
         'event_suspended',
         'event_suspended_cause',
+        'created_at',
+        'updated_at',
+    ];
+    public $sortable = [
+        'title',
+        'subtitle',
+        'subscription_start',
+        'subscription_finish',
+        'event_start',
+        'event_finish',
+        'event_suspended',
         'created_at',
         'updated_at',
     ];

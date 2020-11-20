@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class EditionsController extends Controller
 {
     public function index(){
-        $records = Edition::orderBy('id', 'desc')->paginate(10);
+        $records = Edition::sortable()->orderBy('id', 'desc')->paginate(10);
         return view('Backend.TerraDoSol.Editions.index', compact('records'));
     }
 }
