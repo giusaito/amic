@@ -39,7 +39,7 @@
                                 @endforeach
                                 </ol>
                             @else
-                                @include('partials.categories_article-none')
+                                @include('Backend.partials.categories_article-none')
                             @endif
                             {{-- @each('Backend.partials.categories_article', $records->toTree(), 'record', 'partials.categories_article-none') --}}
                         <button id="saveOrder" class="btn btn-primary">Salvar</button>
