@@ -1,105 +1,125 @@
 <?php
-/*
- * Projeto: amic
- * Arquivo: CategoryArticleController.php
- * ---------------------------------------------------------------------
- * Autor: Leonardo Nascimento
- * E-mail: leonardo.nascimento21@gmail.com
- * ---------------------------------------------------------------------
- * Data da criação: 11/11/2020 10:00:14 am
- * Last Modified:  11/11/2020 10:38:28 am
- * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
- * ---------------------------------------------------------------------
- * Copyright (c) 2020 Leo
- * HISTORY:
- * Date      	By	Comments
- * ----------	---	---------------------------------------------------------
- */
-
-
-?>
-<?php
 
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Models\CategoryArticle;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 
 class CategoryArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $records = CategoryArticle::get();
+        return view('Backend.CategoryArticle.index', ['records' => $records]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $editorias = CategoryArticle::orderBy('created_at','desc')->get();
+        return view('Backend.CategoryArticle.create', compact('editorias'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $this->validate($request, [
+            'title'      => 'required|unique:category_articles|max:100',
+        ],
+        [
+            'title.required' => 'Você deve informar o nome da Editoria.',
+            'title.unique'   => 'Já existe uma editoria com este nome. Por favor, escolha outro.',
+            'title.max'      => 'O nome da Editoria excedeu o limite de 100 caracteres.'
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+        $add = new CategoryArticle;
+        if($request->parent_id > 0){
+            $parent = CategoryArticle::findOrFail($request->parent_id);
+        }
+        $add->title       = $request->title;
+        $add->description = $request->description;
+        $add->slug        = str_slug($request->title);
+        if($request->parent_id > 0){
+            $add->appendToNode($parent)->save();
+        }else {
+            $add->save();
+        }
+
+        $notification = array(
+            'message' => 'A Editoria foi adicionada com sucesso!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('backend.category.noticias.index')->with($notification);
+    }
+    public function saveOrder(Request $request){
+        $this->saveOrderByArray($request['data']);
+        //saveOrderByArray
+    }
     public function show($id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
+    {
+        //
+    }
+    public function destroy($id)
     {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * a method to get the children by order
+     * @param string $orderBy
+     * @return type
      */
-    public function destroy($id)
+    public static function saveOrderByArray($data_array)
     {
-        //
+        self::_updateTreeRoots($data_array);
+        self::_rebuildTree($data_array);
+    }
+    /**
+     * Save roots only
+     * @param type $data_array
+     * @return type
+     */
+    public static function _updateTreeRoots($data_array)
+    {
+        if (is_array($data_array)) {
+            foreach ($data_array as $data_node) {
+                $node = CategoryArticle::find($data_node['item_id']);
+                $node->parent_id = null;
+                $node->save();
+            }
+        }
+    }
+    /**
+     * Rebuilds the tree: update descendants and their order
+     * @param type $data_array
+     * @return type
+     */
+    public static function _rebuildTree($data_array)
+    {
+        if (is_array($data_array)) {
+            foreach ($data_array as $data_node) {
+                $node = CategoryArticle::find($data_node['item_id']);
+                //loop recursively through the children
+                if (isset($data_node['children']) && is_array($data_node['children'])) {
+                    foreach ($data_node['children'] as $data_node_child) {
+                        //append the children to their (old/new)parents
+                        $descendant = CategoryArticle::find($data_node_child['item_id']);
+                        $descendant->appendTo($node)->save();
+                        //ordering trick here, shift the descendants to the bottom to get the right order at the end
+                        $shift = count($descendant->getSiblings());
+                        $descendant->down($shift);
+                        self::_rebuildTree($data_node['children']);
+                    }
+                }
+            }
+        }
     }
 }

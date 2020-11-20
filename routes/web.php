@@ -65,15 +65,17 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 
     // Final Link útil
     
-    // Início rota link útil
-        Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
-        Route::resource('/noticia', 'ArticleController');
-        route::resource('categoria-noticia', 'CategoryArticleController')->names([
-            'index' => 'category.site.index',
-            'create' => 'category.site.create',
-            'update' => 'category.site.update',
-            'destroy' => 'category.site.destroy',
-        ]);
+    // Início rota notícias
+    Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
+    Route::resource('/noticia', 'ArticleController');
+    Route::post('categoria-noticia/noticias/salvar-ordem/', 'CategoryArticleController@saveOrder')->name('category.noticias.saveOrder');
+    route::resource('categoria-noticia', 'CategoryArticleController')->names([
+        'index' => 'category.noticias.index',
+        'create' => 'category.noticias.create',
+        'store' => 'category.noticias.store',
+        'update' => 'category.noticias.update',
+        'destroy' => 'category.noticias.destroy',
+    ]);
 
     // Final Link útil
 
