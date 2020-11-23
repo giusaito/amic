@@ -148,16 +148,15 @@ class CreateTerraDoSol extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ts_editions');
+        Schema::dropIfExists('ts_videos');
         Schema::dropIfExists('ts_slideshows');
         Schema::dropIfExists('ts_abouts');
         Schema::dropIfExists('ts_paths');
         Schema::dropIfExists('ts_days');
-        Schema::dropIfExists('ts_videos');
         Schema::dropIfExists('ts_pictures');
         Schema::dropIfExists('ts_checklists');
         Schema::dropIfExists('ts_recomendations');
         Schema::dropIfExists('ts_sponsors');
-        
+        Schema::dropIfExists('ts_editions');        
     }
 }

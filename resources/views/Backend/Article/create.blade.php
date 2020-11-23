@@ -7,8 +7,8 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:02:26 am
- * Last Modified:  14/11/2020 3:53:52 pm
- * Modified By: Leonardo Nascimento
+ * Last Modified:  23/11/2020 3:29:01 pm
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
  * HISTORY:
@@ -56,23 +56,26 @@
                 <label for="template">Escolha um tema para a notícia</label>
                     <div class="widget-body">
                         <div class="row">
-                            <div class="col-md-3" style="margin-bottom:10px;">
-                                <a class="template">
-                                    <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
-                                </a>
+                            <div class="col-md-4" style="margin-bottom:10px;">
+                                <label>
+									  <input id="tema1" class="themeSet form-control" type="radio" name="candidate" value="1" checked>
+									  <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
+								</label>
+                           	 </div>
+                            <div class="col-md-4" style="margin-bottom:10px;">
+                                <label>
+									  <input id="tema2" class="themeSet form-control" type="radio" name="candidate" value="2">
+									  <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
+								</label>
                             </div>
-                            <div class="col-md-3" style="margin-bottom:10px;">
-                                <a class="template">
-                                    <img src="https://via.placeholder.com/300" class="img-fluid" style="cursor: pointer;" />
-                                </a>
+                            <div class="col-md-4 temaAtivo" style="margin-bottom:10px;">
+                                <label>
+									  <input id="tema3" class="themeSet form-control" type="radio" name="candidate" value="3">
+									  <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
+								</label>
                             </div>
-                            <div class="col-md-3 temaAtivo" style="margin-bottom:10px;">
-                                <a class="template">
-                                    <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
-                                </a>
-                            </div>
-                            <input type="hidden" name="template_id">
-                            </div>
+                            <input type="hidden" id="template_id" name="template_id" value="1">
+                        </div>
                     </div>
                 </div>
 			</div>
@@ -115,14 +118,30 @@
 			</div>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
+					<h5>Destaque</h5>
+					<span>Defina se a publicação será fixada na primeira posição do site</span>
+				</div>
+				<div class="card-block p-3">
+					<select name="feature" id="feature" class="form-control" required="required">
+						<option value="">Selecione...</option>
+						<option value="1">Sim</option>
+						<option value="0">Não</option>
+					</select>
+					@if($errors->first('feature'))
+						<label for="feature" class="error">{{ $errors->first('feature') }}</label>
+					@endif
+				</div>
+			</div>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
 					<h5>Editorias</h5>
 				</div>
 				<div class="card-block p-3">
 					@foreach($editorias as $editoria)
 							<div>
-								<div class="border-checkbox-group border-checkbox-group-primary">
-									<input class="border-checkbox" type="checkbox" id="{{$editoria->slug}}" name="editoria[]" value="{{$editoria->id}}" @if(is_array(old('editoria')) && in_array($editoria->id, old('editoria'))) checked @endif>
-									<label class="border-checkbox-label" for="{{$editoria->slug}}">{{$editoria->title}}</label>
+								<div class="form-check abc-checkbox abc-checkbox-info">
+									<input class="form-check-input" type="checkbox" id="{{$editoria->slug}}" name="editoria[]" value="{{$editoria->id}}" @if(is_array(old('editoria')) && in_array($editoria->id, old('editoria'))) checked @endif>
+									<label class="form-check-label" for="{{$editoria->slug}}">{{$editoria->title}}</label>
 								</div>
 							</div>
 					@endforeach
@@ -148,23 +167,7 @@
 					@endif
 				</div>
 			</div>
-			<div class="card mt-3 mb-3">
-				<div class="card-header">
-					<h5>Destaque</h5>
-					<span>Defina se a publicação será fixada na primeira posição do site</span>
-				</div>
-				<div class="card-block p-3">
-					<select name="feature" id="feature" class="form-control" required="required">
-						<option value="">Selecione...</option>
-						<option value="1">Sim</option>
-						<option value="0">Não</option>
-					</select>
-					@if($errors->first('feature'))
-						<label for="feature" class="error">{{ $errors->first('feature') }}</label>
-					@endif
-				</div>
-			</div>
-			<div class="card">
+			<div class="card mb-3">
 				<div class="card-header">
 					<h5>Fonte</h5>
 					<span>Insira o nome da fonte da matéria</span>
@@ -177,10 +180,10 @@
             <div class="card">
 				<div class="card-header">
 					<h5>Foto</h5>
-					<span>Capa do Podcast</span>
+					<span>Defina a foto destaque da matéria</span>
 				</div>
 				<div class="card-block p-3">
-					<input name="author_photo" type="text" class="form-control" id="author_photo" placeholder="Insira o nome do autor da foto">
+					<input name="author_photo" type="text" class="mb-3 form-control" id="author_photo" placeholder="Insira o nome do autor da foto" />
 					<input type="file" name="feature_image" class="dropify" data-max-file-size="1M" />
 				</div>
 			</div>
@@ -194,6 +197,8 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/1.0.0/awesome-bootstrap-checkbox.min.css"/>
+
 <style>
 .form-control, .single-line {
     border-radius:5px;
@@ -213,14 +218,32 @@ ul.tagit input[type="text"] {
     outline: none;
 }
 
-.temaAtivo {
-  border: 3px solid #f78900;
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f78900;
+  -webkit-filter: grayscale(0);
+  filter: none;
 }
 
 input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-wrapper {
   text-transform: uppercase;
 }
-
 </style>
 @endsection
 
@@ -292,7 +315,7 @@ input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-w
 			    tokenSeparators: ['/',',',';',' '],
 
 			    ajax: {
-			        url: '#',
+			        url: '{{route('backend.noticia.tag')}}',
 			        dataType: 'json',
 			        data: function (params) {
 			            return {
@@ -313,6 +336,14 @@ input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-w
 			    }
 			});
     });
+
+$(document).on('click','.themeSet',function(event){
+    var selectedOption = $(this).val();
+    var id = $(this).attr('value');
+	
+	$('#template_id').attr('value', id);
+    
+});
 </script>
 
 @endsection

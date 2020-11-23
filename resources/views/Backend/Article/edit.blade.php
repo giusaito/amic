@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 12/11/2020 10:28:37 pm
- * Last Modified:  12/11/2020 11:50:23 pm
+ * Last Modified:  23/11/2020 3:27:14 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -55,26 +55,27 @@
 				</div>
                 <div id="tagsd" class="widget">
                 <label for="template">Escolha um tema para a notícia</label>
-                    <div class="widget-body">
-                        <div class="row">
-                            <div class="col-md-3" style="margin-bottom:10px;">
-                                <a class="template">
-                                    <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
-                                </a>
-                            </div>
-                            <div class="col-md-3" style="margin-bottom:10px;">
-                                <a class="template">
-                                    <img src="https://via.placeholder.com/300" class="img-fluid" style="cursor: pointer;" />
-                                </a>
-                            </div>
-                            <div class="col-md-3 temaAtivo" style="margin-bottom:10px;">
-                                <a class="template">
-                                    <img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
-                                </a>
-                            </div>
-                            <input type="hidden" name="template_id">
-                            </div>
-                    </div>
+                    <div class="row">
+						<div class="col-md-4" style="margin-bottom:10px;">
+							<label>
+								<input id="tema1" class="themeSet form-control" type="radio" name="candidate" value="1" {{$article->template_id == 1 ? 'checked' : ''}} />
+								<img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
+							</label>
+							</div>
+						<div class="col-md-4" style="margin-bottom:10px;">
+							<label>
+								<input id="tema2" class="themeSet form-control" type="radio" name="candidate" value="2" {{$article->template_id == 2 ? 'checked' : ''}} />
+								<img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
+							</label>
+						</div>
+						<div class="col-md-4 temaAtivo" style="margin-bottom:10px;">
+							<label>
+								<input id="tema3" class="themeSet form-control" type="radio" name="candidate" value="3" {{$article->template_id == 3 ? 'checked' : ''}} />
+								<img src="https://via.placeholder.com/500" class="img-fluid" style="cursor: pointer;" />
+							</label>
+						</div>
+						<input type="hidden" id="template_id" name="template_id" value="{{$article->template_id}}">
+					</div>
                 </div>
 			</div>
 		</div>
@@ -130,6 +131,39 @@
 					@endif
 				</div>
 			</div>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
+					<h5>Editorias</h5>
+				</div>
+				<div class="card-block p-3">
+					@foreach($editorias as $key => $editoria)
+							<div>
+								<div class="form-check abc-checkbox abc-checkbox-info">
+									<input class="form-check-input" type="checkbox" id="{{$editoria->slug}}" name="editoria[]" value="{{$editoria->id}}" @if(in_array($editoria->id,$editoriasSalvas)) checked @endif />
+									<label class="form-check-label" for="{{$editoria->slug}}">{{$editoria->title}}</label>
+								</div>
+							</div>
+					@endforeach
+					@if($errors->first('editorias'))
+						<label for="feature" class="error">{{ $errors->first('editorias') }}</label>
+					@endif
+				</div>
+			</div>
+			<div class="card mt-3 mb-3">
+				<div class="card-header">
+					<h5>Tags</h5>
+				</div>
+				<div class="card-block p-3">
+					<select id="tag_list" name="tags[]" class="form-control" multiple>
+                       @foreach($article->tag as $tag)
+	                    	<option val="{{addslashes($tag->title)}}" selected>{{addslashes($tag->title)}}</option>
+	                    @endforeach
+                    </select>
+					@if($errors->first('tags'))
+						<label for="tags" class="error">{{ $errors->first('tags') }}</label>
+					@endif
+				</div>
+			</div>
 			<div class="card">
 				<div class="card-header">
 					<h5>Fonte</h5>
@@ -143,11 +177,12 @@
             <div class="card">
 				<div class="card-header">
 					<h5>Foto</h5>
-					<span>Capa do Podcast</span>
+					<span>Defina a foto destaque da matéria</span>
 				</div>
 				<div class="card-block p-3">
-					<input name="author_photo" type="text" class="form-control" id="author_photo" placeholder="Insira o nome do autor da foto">
-					<input type="file" name="feature_image" class="dropify" data-max-file-size="1M" />
+					<input name="author_photo" type="text" class="mb-3 form-control" id="author_photo" placeholder="Insira o nome do autor da foto">
+					<input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($article->path) value="{{asset('storage')}}/{{$article->path}}original-{{$article->image}}" data-default-file="{{asset('storage')}}/{{$article->path}}original-{{$article->image}}" @endif />
+					<input type="hidden" name="isPhoto" id="isPhoto" value="{{!empty($article->path) ? 1 : 0}}">
 				</div>
 			</div>
 		</div>
@@ -159,6 +194,8 @@
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/1.0.0/awesome-bootstrap-checkbox.min.css"/>
 
 <style>
 .form-control, .single-line {
@@ -179,19 +216,45 @@ ul.tagit input[type="text"] {
     outline: none;
 }
 
-.temaAtivo {
-  border: 3px solid #f78900;
+input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-wrapper {
+  text-transform: uppercase;
+}
+
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f78900;
+  -webkit-filter: grayscale(0);
+  filter: none;
 }
 
 input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-wrapper {
   text-transform: uppercase;
-}</style>
+}
+</style>
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/i18n/pt-BR.js" integrity="sha256-/pqU7mByO80szYr1JmBQCoGGTtAgj2viXKUnyEK7I5k=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $(".editor").summernote({
@@ -242,11 +305,54 @@ input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-w
 					fileSize:   'Desculpe, o arquivo é muito grande'
 				}
 			});
-			var drEvent = $('#photoArtigo').dropify();
-			drEvent.on('dropify.beforeClear', function(event, element){
-				return confirm("Você tem certeza que deseja excluir a foto?");
-			});
+		var drEvent = $('#photoArtigo').dropify();
+		drEvent.on('dropify.beforeClear', function(event, element){
+			return confirm("Você tem certeza que deseja excluir a foto?");
+		});
+		drEvent.on('dropify.afterClear', function(event, element){
+			$('#isPhoto').attr('value', 2);
+		});
+
+		$(".dropify").change(function(){
+			$('#isPhoto').attr('value', 3);
+		});
     });
+	$('#tag_list').select2({
+		placeholder: "Comece a digitar...",
+		language: 'pt-BR',
+		minimumInputLength: 3,
+		tags: true,
+		tokenSeparators: ['/',',',';',' '],
+
+		ajax: {
+			url: '{{route('backend.noticia.tag')}}',
+			dataType: 'json',
+			data: function (params) {
+				return {
+					query: $.trim(params.term)
+				};
+			},
+			processResults: function (data) {
+				return {
+					results:  $.map(data, function (item) {
+						return {
+						text: item.text,
+						id: item.text
+						}
+					})
+				};
+			},
+			cache: true
+		}
+	});
+
+$(document).on('click','.themeSet',function(event){
+    var selectedOption = $(this).val();
+    var id = $(this).attr('value');
+	
+	$('#template_id').attr('value', id);
+    
+});
 </script>
 
 @endsection

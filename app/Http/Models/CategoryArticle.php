@@ -2,6 +2,7 @@
 
 namespace App\Http\Models;
 use Kalnoy\Nestedset\NodeTrait;
+use App\Http\Models\CategoryArticle;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,4 +19,9 @@ class CategoryArticle extends Model
         '_rgt'
     ];
     use NodeTrait;
+
+    public function artigos()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 }

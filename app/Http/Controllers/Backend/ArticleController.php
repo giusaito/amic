@@ -7,8 +7,8 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:59:44 am
- * Last Modified:  14/11/2020 3:19:20 pm
- * Modified By: Leonardo Nascimento
+ * Last Modified:  23/11/2020 3:03:07 pm
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
  * HISTORY:
@@ -23,9 +23,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Article;
 use App\Http\Models\CategoryArticle;
+use App\Http\Models\Tag;
 use DateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ArticleController extends Controller
 {
@@ -34,6 +36,14 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $image_ext = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'];
+
+    public function __construct()
+    {
+      $this->storage = Storage::disk('public');
+    }
+
     public function index()
     {
         $articles = Article::with('user')->orderBy('id', 'desc')->paginate(10);
@@ -66,20 +76,56 @@ class ArticleController extends Controller
             $agendamento = date('Y-m-d H:i:s');
         }
 
+        $file = $request->file('feature_image');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
+
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "noticia/" . date('Y/m/d/');
+
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+
         $article->title = $request->title;
         $article->slug = \Str::slug($request->title);
         $article->description = $request->description;
         $article->video = $request->video;
         $article->alternative_link = $request->alternative_link;
         $article->content = $request->content;
-        $article->template_id = 3;
+        $article->template_id = $request->template_id;
+        $article->path = isset($path) ? $path : NULL;
+        $article->image = isset($hashname) ? $hashname : NULL;
         $article->published_at = $agendamento;
+        $article->author_photo = $request->author_photo;
         $article->status = $request->status;
         $article->feature = (int) $request->feature;
         $article->font = $request->font;
         $article->author_id = \Auth::id();
 
         $article->save();
+
+        $article->editorias()->attach($request->editoria);
+
+        if(!empty($request->tags)){
+            foreach($request->tags as $tag){
+                $tags = Tag::firstOrCreate([
+                    'title' => mb_strtolower($tag, 'UTF-8'),
+                    'slug' => str_slug($tag)
+                ]);
+
+                $article->tag()->attach($tags->id);
+            }
+        } 
 
         $notification = [
             'message' => 'A notícia ' . $article->title . ' foi adicionada com sucesso',
@@ -109,7 +155,14 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
-        return view('Backend.Article.edit', compact('article'));
+        $editorias = CategoryArticle::all();
+
+        $editoriasSalvas = [];
+        foreach($article->editorias as $editoria){
+            $editoriasSalvas[] = $editoria->id;
+        }
+        
+        return view('Backend.Article.edit', compact('article', 'editorias', 'editoriasSalvas'));
     }
 
     /**
@@ -122,21 +175,80 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         $agendamento = Carbon::createFromFormat('d/m/Y H:i', $request->published_at)->format('Y-m-d H:i:s');
+
         $article = Article::find($id);
+
+        $file = $request->file('feature_image');
+        if($file){
+            $ext = $file->getClientOriginalExtension();
+
+            $height = Image::make($file)->height();
+            $width = Image::make($file)->width();
+
+            $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
+
+            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+
+            $path = "noticia/" . date('Y/m/d/');
+
+            $this->storage->put($path. 'original-' . $file->hashName(),  $original);
+
+            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+           $hashname = $file->hashName();
+        }
+        
+        $isPhoto = (int)$request->isPhoto;
+        /* 1 A foto não foi alterada
+           2 Foto deletada
+           3 Foto alterada 
+        */
+        if($isPhoto == 1) {
+            $path = $article->path;
+            $hashname = $article->image;
+            
+        }else if($isPhoto == 2){
+            $path = NULL;
+            $hashname = NULL;
+        }
+        else if($isPhoto == 3){
+            $path = $path;
+            $hashname = $hashname;
+        }
+
         $article->title = $request->title;
         $article->slug = \Str::slug($request->title);
         $article->description = $request->description;
         $article->video = $request->video;
         $article->alternative_link = $request->alternative_link;
         $article->content = $request->content;
-        $article->template_id = 3;
+        $article->path = isset($path) ? $path : NULL;
+        $article->image = isset($hashname) ? $hashname : NULL;
+        $article->author_photo = $request->author_photo;
+        $article->template_id = $request->template_id;
         $article->published_at = $agendamento;
         $article->status = $request->status;
         $article->feature = (int) $request->feature;
         $article->font = $request->font;
-        $article->author_id = \Auth::id();
+        $article->author_edit_id = \Auth::id();
 
         $article->update();
+
+        $article->editorias()->sync($request->editoria);
+        
+
+        $article->tag()->detach();
+        
+        if(!empty($request->tags)){
+           foreach($request->tags as $tag){
+                $tags = Tag::firstOrCreate([
+                    'title' => mb_strtolower($tag, 'UTF-8'),
+                    'slug' => str_slug($tag)
+                ]);
+
+                $article->tag()->attach($tags->id);
+            }
+        }
 
         $notification = [
             'message' => 'A notícia ' . $article->title . ' foi atualizada com sucesso',
@@ -152,10 +264,11 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(Article $noticium)
     {
-        $article->delete();
-        Storage::delete('public/images/noticia/'.$article->image);
+        $this->storage->delete($noticium->path . 'original-' . $noticium->image);
+        $this->storage->delete($noticium->path . '150x150-' . $noticium->image);
+        $noticium->delete();
 
         $notification = [
             'message' => 'Artigo deletado com sucesso',
@@ -175,5 +288,13 @@ class ArticleController extends Controller
         	$articles = Article::orderBy('id','desc')->with('user')->paginate(10);
         }
     	return view('Backend.Article.search', compact('articles','search'));
+    }
+
+    public function tag(Request $request){
+        $query = $request->input('query');
+
+    	$pesquisaTag = Tag::where('title','like','%'.$query.'%')->get(['tags.id','tags.title AS text']);
+
+		return response()->json($pesquisaTag);
     }
 }

@@ -7,8 +7,8 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:02:04 am
- * Last Modified:  13/11/2020 12:01:39 am
- * Modified By: Leonardo Nascimento
+ * Last Modified:  23/11/2020 9:36:14 am
+ * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
  * HISTORY:
@@ -78,9 +78,11 @@
                             @foreach($articles as $article)
                                 <tr>
                                     <th scope="row">
-                                        <a href="{{$article->image}}" target="_blank">
-                                            <img src="{{$article->image}}" class="img-fluid" width="80">
+                                        @if($article->path)
+                                        <a href="{{asset('storage')}}/{{$article->path}}150x150-{{$article->image}}" target="_blank">
+                                            <img src="{{asset('storage')}}/{{$article->path}}150x150-{{$article->image}}" class="img-fluid" width="80">
                                         </a>
+                                        @endif
                                     </th>
                                     @if($article->status == "PUBLISHED")
                                         <th scope="row"><span class="label label-primary">Publicado</span></th>
