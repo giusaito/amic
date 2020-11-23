@@ -137,69 +137,74 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
             'update' => 'editions.update',
             'destroy' => 'editions.destroy',
         ]);
-        route::resource('sobre', 'AboutController')->names([
-            'index' => 'about.index',
-            'create' => 'about.create',
-            'store' => 'about.store',
-            'update' => 'about.update',
-            'destroy' => 'about.destroy',
-        ]);
-        route::resource('checklist', 'ChecklistController')->names([
-            'index' => 'checklist.index',
-            'create' => 'checklist.create',
-            'store' => 'checklist.store',
-            'update' => 'checklist.update',
-            'destroy' => 'checklist.destroy',
-        ]);
-        route::resource('dias', 'DaysController')->names([
-            'index' => 'days.index',
-            'create' => 'days.create',
-            'store' => 'days.store',
-            'update' => 'days.update',
-            'destroy' => 'days.destroy',
-        ]);
-        route::resource('percurso', 'PathsController')->names([
-            'index' => 'paths.index',
-            'create' => 'paths.create',
-            'store' => 'paths.store',
-            'update' => 'paths.update',
-            'destroy' => 'paths.destroy',
-        ]);
-        route::resource('fotos', 'PicturesController')->names([
-            'index' => 'pictures.index',
-            'create' => 'pictures.create',
-            'store' => 'pictures.store',
-            'update' => 'pictures.update',
-            'destroy' => 'pictures.destroy',
-        ]);
-        route::resource('recomendacoes', 'RecomendationsController')->names([
-            'index' => 'recomendations.index',
-            'create' => 'recomendations.create',
-            'store' => 'recomendations.store',
-            'update' => 'recomendations.update',
-            'destroy' => 'recomendations.destroy',
-        ]);
-        route::resource('slideshow', 'SlideshowController')->names([
-            'index' => 'slideshow.index',
-            'create' => 'slideshow.create',
-            'store' => 'slideshow.store',
-            'update' => 'slideshow.update',
-            'destroy' => 'slideshow.destroy',
-        ]);
-        route::resource('patrocinadores', 'SponsorsController')->names([
-            'index' => 'sponsors.index',
-            'create' => 'sponsors.create',
-            'store' => 'sponsors.store',
-            'update' => 'sponsors.update',
-            'destroy' => 'sponsors.destroy',
-        ]);
-        route::resource('videos', 'VideosController')->names([
-            'index' => 'videos.index',
-            'create' => 'videos.create',
-            'store' => 'videos.store',
-            'update' => 'videos.update',
-            'destroy' => 'videos.destroy',
-        ]);
+        Route::group(['prefix'=>'sobre'],function(){
+			Route::get('/{edicao}', ['as' => 'about.index', 'uses' => 'AboutController@index']);
+			Route::post('/{edicao}', ['as' => 'about.store', 'uses' =>'AboutController@store']);
+		});	
+        Route::group(['prefix'=>'checklist'],function(){
+			Route::get('/{edicao}', ['as' => 'checklist.index', 'uses' => 'ChecklistController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'checklist.create', 'uses' =>'ChecklistController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'checklist.store', 'uses' =>'ChecklistController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'checklist.edit', 'uses' => 'ChecklistController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'checklist.update', 'uses' => 'ChecklistController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'checklist.destroy', 'uses' => 'ChecklistController@destroy']);
+		});	
+        Route::group(['prefix'=>'dias'],function(){
+			Route::get('/{edicao}', ['as' => 'days.index', 'uses' => 'DaysController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'days.create', 'uses' =>'DaysController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'days.store', 'uses' =>'DaysController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'days.edit', 'uses' => 'DaysController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'days.update', 'uses' => 'DaysController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'days.destroy', 'uses' => 'DaysController@destroy']);
+		});	
+        Route::group(['prefix'=>'percurso'],function(){
+			Route::get('/{edicao}', ['as' => 'paths.index', 'uses' => 'PathsController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'paths.create', 'uses' =>'PathsController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'paths.store', 'uses' =>'PathsController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'paths.edit', 'uses' => 'PathsController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'paths.update', 'uses' => 'PathsController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'paths.destroy', 'uses' => 'PathsController@destroy']);
+		});	
+        Route::group(['prefix'=>'fotos'],function(){
+			Route::get('/{edicao}', ['as' => 'pictures.index', 'uses' => 'PicturesController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'pictures.create', 'uses' =>'PicturesController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'pictures.store', 'uses' =>'PicturesController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'pictures.edit', 'uses' => 'PicturesController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'pictures.update', 'uses' => 'PicturesController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'pictures.destroy', 'uses' => 'PicturesController@destroy']);
+		});	
+        Route::group(['prefix'=>'recomendacoes'],function(){
+			Route::get('/{edicao}', ['as' => 'recomendations.index', 'uses' => 'RecomendationsController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'recomendations.create', 'uses' =>'RecomendationsController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'recomendations.store', 'uses' =>'RecomendationsController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'recomendations.edit', 'uses' => 'RecomendationsController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'recomendations.update', 'uses' => 'RecomendationsController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'recomendations.destroy', 'uses' => 'RecomendationsController@destroy']);
+		});	
+        Route::group(['prefix'=>'slideshow'],function(){
+			Route::get('/{edicao}', ['as' => 'slideshow.index', 'uses' => 'SlideshowController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'slideshow.create', 'uses' =>'SlideshowController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'slideshow.store', 'uses' =>'SlideshowController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'slideshow.edit', 'uses' => 'SlideshowController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'slideshow.update', 'uses' => 'SlideshowController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'slideshow.destroy', 'uses' => 'SlideshowController@destroy']);
+		});	
+        Route::group(['prefix'=>'patrocinadores'],function(){
+			Route::get('/{edicao}', ['as' => 'sponsors.index', 'uses' => 'SponsorsController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'sponsors.create', 'uses' =>'SponsorsController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'sponsors.store', 'uses' =>'SponsorsController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'sponsors.edit', 'uses' => 'SponsorsController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'sponsors.update', 'uses' => 'SponsorsController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'sponsors.destroy', 'uses' => 'SponsorsController@destroy']);
+		});	
+        Route::group(['prefix'=>'videos'],function(){
+			Route::get('/{edicao}', ['as' => 'videos.index', 'uses' => 'VideosController@index']);
+			Route::get('adicionar/{edicao}', ['as' => 'videos.create', 'uses' =>'VideosController@create']);
+			Route::post('adicionar/{edicao}', ['as' => 'videos.store', 'uses' =>'VideosController@store']);
+			Route::get('editar/{edicao}/{id}', ['as' => 'videos.edit', 'uses' => 'VideosController@edit']);
+            Route::post('editar/{edicao}/{id}', ['as' => 'videos.update', 'uses' => 'VideosController@update']);
+            Route::delete('excluir/{edicao}/{id}', ['as' => 'videos.destroy', 'uses' => 'VideosController@destroy']);
+		});	
     });
 
     // Final Terra do Sol

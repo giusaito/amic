@@ -76,31 +76,31 @@
                                         <th scope="row">{{ Carbon\Carbon::parse($record->updated_at)->format('d/m/Y') }}</th>
                                         <th scope="row">
                                             <div class="tooltip-link">
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Sobre">
+                                                <a href="{{route('backend.ts.about.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Sobre">
                                                     <i class="fas fa-address-card"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Checklist">
+                                                <a href="{{route('backend.ts.checklist.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Checklist">
                                                     <i class="fas fa-tasks"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Dias">
+                                                <a href="{{route('backend.ts.days.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Dias">
                                                     <i class="fas fa-calendar-day"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Trajeto">
+                                                <a href="{{route('backend.ts.paths.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Percurso">
                                                     <i class="fas fa-route"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Fotos">
+                                                <a href="{{route('backend.ts.pictures.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Fotos">
                                                     <i class="fa fa-file-picture-o"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Recomendação">
+                                                <a href="{{route('backend.ts.recomendations.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Recomendação">
                                                     <i class="fas fa-comment-dots"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Slideshow">
+                                                <a href="{{route('backend.ts.slideshow.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Slideshow">
                                                     <i class="fas fa-images"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Patrocinadores">
+                                                <a href="{{route('backend.ts.sponsors.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Patrocinadores">
                                                     <i class="fas fa-briefcase"></i>
                                                 </a>
-                                                <a class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Vídeos">
+                                                <a href="{{route('backend.ts.videos.index', ['edicao' => $record->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Vídeos">
                                                     <i class="fab fa-youtube"></i>
                                                 </a>
                                             </div>

@@ -101,7 +101,14 @@ messages: {
 });
 var drEvent = $('#photoArtigo').dropify();
 drEvent.on('dropify.beforeClear', function(event, element){
-return confirm("Você tem certeza que deseja excluir a foto?");
+    return confirm("Você tem certeza que deseja excluir a foto?");
+});
+drEvent.on('dropify.afterClear', function(event, element){
+    $('#isPhoto').attr('value', 2);
+});
+
+$(".dropify").change(function(){
+    $('#isPhoto').attr('value', 3);
 });
 
 $('.input-daterange').datepicker({

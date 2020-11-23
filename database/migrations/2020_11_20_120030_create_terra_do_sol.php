@@ -44,7 +44,9 @@ class CreateTerraDoSol extends Migration
             $table->bigInteger('ts_edition_id')->unsigned();
             $table->string('title');
             $table->longText('content');
+            $table->string('path1')->nullable();
             $table->string('image1',100)->nullable();
+            $table->string('path2')->nullable();
             $table->string('image2',100)->nullable();
             $table->timestamps();
 
