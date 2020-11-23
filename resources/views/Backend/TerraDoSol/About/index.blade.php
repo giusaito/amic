@@ -12,11 +12,11 @@
                 <div class="card mt-3" style="padding:15px;">
                     <div class="form-group">
                         <label for="title">Título</label>
-                        <input name="title" type="text" class="form-control" id="title" placeholder="Título" required="required">
+                        <input name="title" type="text" class="form-control" id="title" placeholder="Título" required="required" value="{{$record->title}}">
                     </div>
                     <div class="form-group">
                         <label for="subtitle">Subtítulo</label>
-                        <textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">{{old('content')}}</textarea>
+                        <textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">{{$record->content}}</textarea>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <span>Defina a Imagem</span>
                     </div>
                     <div class="card-block p-3">
-                        <input type="file" name="image1" class="dropify1" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M"/>
+                        <input type="file" name="image1" class="dropify1" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M"  @if($record->path1) value="{{asset('storage')}}/{{$record->path1}}original-{{$record->image1}}" data-default-file="{{asset('storage')}}/{{$record->path1}}original-{{$record->image1}}" @endif/>
                         <input type="hidden" name="isPhoto1" id="isPhoto1" value="{{!empty($record->path1) ? 1 : 0}}">
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                         <span>Defina a Imagem</span>
                     </div>
                     <div class="card-block p-3">
-                        <input type="file" name="image2" class="dropify2" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M"/>
+                        <input type="file" name="image2" class="dropify2" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M"  @if($record->path2) value="{{asset('storage')}}/{{$record->path2}}original-{{$record->image2}}" data-default-file="{{asset('storage')}}/{{$record->path2}}original-{{$record->image2}}" @endif/>
                         <input type="hidden" name="isPhoto2" id="isPhoto2" value="{{!empty($record->path2) ? 1 : 0}}">
                     </div>
                 </div>
