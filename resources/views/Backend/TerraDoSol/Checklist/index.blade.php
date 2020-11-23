@@ -25,7 +25,7 @@
                     <div class="ibox-title">
                         <h5>Cadastros</h5>
                         <div class="ibox-tools">
-                            <a href="{{route('backend.ts.checklist.create')}}/" class="btn btn-primary btn-sm right">
+                            <a href="{{route('backend.ts.checklist.create', ['edicao' => $edicao->id])}}/" class="btn btn-primary btn-sm right">
                                 <i class="fa fa-plus"></i> 
                                 Adicionar
                             </a>

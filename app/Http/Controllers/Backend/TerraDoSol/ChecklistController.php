@@ -24,7 +24,7 @@ class ChecklistController extends Controller
         })->orderBy('id', 'desc')->paginate(10);
         return view('Backend.TerraDoSol.Checklist.index', compact('records'));
     }
-    public function create(){
+    public function create(Edition $edicao){
         return view('Backend.TerraDoSol.Checklist.create');
     }
     public function store(Request $request)
