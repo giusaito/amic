@@ -542,6 +542,11 @@ $(window).bind("load resize", function () {
     }
 });
 
+$('.tooltip-link').tooltip({
+    selector: "[data-toggle=tooltip]",
+    container: "body"
+});
+
 // Local Storage functions
 // Set proper body class and plugins based on user configuration
 $(document).ready(function () {

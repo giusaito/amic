@@ -17,6 +17,7 @@ class CreateTerraDoSol extends Migration
             $table->id();
             $table->string('title');
             $table->string('subtitle');
+            $table->string('path')->nullable();
             $table->string('logo',100);
             $table->string('slug');
             $table->timestamp('subscription_start')->nullable();

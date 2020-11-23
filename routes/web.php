@@ -127,10 +127,12 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 
     // Início Terra do Sol
     Route::group(['prefix' => 'terra-do-sol', 'namespace' => 'TerraDoSol', 'as' => 'ts.'], function () {
+        Route::get('edicoes/pesquisar/', 'EditionsController@search')->name('editions.search');
         route::resource('edicoes', 'EditionsController')->names([
             'index' => 'editions.index',
             'create' => 'editions.create',
             'store' => 'editions.store',
+            'edit' => 'editions.edit',
             'update' => 'editions.update',
             'destroy' => 'editions.destroy',
         ]);

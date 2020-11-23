@@ -36,7 +36,40 @@ class Edition extends Model
         'updated_at',
     ];
     
-    // public function user(){
-    //     return $this->belongsTo('App\User','author_id','id');
-    // }
+    public function sobre()
+    {
+        return $this->hasOne('App\Models\TerraDoSol\About', 'ts_edition_id');
+    }
+    public function checklist()
+    {
+        return $this->hasMany('App\Models\TerraDoSol\Checklist', 'ts_edition_id');
+    }
+    public function dias()
+    {
+        return $this->hasMany('App\Models\TerraDoSol\Day', 'ts_edition_id');
+    }
+    public function trajeto()
+    {
+        return $this->hasOne('App\Models\TerraDoSol\Path', 'ts_edition_id');
+    }
+    public function fotos()
+    {
+        return $this->hasMany('App\Models\TerraDoSol\Picture', 'ts_edition_id');
+    }
+    public function recomendacao()
+    {
+        return $this->hasOne('App\Models\TerraDoSol\Recomendation', 'ts_edition_id');
+    }
+    public function slideshow()
+    {
+        return $this->hasMany('App\Models\TerraDoSol\Slideshow', 'ts_edition_id');
+    }
+    public function patrocinadores()
+    {
+        return $this->hasMany('App\Models\TerraDoSol\Sponsor', 'ts_edition_id');
+    }
+    public function videos()
+    {
+        return $this->hasMany('App\Models\TerraDoSol\Video', 'ts_edition_id');
+    }
 }
