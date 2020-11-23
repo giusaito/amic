@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  23/11/2020 8:36:33 am
+ * Last Modified:  23/11/2020 4:51:27 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -101,15 +101,27 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::resource('patrocinador', 'PartnerController');
     //Final partners
     
-    // Início partners
+    // Início publiidade
     Route::get('publicidade/pesquisar/', 'AdsController@search')->name('publicidade.search');
     Route::resource('publicidade', 'AdsController');
-    //Final partners
+    //Final publiidade
     
     // Início informativo
     Route::get('informativo/pesquisar/', 'InformativeController@search')->name('informativo.search');
     Route::resource('informativo', 'InformativeController');
     //Final informativo
+    
+    // Início leis e regimentos
+    Route::get('lei-regimento/pesquisar/', 'LawController@search')->name('lei.search');
+    Route::resource('lei-e-regimento', 'LawController')->names([
+        'index'   =>  'lei.index',
+        'create'  =>  'lei.create',
+        'edit'    =>  'lei.edit',
+        'store'   =>  'lei.store',
+        'update'  =>  'lei.update',
+        'destroy' =>  'lei.destroy',
+    ]);;
+    //Final leis e regimentos
     
     // Início slide
     Route::get('slide/pesquisar/', 'SlideController@search')->name('slide.search');

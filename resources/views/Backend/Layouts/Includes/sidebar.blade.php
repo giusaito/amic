@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:30:00 am
- * Last Modified:  23/11/2020 3:11:36 pm
+ * Last Modified:  23/11/2020 4:49:38 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -67,6 +67,9 @@
             </li>
             <li class="{{ (request()->is('painel/tv-amic*')) ? 'active' : '' }}">
                 <a href="{{route('backend.tv-amic.index')}}"><i class="fa fa-tv"></i> <span class="nav-label">TV amic</span></a>
+            </li>
+            <li class="{{ (request()->is('painel/lei-e-regimento*')) ? 'active' : '' }}">
+                <a href="{{route('backend.lei.index')}}"><i class="fa fa-book"></i> <span class="nav-label">Leis & Regimentos</span></a>
             </li>
             <li class="{{ (request()->is('painel/equipe*')) ? 'active' : '' }}">
                 <a href="{{route('backend.equipe.index')}}"><i class="fa fa-users"></i> <span class="nav-label">Equipe</span></a>
