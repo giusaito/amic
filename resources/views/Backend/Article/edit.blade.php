@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 12/11/2020 10:28:37 pm
- * Last Modified:  23/11/2020 2:49:03 pm
+ * Last Modified:  23/11/2020 3:27:14 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -138,9 +138,9 @@
 				<div class="card-block p-3">
 					@foreach($editorias as $key => $editoria)
 							<div>
-								<div class="border-checkbox-group border-checkbox-group-primary">
-									<input class="border-checkbox" type="checkbox" id="{{$editoria->slug}}" name="editoria[]" value="{{$editoria->id}}" @if(in_array($editoria->id,$editoriasSalvas)) checked @endif />
-									<label class="border-checkbox-label" for="{{$editoria->slug}}">{{$editoria->title}}</label>
+								<div class="form-check abc-checkbox abc-checkbox-info">
+									<input class="form-check-input" type="checkbox" id="{{$editoria->slug}}" name="editoria[]" value="{{$editoria->id}}" @if(in_array($editoria->id,$editoriasSalvas)) checked @endif />
+									<label class="form-check-label" for="{{$editoria->slug}}">{{$editoria->title}}</label>
 								</div>
 							</div>
 					@endforeach
@@ -195,6 +195,7 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesome-bootstrap-checkbox/1.0.0/awesome-bootstrap-checkbox.min.css"/>
 
 <style>
 .form-control, .single-line {
