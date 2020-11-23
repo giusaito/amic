@@ -8,15 +8,27 @@ use App\Http\Models\TerraDoSol\About;
 use DateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class AboutController extends Controller
 {
+    private $image_ext = ['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'];
+    public function __construct()
+    {
+      $this->storage = Storage::disk('public');
+    }
     public function index(Edition $edicao){
         $record = About::where(['ts_edition_id'=> $edicao->id])->first();
         return view('Backend.TerraDoSol.About.index', compact('edicao','record'));
     }
-    public function store(Request $request, Edition $edicao, $id){
-        $record = About::find($id);
+    public function store(Request $request, Edition $edicao){
+        $edicao = Edition::with('sobre')->where(['id'=>$edicao->id])->first();
+        if($edicao->sobre){
+            $record = About::find($edicao->sobre['id']);
+        }else {
+            $record  = new About;
+        }
+        // dd($record->sobre);
 
         /*
         * FOTO 1
@@ -64,7 +76,7 @@ class AboutController extends Controller
             $path2 = "terra-do-sol/img/" . date('Y/m/d/');
             $this->storage->put($path2. 'original-' . $image2->hashName(),  $original);
             $this->storage->put($path2. '150x150-'.  $image2->hashName(),  $thumb1);
-            $hashname1 = $image2->hashName();
+            $hashname2 = $image2->hashName();
         }
         $isPhoto2 = (int)$request->isPhoto2;
         /* 1 A foto não foi alterada
@@ -84,14 +96,15 @@ class AboutController extends Controller
             $hashname2 = $hashname2;
         }
 
-        $record->title    = $request->title;
-        $record->content  = $request->content;
-        $record->path1     = isset($path1) ? $path1 : NULL;
-        $record->image1     = isset($hashname1) ? $hashname1 : NULL;
-        $record->path2     = isset($path2) ? $path1 : NULL;
-        $record->image2     = isset($hashname2) ? $hashname2 : NULL;
+        $record->ts_edition_id  = $edicao->id;
+        $record->title          = $request->title;
+        $record->content        = $request->content;
+        $record->path1          = isset($path1) ? $path1 : NULL;
+        $record->image1         = isset($hashname1) ? $hashname1 : NULL;
+        $record->path2          = isset($path2) ? $path1 : NULL;
+        $record->image2         = isset($hashname2) ? $hashname2 : NULL;
 
-        $record->update();
+        $record->save();
 
         $notification = [
             'message' =>  $record->title . ' atualizado com sucesso',

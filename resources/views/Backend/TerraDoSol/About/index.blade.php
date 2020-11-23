@@ -1,8 +1,8 @@
 @extends('Backend.Layouts.layout')
 @section('title', 'Terra do Sol - '.$edicao->title.' - Sobre')
 @section('content')
-
-    <form action="{{ route('backend.ts.editions.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
+    <h1>Terra do Sol - {{ $edicao->title }} &raquo; Sobre</h1>
+    <form action="{{ route('backend.ts.about.store', ['edicao' => $edicao->id]) }}" class="form-bordered" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-9 mt-3">
@@ -27,11 +27,22 @@
                 </button>
                 <div class="card mt-3 mb-3">
                     <div class="card-header">
-                        <h5>Logo</h5>
-                        <span>Defina a logo da Edição</span>
+                        <h5>Imagem 1</h5>
+                        <span>Defina a Imagem</span>
                     </div>
                     <div class="card-block p-3">
-                        <input type="file" name="logo" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" required="required"/>
+                        <input type="file" name="image1" class="dropify1" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M"/>
+                        <input type="hidden" name="isPhoto1" id="isPhoto1" value="{{!empty($record->path1) ? 1 : 0}}">
+                    </div>
+                </div>
+                <div class="card mt-3 mb-3">
+                    <div class="card-header">
+                        <h5>Imagem 2</h5>
+                        <span>Defina a Imagem</span>
+                    </div>
+                    <div class="card-block p-3">
+                        <input type="file" name="image2" class="dropify2" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M"/>
+                        <input type="hidden" name="isPhoto2" id="isPhoto2" value="{{!empty($record->path2) ? 1 : 0}}">
                     </div>
                 </div>
             </div>
@@ -50,8 +61,8 @@
 <script src="{{ URL::asset('js/backend/summernote-ptbr.js') }}"></script>
 
 <script>
-$('.dropify').attr("data-default-file");
-$('.dropify').dropify({
+$('.dropify1').attr("data-default-file");
+$('.dropify1').dropify({
     messages: {
         default: 'Arraste e solte um arquivo aqui ou clique',
         replace: 'Arraste e solte um arquivo ou clique para substituir',
@@ -59,9 +70,21 @@ $('.dropify').dropify({
         fileSize:   'Desculpe, o arquivo é muito grande'
     }
 });
-var drEvent = $('#photoArtigo').dropify();
-drEvent.on('dropify.beforeClear', function(event, element){
-    return confirm("Você tem certeza que deseja excluir a foto?");
+$(".dropify1").change(function(){
+    $('#isPhoto1').attr('value', 3);
+});
+
+$('.dropify2').attr("data-default-file");
+$('.dropify2').dropify({
+    messages: {
+        default: 'Arraste e solte um arquivo aqui ou clique',
+        replace: 'Arraste e solte um arquivo ou clique para substituir',
+        remove:  'remover',
+        fileSize:   'Desculpe, o arquivo é muito grande'
+    }
+});
+$(".dropify2").change(function(){
+    $('#isPhoto2').attr('value', 3);
 });
 
 $(".editor").summernote({
