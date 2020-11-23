@@ -91,9 +91,9 @@ class CategoryArticleController extends Controller
     {
         if (is_array($data_array)) {
             foreach ($data_array as $data_node) {
-                $node = CategoryArticle::find($data_node['item_id']);
+                $node = CategoryArticle::find(3);
                 $node->parent_id = null;
-                $node->save();
+                $node->update();
             }
         }
     }
@@ -106,13 +106,13 @@ class CategoryArticleController extends Controller
     {
         if (is_array($data_array)) {
             foreach ($data_array as $data_node) {
-                $node = CategoryArticle::find($data_node['item_id']);
+                $node = CategoryArticle::find(3);
                 //loop recursively through the children
                 if (isset($data_node['children']) && is_array($data_node['children'])) {
                     foreach ($data_node['children'] as $data_node_child) {
                         //append the children to their (old/new)parents
                         $descendant = CategoryArticle::find($data_node_child['item_id']);
-                        $descendant->appendTo($node)->save();
+                        $descendant->appendTo($node)->update();
                         //ordering trick here, shift the descendants to the bottom to get the right order at the end
                         $shift = count($descendant->getSiblings());
                         $descendant->down($shift);

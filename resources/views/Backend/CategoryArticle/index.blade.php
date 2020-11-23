@@ -1,5 +1,5 @@
 @extends('Backend.Layouts.layout')
-@section('title', 'Categorias &raquo; Notícias')
+@section('title', 'Categorias de Notícias')
 @section('content')
 <section id="noticias">
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -42,7 +42,10 @@
                                 @include('Backend.partials.categories_article-none')
                             @endif
                             {{-- @each('Backend.partials.categories_article', $records->toTree(), 'record', 'partials.categories_article-none') --}}
-                        <button id="saveOrder" class="btn btn-primary">Salvar</button>
+                        <button id="saveOrder" class="btn btn-primary mb-3">
+                            <i class="fa fa-refresh"></i> 
+                            Atualizar
+                        </button>
                         <div class="result"></div>
                         <pre id="toArrayOutput">
                         </pre>

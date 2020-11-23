@@ -1,5 +1,5 @@
 @extends('Backend.Layouts.layout')
-@section('title', 'Adicionar Notícia')
+@section('title', 'Adicionar Categoria')
 @section('content')
 
 
