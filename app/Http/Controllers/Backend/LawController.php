@@ -71,16 +71,13 @@ class LawController extends Controller
             $pathArch = "lei-regimento/archive/" . date('Y/m/d/');
             $this->storage->put($pathArch,  $file);
            $hashnameArchive = $file->hashName();
-        }
-        
-        if(is_null($request->url) && $file){
-            $url = asset('storage') . '/' . $pathArch . $hashnameArchive;
-        }elseif($file){
+           $url = asset('storage') . '/' . $pathArch . $hashnameArchive;
+        }elseif($request->url){
             $url = $request->url;
-        } else {
+        }else {
             return back()->with('error','Por favor, faça o upload de um arquivo ou preencha o campo URL');
         }
-        
+                
         $record = new Law;
         $record->title = $request->title;
         $record->slug = \Str::slug($request->title);
@@ -134,9 +131,9 @@ class LawController extends Controller
     {  
         $file = $request->file('feature_image');
 
-        if(!empty($request->url)){
-            return back()->with('error','Por favor, faça o upload de um arquivo ou preencha o campo URL');
-        }
+        // if(!empty($request->url)){
+        //     return back()->with('error','Por favor, faça o upload de um arquivo ou preencha o campo URL');
+        // }
 
         $record = Law::find($id);
 
@@ -150,7 +147,7 @@ class LawController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
-            $path = "informative/img/" . date('Y/m/d/');
+            $path = "lei-regimento/archive/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
@@ -168,18 +165,18 @@ class LawController extends Controller
             $path = $record->path;
             $hashname = $record->image;
             
-        }else if($isPhoto == 2){
+        }elseif($isPhoto == 2){
             $path = NULL;
             $hashname = NULL;
         }
-        else if($isPhoto == 3){
+        elseif($isPhoto == 3){
             $path = $path;
             $hashname = $hashname;
         }
         
         $file = $request->file('archive');
         if($file){
-            $pathArch = "informative/archive/" . date('Y/m/d/');
+            $pathArch = "lei-regimento/archive/" . date('Y/m/d/');
             $this->storage->put($pathArch,  $file);
            $hashnameArchive = $file->hashName();
         }
@@ -189,24 +186,25 @@ class LawController extends Controller
            2 Arquivo deletado
            3 Arquivo alterado
         */
+
         if($isArchive == 1) {
-            $hashnameArchive = $record->hashnameArchive;    
+            $hashnameArchive = $record->archive;
+            $pathArch = "lei-regimento/archive/" . date('Y/m/d/');
             $url = $record->url;
-        }else if($isArchive == 2){
-            $hashnameArchive = NULL;
-            $url = $request->url;
+        }elseif($isArchive == 2 || $isArchive == 0){
+            if(is_null($request->url)){
+                return back()->with('error','Por favor, faça o upload de um arquivo ou preencha o campo URL');
+            }else {
+                $this->storage->delete($record->archive);
+                $hashnameArchive = NULL;
+                $url = $request->url;
+            }
         }
         else if($isArchive == 3){
+            $this->storage->delete($record->archive);
+            // dd($record->archive);
             $hashnameArchive = $hashnameArchive;
             $url = asset('storage') . '/' . $pathArch . $hashnameArchive;
-        }
-        
-        if(is_null($request->url) && $file){
-            $url = asset('storage') . '/' . $pathArch . $hashnameArchive;
-        }elseif($file){
-            $url = $request->url;
-        } else {
-            return back()->with('error','Por favor, faça o upload de um arquivo ou preencha o campo URL');
         }
         
         $record->title = $request->title;

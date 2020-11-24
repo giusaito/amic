@@ -49,7 +49,7 @@
                             <th scope="col">Capa</th>
                             <th scope="col">Título</th>
                             <th scope="col">Descrição</th>
-                            <th scope="col">Link</th>
+                            <th scope="col">Url</th>
                             <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -65,7 +65,9 @@
                                     </th>
                                     <th scope="row">{{$record->title}}</th>
                                     <th scope="row">{{$record->description}}</th>
-                                    <th scope="row">{{$record->link}}</th>
+                                    <th scope="row">
+                                        <a href="{{$record->url}}" target="_blank">{{ Str::limit($record->url, 50) }}</a>
+                                    </th>
                                     {{-- <th scope="row">{{ Str::limit($record->description, 50) }}</th> --}}
                                     <th scope="row">
                                         <a href="{{route('backend.lei.edit', ['lei_e_regimento' => $record->id])}}" class="btn btn-warning btn-sm">

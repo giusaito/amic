@@ -93,7 +93,7 @@ $('.dropify').attr("data-default-file");
 		$('#isPhoto').attr('value', 2);
 	});
 
-	$(".dropify").change(function(){
+	$("#capa").change(function(){
 		$('#isPhoto').attr('value', 3);
 	});
 	
@@ -106,7 +106,7 @@ $('.dropify').attr("data-default-file");
 		$('#isArchive').attr('value', 2);
 	});
 
-	$(".dropify").change(function(){
+	$("#archive").change(function(){
 		$('#isArchive').attr('value', 3);
 	});
 </script>

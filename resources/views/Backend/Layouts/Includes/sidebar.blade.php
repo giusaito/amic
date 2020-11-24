@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:30:00 am
- * Last Modified:  23/11/2020 4:49:38 pm
+ * Last Modified:  24/11/2020 2:08:09 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -44,7 +44,7 @@
             <li class="">
                 <a href="#" aria-expanded="false"><i class="fa fa-list-alt"></i> <span class="nav-label">Notícias</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                     <li class="{{ (request()->is('painel/noticia*')) ? 'active' : '' }}">
+                    <li class="{{ (request()->is('painel/noticia*')) ? 'active' : '' }}">
                         <a href="{{route('backend.noticia.index')}}">
                             <span class="nav-label">Notícias</span>
                         </a>
@@ -56,26 +56,48 @@
                     </li>
                 </ul>
             </li>
-            <li class="{{ (request()->is('painel/categoria/site-util*')) ? 'active' : '' }}">
-                <a href="{{route('backend.category.site.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Categoria Sites Úteis</span></a>
+            <li class="">
+                <a href="#" aria-expanded="false"><i class="fa fa-link"></i> <span class="nav-label">Informações úteis</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li class="{{ (request()->is('painel/categoria/site-util*')) ? 'active' : '' }}">
+                        <a href="{{route('backend.category.site.index')}}">
+                            <span class="nav-label">Categoria Sites Úteis</span>
+                        </a>
+                    </li>
+                    <li class="{{ (request()->is('painel/site-util*')) ? 'active' : '' }}">
+                        <a href="{{route('backend.site-util.index')}}">
+                            <span class="nav-label">Sites Úteis</span>
+                        </a>
+                    </li>
+                    <li class="{{ (request()->is('painel/telefone*')) ? 'active' : '' }}">
+                        <a href="{{route('backend.telefone.index')}}">
+                            <span class="nav-label">Telefones Úteis</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="{{ (request()->is('painel/site-util*')) ? 'active' : '' }}">
-                <a href="{{route('backend.site-util.index')}}"><i class="fa fa-link"></i> <span class="nav-label">Sites Úteis</span></a>
+            <li class="">
+                <a href="#" aria-expanded="false"><i class="fa fa-play-circle"></i> <span class="nav-label">Áudio & Vídeo</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                    <li class="{{ (request()->is('painel/tv-amic*')) ? 'active' : '' }}">
+                        <a href="{{route('backend.tv-amic.index')}}">
+                            <span class="nav-label">TV amic</span>
+                        </a>
+                    </li>
+                    <li class="{{ (request()->is('painel/podcast*')) ? 'active' : '' }}">
+                        <a href="{{route('backend.podcast.index')}}">
+                            <span class="nav-label">Podcast</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="{{ (request()->is('painel/telefone*')) ? 'active' : '' }}">
-                <a href="{{route('backend.telefone.index')}}"><i class="fa fa-phone"></i> <span class="nav-label">Telefones Úteis</span></a>
-            </li>
-            <li class="{{ (request()->is('painel/tv-amic*')) ? 'active' : '' }}">
-                <a href="{{route('backend.tv-amic.index')}}"><i class="fa fa-tv"></i> <span class="nav-label">TV amic</span></a>
-            </li>
+            
+            
             <li class="{{ (request()->is('painel/lei-e-regimento*')) ? 'active' : '' }}">
                 <a href="{{route('backend.lei.index')}}"><i class="fa fa-book"></i> <span class="nav-label">Leis & Regimentos</span></a>
             </li>
             <li class="{{ (request()->is('painel/equipe*')) ? 'active' : '' }}">
                 <a href="{{route('backend.equipe.index')}}"><i class="fa fa-users"></i> <span class="nav-label">Equipe</span></a>
-            </li>
-            <li class="{{ (request()->is('painel/podcast*')) ? 'active' : '' }}">
-                <a href="{{route('backend.podcast.index')}}"><i class="fa fa-play-circle"></i> <span class="nav-label">Podcast</span></a>
             </li>
             <li class="{{ (request()->is('painel/evento*')) ? 'active' : '' }}">
                 <a href="{{route('backend.evento.index')}}"><i class="fa fa-calendar"></i> <span class="nav-label">Agenda</span></a>
@@ -91,6 +113,9 @@
             </li>
             <li class="{{ (request()->is('painel/slide*')) ? 'active' : '' }}">
                 <a href="{{route('backend.slide.index')}}"><i class="fa fa-photo"></i> <span class="nav-label">Slide</span></a>
+            </li>
+            <li class="{{ (request()->is('painel/configuracoes*')) ? 'active' : '' }}">
+                <a href="{{route('backend.configuracoes.index')}}"><i class="fa fa-cogs"></i> <span class="nav-label">Configurações</span></a>
             </li>
         </ul>
     </div>

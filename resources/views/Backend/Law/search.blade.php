@@ -1,16 +1,16 @@
 @extends('Backend.Layouts.layout')
-@section('title', 'Informativo Amic')
+@section('title', 'Leis & regimentos Amic')
 @section('content')
 
 <section id="tvAmic">
-    <div class="text-right mt-4">
-        <a href="{{route('backend.informativo.index')}}/" class="btn btn-warning right"><i class="fa fa-chevron-left"></i> Voltar</a>
+    <div class="text-right mt-4 mb-4">
+        <a href="{{route('backend.lei.index')}}/" class="btn btn-warning right"><i class="fa fa-chevron-left"></i> Voltar</a>
     </div>
 	    <div class="container-fluid">
 	        <div class="row">
 	            <div class="col-md-12">
 	                <div class="card pt-2">
-	                    <form action="{{route('backend.informativo.search')}}" method="GET">
+	                    <form action="{{route('backend.lei.search')}}" method="GET">
 	                        <div class="form-row align-items-center">
 	                            <div class="pl-5 col-10">
 	                            <input type="text" name="pesquisar" class="form-control mb-2" id="inlineFormInput" placeholder="Digite um termo para buscar" value="{{Request::input('pesquisar')}}">
@@ -36,23 +36,32 @@
 	                        <th scope="col">Capa</th>
                             <th scope="col">Título</th>
                             <th scope="col">Descrição</th>
-                            <th scope="col">Link</th>
+                            <th scope="col">Url</th>
                             <th scope="col">Ações</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
 	                        @foreach($records as $record)
                                 <tr>
-                                    <th scope="row">{{$record->capa}}</th>
+                                    <th scope="row">
+                                        @if($record->path)
+                                        <a href="{{asset('storage')}}/{{$record->path}}150x150-{{$record->image}}" target="_blank">
+                                            <img src="{{asset('storage')}}/{{$record->path}}150x150-{{$record->image}}" class="img-fluid" width="80">
+                                        </a>
+                                        @endif
+                                    </th>
                                     <th scope="row">{{$record->title}}</th>
-                                    <th scope="row">{{$record->link}}</th>
+                                    <th scope="row">{{$record->description}}</th>
+                                    <th scope="row">
+                                        <a href="{{$record->url}}" target="_blank">{{ Str::limit($record->url, 50) }}</a>
+                                    </th>
                                     {{-- <th scope="row">{{ Str::limit($record->description, 50) }}</th> --}}
                                     <th scope="row">
-                                        <a href="{{route('backend.informativo.edit', ['informativo' => $record->id])}}" class="btn btn-warning btn-sm">
+                                        <a href="{{route('backend.lei.edit', ['lei_e_regimento' => $record->id])}}" class="btn btn-warning btn-sm">
                                             <i class="fa fa-pencil"></i> 
                                             Editar
                                         </a>
-                                        <form  method="POST" action="{{route('backend.informativo.destroy', ['informativo' => $record->id])}}" style="display:inline-block">
+                                        <form  method="POST" action="{{route('backend.lei.destroy', ['lei_e_regimento' => $record->id])}}" style="display:inline-block">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
                                             <div class="form-group">

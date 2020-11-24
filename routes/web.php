@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  23/11/2020 4:51:27 pm
+ * Last Modified:  24/11/2020 11:15:13 am
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -101,10 +101,10 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::resource('patrocinador', 'PartnerController');
     //Final partners
     
-    // Início publiidade
+    // Início publicidade
     Route::get('publicidade/pesquisar/', 'AdsController@search')->name('publicidade.search');
     Route::resource('publicidade', 'AdsController');
-    //Final publiidade
+    //Final publicidade
     
     // Início informativo
     Route::get('informativo/pesquisar/', 'InformativeController@search')->name('informativo.search');
@@ -133,10 +133,14 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::resource('telefone', 'phoneController');
     //Final phone
     
-    // Início team
+    // Início equipe
     Route::get('equipe/pesquisar/', 'teamController@search')->name('equipe.search');
     Route::resource('equipe', 'teamController');
-    //Final team
+    //Final equipe
+    
+    // Início settings
+    Route::resource('configuracoes', 'SettingController');
+    //Final settings
 
     // Início Terra do Sol
     Route::group(['prefix' => 'terra-do-sol', 'namespace' => 'TerraDoSol', 'as' => 'ts.'], function () {
