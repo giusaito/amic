@@ -15,4 +15,13 @@ class PicturesController extends Controller
         $records = Picture::orderBy('id', 'desc')->get();
         return view('Backend.TerraDoSol.Pictures.index', compact('edicao','records'));
     }
+    public function store(Request $request, Edition $edicao)
+    {
+        dd(request()->file);
+    	// $imageName = request()->file->getClientOriginalName();
+        // request()->file->move(public_path('upload'), $imageName);
+
+
+    	// return response()->json(['uploaded' => '/upload/'.$imageName]);
+    }
 }
