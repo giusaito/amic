@@ -59,6 +59,7 @@ class CreateTerraDoSol extends Migration
             $table->id();
             $table->bigInteger('ts_edition_id')->unsigned();
             $table->string('video');
+            $table->string('path')->nullable();
             $table->string('map');
             $table->timestamps();
 
