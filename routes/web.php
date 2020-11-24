@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  23/11/2020 8:36:33 am
+ * Last Modified:  23/11/2020 4:51:27 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -101,15 +101,27 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::resource('patrocinador', 'PartnerController');
     //Final partners
     
-    // Início partners
+    // Início publiidade
     Route::get('publicidade/pesquisar/', 'AdsController@search')->name('publicidade.search');
     Route::resource('publicidade', 'AdsController');
-    //Final partners
+    //Final publiidade
     
     // Início informativo
     Route::get('informativo/pesquisar/', 'InformativeController@search')->name('informativo.search');
     Route::resource('informativo', 'InformativeController');
     //Final informativo
+    
+    // Início leis e regimentos
+    Route::get('lei-regimento/pesquisar/', 'LawController@search')->name('lei.search');
+    Route::resource('lei-e-regimento', 'LawController')->names([
+        'index'   =>  'lei.index',
+        'create'  =>  'lei.create',
+        'edit'    =>  'lei.edit',
+        'store'   =>  'lei.store',
+        'update'  =>  'lei.update',
+        'destroy' =>  'lei.destroy',
+    ]);;
+    //Final leis e regimentos
     
     // Início slide
     Route::get('slide/pesquisar/', 'SlideController@search')->name('slide.search');
@@ -142,21 +154,22 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 			Route::post('/{edicao}', ['as' => 'about.store', 'uses' =>'AboutController@store']);
 		});	
         Route::group(['prefix'=>'checklist'],function(){
-            Route::get('pesquisar/', 'ChecklistController@search')->name('checklist.search');
+            Route::get('pesquisar/{edicao}', 'ChecklistController@search')->name('checklist.search');
 			Route::get('/{edicao}', ['as' => 'checklist.index', 'uses' => 'ChecklistController@index']);
 			Route::get('adicionar/{edicao}', ['as' => 'checklist.create', 'uses' =>'ChecklistController@create']);
 			Route::post('adicionar/{edicao}', ['as' => 'checklist.store', 'uses' =>'ChecklistController@store']);
 			Route::get('editar/{edicao}/{id}', ['as' => 'checklist.edit', 'uses' => 'ChecklistController@edit']);
-            Route::post('editar/{edicao}/{id}', ['as' => 'checklist.update', 'uses' => 'ChecklistController@update']);
-            Route::delete('excluir/{edicao}/{id}', ['as' => 'checklist.destroy', 'uses' => 'ChecklistController@destroy']);
+            Route::put('editar/{edicao}/{id}', ['as' => 'checklist.update', 'uses' => 'ChecklistController@update']);
+            Route::delete('excluir/{edicao}/{checklist}', ['as' => 'checklist.destroy', 'uses' => 'ChecklistController@destroy']);
 		});	
         Route::group(['prefix'=>'dias'],function(){
+            Route::get('pesquisar/{edicao}', 'DaysController@search')->name('days.search');
 			Route::get('/{edicao}', ['as' => 'days.index', 'uses' => 'DaysController@index']);
 			Route::get('adicionar/{edicao}', ['as' => 'days.create', 'uses' =>'DaysController@create']);
 			Route::post('adicionar/{edicao}', ['as' => 'days.store', 'uses' =>'DaysController@store']);
 			Route::get('editar/{edicao}/{id}', ['as' => 'days.edit', 'uses' => 'DaysController@edit']);
-            Route::post('editar/{edicao}/{id}', ['as' => 'days.update', 'uses' => 'DaysController@update']);
-            Route::delete('excluir/{edicao}/{id}', ['as' => 'days.destroy', 'uses' => 'DaysController@destroy']);
+            Route::put('editar/{edicao}/{id}', ['as' => 'days.update', 'uses' => 'DaysController@update']);
+            Route::delete('excluir/{edicao}/{day}', ['as' => 'days.destroy', 'uses' => 'DaysController@destroy']);
 		});	
         Route::group(['prefix'=>'percurso'],function(){
 			Route::get('/{edicao}', ['as' => 'paths.index', 'uses' => 'PathsController@index']);

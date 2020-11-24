@@ -3,6 +3,7 @@ namespace App\Http\Models\TerraDoSol;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Models\FullTextSearch;
+use Kyslik\ColumnSortable\Sortable;
 
 
 class Day extends Model
@@ -11,7 +12,14 @@ class Day extends Model
     protected $guarded = [''];
 
     use FullTextSearch;
+    use Sortable;
     protected $searchable = [
+        'title',
+        'content',
+        'created_at',
+        'updated_at',
+    ];
+    public $sortable = [
         'title',
         'content',
         'created_at',
