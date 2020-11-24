@@ -23,6 +23,12 @@
                     <div class="ibox-title">
                         <h5>Lista de edições cadastradas</h5>
                         <div class="ibox-tools">
+                            @if(Route::current()->getName() == 'backend.ts.editions.search') 
+                            <a href="{{route('backend.ts.editions.index')}}/" class="btn btn-warning btn-sm right" style="color:#fff !important;">
+                                <i class="fas fa-times"></i>
+                                Limpar
+                            </a>
+                            @endif
                             <a href="{{route('backend.ts.editions.create')}}/" class="btn btn-primary btn-sm right">
                                 <i class="fa fa-plus"></i> 
                                 Adicionar
@@ -106,8 +112,8 @@
                                             </div>
                                         </th>
                                         <th scope="row">
-                                            <a href="{{route('backend.ts.editions.edit', ['edico' => $record->id])}}" class="btn btn-warning btn-sm">
-                                                <i class="fa fa-pencil"></i> 
+                                            <a href="{{route('backend.ts.editions.edit', ['edico' => $record->id])}}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
                                                 Editar
                                             </a>
                                             <form  method="POST" action="{{route('backend.ts.editions.destroy', ['edico' => $record->id])}}" style="display:inline-block">

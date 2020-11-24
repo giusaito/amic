@@ -154,12 +154,13 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 			Route::post('/{edicao}', ['as' => 'about.store', 'uses' =>'AboutController@store']);
 		});	
         Route::group(['prefix'=>'checklist'],function(){
+            Route::get('pesquisar/{edicao}', 'ChecklistController@search')->name('checklist.search');
 			Route::get('/{edicao}', ['as' => 'checklist.index', 'uses' => 'ChecklistController@index']);
 			Route::get('adicionar/{edicao}', ['as' => 'checklist.create', 'uses' =>'ChecklistController@create']);
 			Route::post('adicionar/{edicao}', ['as' => 'checklist.store', 'uses' =>'ChecklistController@store']);
 			Route::get('editar/{edicao}/{id}', ['as' => 'checklist.edit', 'uses' => 'ChecklistController@edit']);
-            Route::post('editar/{edicao}/{id}', ['as' => 'checklist.update', 'uses' => 'ChecklistController@update']);
-            Route::delete('excluir/{edicao}/{id}', ['as' => 'checklist.destroy', 'uses' => 'ChecklistController@destroy']);
+            Route::put('editar/{edicao}/{id}', ['as' => 'checklist.update', 'uses' => 'ChecklistController@update']);
+            Route::delete('excluir/{edicao}/{checklist}', ['as' => 'checklist.destroy', 'uses' => 'ChecklistController@destroy']);
 		});	
         Route::group(['prefix'=>'dias'],function(){
 			Route::get('/{edicao}', ['as' => 'days.index', 'uses' => 'DaysController@index']);

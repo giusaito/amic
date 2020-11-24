@@ -25,14 +25,20 @@
                     <div class="ibox-title">
                         <h5>Cadastros</h5>
                         <div class="ibox-tools">
-                            <a href="{{route('backend.ts.checklist.create')}}/" class="btn btn-primary btn-sm right">
+                            @if(Route::current()->getName() == 'backend.ts.checklist.search') 
+                            <a href="{{route('backend.ts.checklist.index', ['edicao' => $edicao->id])}}/" class="btn btn-warning btn-sm right" style="color:#fff !important;">
+                                <i class="fas fa-times"></i>
+                                Limpar
+                            </a>
+                            @endif
+                            <a href="{{route('backend.ts.checklist.create', ['edicao' => $edicao->id])}}/" class="btn btn-primary btn-sm right">
                                 <i class="fa fa-plus"></i> 
                                 Adicionar
                             </a>
                         </div>
                     </div>
                     <hr>
-                    <form action="{{route('backend.ts.checklist.search')}}" method="GET">
+                    <form action="{{route('backend.ts.checklist.search', ['edicao' => $edicao->id])}}" method="GET">
                         <div class="col-12">
                             <div class="input-group">
                                 <input type="text" name="pesquisar" class="form-control mb-2" placeholder="Digite um termo para buscar" required="required">
@@ -49,7 +55,6 @@
                         <table class="table center-content-table">
                             <thead>
                                 <tr>
-                                    <th scope="col"></th>
                                     <th scope="col">@sortablelink('content', 'Item')</th>
                                     <th scope="col">@sortablelink('created_at', 'Adicionado')</th>
                                     <th scope="col">@sortablelink('updated_at', 'Modificado')</th>
@@ -63,11 +68,11 @@
                                         <th scope="row">{{ Carbon\Carbon::parse($record->created_at)->format('d/m/Y') }}</th>
                                         <th scope="row">{{ Carbon\Carbon::parse($record->updated_at)->format('d/m/Y') }}</th>
                                         <th scope="row">
-                                            <a href="{{route('backend.ts.checklist.edit', ['edico' => $record->id])}}" class="btn btn-warning btn-sm">
-                                                <i class="fa fa-pencil"></i> 
+                                            <a href="{{route('backend.ts.checklist.edit', ['edicao' => $edicao->id, 'id' => $record->id])}}" class="btn btn-warning">
+                                                <i class="fas fa-edit"></i>
                                                 Editar
                                             </a>
-                                            <form  method="POST" action="{{route('backend.ts.checklist.destroy', ['edico' => $record->id])}}" style="display:inline-block">
+                                            <form  method="POST" action="{{route('backend.ts.checklist.destroy', ['edicao' => $edicao->id, 'checklist' => $record])}}" style="display:inline-block">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
                                                 <div class="form-group">
