@@ -1,284 +1,193 @@
+<?php
+  /*
+   * Projeto: amic
+   * Arquivo: index.blade.php
+   * ---------------------------------------------------------------------
+   * Autor: Leonardo Nascimento
+   * E-mail: leonardo.nascimento21@gmail.com
+   * ---------------------------------------------------------------------
+   * Data da criação: 24/11/2020 2:25:13 pm
+   * Last Modified:  24/11/2020 3:02:47 pm
+   * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
+   * ---------------------------------------------------------------------
+   * Copyright (c) 2020 Leo
+   * HISTORY:
+   * Date      	By	Comments
+   * ----------	---	---------------------------------------------------------
+   */
+  
+  
+  ?>
 @extends('Backend.Layouts.layout')
-@section('title', 'Categorias de Notícias')
+@section('title', 'Categorias notícias')
 @section('content')
-<section id="noticias">
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-4">
-            <h2>Notícias &raquo; Categorias</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/painel">Painel</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{route('backend.noticia.index')}}">Notícias</a>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>Categorias</strong>
-                </li>
-            </ol>
-        </div>  
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="ibox-title">
-                        <h5>Lista de Categorias cadastradas</h5>
-                        <div class="ibox-tools">
-                            <a href="{{route('backend.category.noticias.create')}}/" class="btn btn-primary btn-sm right">
-                                <i class="fa fa-plus"></i> 
-                                Adicionar
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                            @if (count($records) > 0)
-                                <ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded">
-                                @foreach ($records->toTree() as $record)
-                                    @include('Backend.partials.categories_article', $record)
-                                @endforeach
-                                </ol>
-                            @else
-                                @include('Backend.partials.categories_article-none')
-                            @endif
-                            {{-- @each('Backend.partials.categories_article', $records->toTree(), 'record', 'partials.categories_article-none') --}}
-                        <button id="saveOrder" class="btn btn-primary mb-3">
-                            <i class="fa fa-refresh"></i> 
-                            Atualizar
-                        </button>
-                        <div class="result"></div>
-                        <pre id="toArrayOutput">
-                        </pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
+
+@section('content')
+
+@if(session('error'))
+	<div class="alert alert-danger text-center">
+		<strong>{{ session('error') }}</strong>
+	</div>
+@endif
+
+<div class="card card user-card-full">
+	<div class="row m-l-0 m-r-0">
+		<div class="col-sm-4 bg-c-lite-green user-profile">
+			<div class="card-block text-center">
+				<form action="@if(\Route::current()->getName() == 'backend.category.noticias.index') {{ route('backend.category.noticias.index') }} @else {{ route('backend.category.noticias.update', $editoria->id) }} @endif" class="form-bordered" method="post" enctype="multipart/form-data">
+					    @csrf
+                        @if(\Route::current()->getName() == 'backend.category.noticias.index') {{ route('backend.category.site.index') }}
+                            @method('post')
+                        @else
+                            @method('put')
+                        @endif
+                        <div class="ibox-title">
+							<h2>@if(\Route::current()->getName() == 'backend.category.noticias.index') Adicionar nova editoria @else Editar editoria {{$editoria->title}}</> @endif</h2>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="control-label" for="name">Título <span class="required">*</span></label>
+								<input type="text" class="form-control" id="titulo" name="title" value="@if(\Route::current()->getName() == 'backend.category.noticias.index') {{ old('title') }} @else {{$editoria->title}} @endif">
+								@if($errors->first('title'))
+									<label for="title" class="error">{{ $errors->first('title') }}</label>
+								@endif
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="parent">Editoria Pai</label>
+								<select class="form-control" id="parent" name="parent">
+									<option value="0">Nenhum</option>
+									@php
+									$editoriasEspacos = function ($categories, $prefix = '&emsp;') use (&$editoriasEspacos, &$editoria) {
+									    foreach ($categories as $category) {
+									    	 // {{ (\Input::old("state_id") == $estado->id ? "selected":"") }}
+									    	if(\Route::current()->getName() == 'backend.category.noticias.index'){
+									    		Request::old("parent") == $category->id ? $selected = "selected": $selected = "";
+									    	}else {
+									    		$editoria->parent_id == $category->id ? $selected = "selected": $selected = "";
+									    	}
+									        // echo PHP_EOL.$prefix.$category->name;
+									        echo PHP_EOL.'<option value="'.$category->id.'" '.$selected.'>'.$prefix.$category->title.'</option>';
+
+									        $editoriasEspacos($category->children, $prefix.'&emsp;');
+									    }
+									};
+
+									$editoriasEspacos($editorias->toTree());
+									@endphp
+								</select>
+							</div>
+						</div>
+						<footer class="panel-footer">
+							<div class="row">
+								<div class="col-sm-6">
+									<button type="submit" class="btn btn-primary">@if(\Route::current()->getName() == 'backend.category.noticias.index') Cadastrar @else Editar @endif</button>
+									<button type="reset" class="btn btn-warning">Limpar</button>
+								</div>
+								<div class="col-sm-6 text-right">
+									@if(\Route::current()->getName() != 'backend.category.noticias.index')
+										<a href="{{route('backend.category.noticias.index')}}" class="btn btn-default btn-sm"><i class="fa fa-arrow-circle-left"></i> Voltar</a>
+									@endif
+									{{-- @if($countLixo > 0)
+										<a href="#lixeira" class="thrash-button btn btn-danger btn-sm"><i class="fa fa-trash"></i> Lixeira <span class="badge">{{$countLixo}}</span></a>
+									@endif --}}
+								</div>
+							</div>
+						</footer>
+				</form>
+			</div>
+		</div>
+		<div class="col-sm-8">
+			<div class="card-block">
+				<div class="table-responsive">
+					<section class="panel">
+						<div class="panel-body">
+							@php
+							function RecursiveCategories($array) {
+
+							    if (count($array)) {
+							            echo "\n<ul class=\"tree\">\n";
+							        foreach ($array as $category) {
+                                        echo "<li id=\"".$category->id."\">".
+                                            '&nbsp;<a href="'.route('backend.category.noticias.edit',$category->id).'" class="warning-row mini-button" data-toggle="tooltip" data-placement="top" title="Editar registro" style="background: none;border: none;color: #85c9e7;"><i class="fa fa-edit"></i></a>'.
+                                            '<form class="delete" action="'.route('backend.category.noticias.edit', $category->id).'" method="POST" style="display: inline-block;">'.
+                                            method_field('delete').
+                                            '<input type="hidden" name="_method" value="DELETE">'.
+                                            '<input type="hidden" name="_token" value="'.csrf_token().'" />'.
+                                            '<button type="submit" class="delete-row mini-button" data-toggle="tooltip" data-placement="top" title="Excluir registro" style="background: none;border: none;color: #85c9e7;"><i class="fa fa-trash"></i></button>'.
+                                            '</form>'.$category->title;
+                                        if (count($category->children)) {
+                                                RecursiveCategories($category->children);
+                                        }
+                                        echo "</li>\n";
+							        }
+							        echo "</ul>\n";
+							    }
+							}
+							RecursiveCategories($editorias->toTree());
+							@endphp
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @section('css')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog==" crossorigin="anonymous" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
-<style>
-.form-control, .single-line {
-    border-radius:5px;
-}
-ul.tagit input[type="text"] {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    width: inherit;
-    background-color: inherit;
-    outline: none;
-}
+<style type="text/css">
+	ul.tree, ul.tree ul {
+		list-style-type: none;
+		background: url(http://oestnews.com.br/assets/backend/images/vline.png) repeat-y;
+		margin: 0;
+		padding: 0;
+	}
+   
+	ul.tree ul {
+		margin-left: 10px;
+	}
 
-.temaAtivo {
-  border: 3px solid #f78900;
-}
+	ul.tree li {
+		margin: 0;
+		padding: 0 12px;
+		line-height: 20px;
+		background: url(http://oestnews.com.br/assets/backend/images/node.png) no-repeat;
+		color: #369;
+		font-weight: bold;
+	}
 
-input.ui-widget-content.ui-autocomplete-input, span.tagit-label, .ui-menu-item-wrapper {
-  text-transform: uppercase;
-}
+	ul.tree li li {
+	    color: inherit;
+	}
 
-
-.mjs-nestedSortable-error {
-    background: #fbe3e4;
-    border-color: transparent;
-}
-
-#tree {
-    width: 550px;
-    margin: 0;
-}
-
-ol {
-    max-width: 100%;
-    padding-left: 25px;
-}
-
-ol.sortable,ol.sortable ol {
-    list-style-type: none;
-}
-
-.sortable li div {
-    border: 1px solid #d4d4d4;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    cursor: move;
-    border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-    margin: 0;
-    padding: 3px;
-}
-
-li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
-    border-color: #999;
-}
-
-.disclose, .expandEditor {
-    cursor: pointer;
-    width: 20px;
-    display: none;
-}
-
-.sortable li.mjs-nestedSortable-collapsed > ol {
-    display: none;
-}
-
-.sortable li.mjs-nestedSortable-branch > div > .disclose {
-    display: inline-block;
-}
-
-.sortable span.ui-icon {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-
-.menuDiv {
-    background: #EBEBEB;
-}
-
-.menuEdit {
-    background: #FFF;
-}
-
-.itemTitle {
-    vertical-align: middle;
-    cursor: pointer;
-}
-
-.deleteMenu, .editMenu {
-    float: right;
-    cursor: pointer;
-}
-
-#saveOrder {
-    display: none;
-}
-
+	ul.tree li.last {
+		background: #000 url(http://oestnews.com.br/assets/backend/images/lastnode.png) no-repeat;
+	}
 </style>
 @endsection
-@section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nestedSortable/2.0.0/jquery.mjs.nestedSortable.min.js"></script>
+@section('script')
 <script>
-    $().ready(function(){
-        var ns = $('ol.sortable').nestedSortable({
-            forcePlaceholderSize: true,
-            handle: 'div',
-            helper:	'clone',
-            items: 'li',
-            opacity: .6,
-            placeholder: 'placeholder',
-            revert: 250,
-            tabSize: 25,
-            tolerance: 'pointer',
-            toleranceElement: '> div',
-            maxLevels: 4,
-            isTree: true,
-            expandOnHover: 700,
-            startCollapsed: false,
-            change: function(){
-                console.log('Relocated item');
+"use strict";
+$(document).ready(function(){
+	$('#color').minicolors({
+        control: $('#color').attr('data-control') || 'hue',
+        defaultValue: $('#color').attr('data-defaultValue') || '',
+        format: $('#color').attr('data-format') || 'hex',
+        keywords: $('#color').attr('data-keywords') || '',
+        inline: $('#color').attr('data-inline') === 'true',
+        letterCase: $('#color').attr('data-letterCase') || 'lowercase',
+        opacity: $('#color').attr('data-opacity'),
+        position: $('#color').attr('data-position') || 'bottom left',
+        swatches: $('#color').attr('data-swatches') ? $('#color').attr('data-swatches').split('|') : [],
+        change: function(value, opacity) {
+            if( !value ) return;
+            if( opacity ) value += ', ' + opacity;
+            if( typeof console === 'object' ) {
+                console.log(value);
             }
-        });
-
-        $( ".sortable li" ).droppable({
-            drop: function( ) {
-                $('#saveOrder').css('display','inline-block');
-            }
-        });
-        
-        $('.expandEditor').attr('title','Click to show/hide item editor');
-        $('.disclose').attr('title','Click to show/hide children');
-        $('.deleteMenu').attr('title', 'Click to delete item.');
-    
-        $('.disclose').on('click', function() {
-            $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
-            $(this).toggleClass('ui-icon-plusthick').toggleClass('ui-icon-minusthick');
-        });
-        
-        $('.expandEditor, .itemTitle').click(function(){
-            var id = $(this).attr('data-id');
-            $('#menuEdit'+id).toggle();
-            $(this).toggleClass('ui-icon-triangle-1-n').toggleClass('ui-icon-triangle-1-s');
-        });
-        
-        $('.deleteMenu').click(function(){
-            var id = $(this).attr('data-id');
-            $('#menuItem_'+id).remove();
-        });
-            
-        // $('#serialize').click(function(){
-        //     serialized = $('ol.sortable').nestedSortable('serialize');
-        //     $('#serializeOutput').text(serialized+'\n\n');
-        // })
-
-        // $('#toHierarchy').click(function(e){
-        //     hiered = $('ol.sortable').nestedSortable('toHierarchy', {startDepthCount: 0});
-        //     hiered = dump(hiered);
-        //     (typeof($('#toHierarchyOutput')[0].textContent) != 'undefined') ?
-        //     $('#toHierarchyOutput')[0].textContent = hiered : $('#toHierarchyOutput')[0].innerText = hiered;
-        // })
-
-        $('#saveOrder').click(function(e){
-            arraied = $('ol.sortable').nestedSortable('toArray', {startDepthCount: 0});
-            console.log(arraied);
-            // $.post( "{{route('backend.category.noticias.saveOrder')}}", function( data ) {
-            //     $( ".result" ).html( data );
-            // });
-
-            $.post("{{route('backend.category.noticias.saveOrder')}}",
-                { 
-                    _token: $('meta[name=csrf-token]').attr('content'),
-                     _method : 'POST', 
-                     data :  arraied
-                }, function(response){
-                    if(response != '')
-                    {
-                        $( ".result" ).html( data );
-                    }
-                });
-
-            // arraied = dump(arraied);
-            // (typeof($('#toArrayOutput')[0].textContent) != 'undefined') ?
-            // $('#toArrayOutput')[0].textContent = arraied : $('#toArrayOutput')[0].innerText = arraied;
-        });
-
-        // function dump(arr,level) {
-		// 	var dumped_text = "";
-		// 	if(!level) level = 0;
-	
-		// 	//The padding given at the beginning of the line.
-		// 	var level_padding = "";
-		// 	for(var j=0;j<level+1;j++) level_padding += "    ";
-	
-		// 	if(typeof(arr) == 'object') { //Array/Hashes/Objects
-		// 		for(var item in arr) {
-		// 			var value = arr[item];
-	
-		// 			if(typeof(value) == 'object') { //If it is an array,
-		// 				dumped_text += level_padding + "'" + item + "' ...\n";
-		// 				dumped_text += dump(value,level+1);
-		// 			} else {
-		// 				dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
-		// 			}
-		// 		}
-		// 	} else { //Strings/Chars/Numbers etc.
-		// 		dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
-		// 	}
-		// 	return dumped_text;
-		// }
+        },
+        theme: 'bootstrap'
     });
+});
 </script>
 @endsection
-@include('Backend.Includes.toast')

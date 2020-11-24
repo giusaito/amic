@@ -10,10 +10,24 @@ use Illuminate\Support\Facades\Input;
 
 class CategoryArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request, $id = null)
     {
-        $records = CategoryArticle::get();
-        return view('Backend.CategoryArticle.index', ['records' => $records]);
+        if(!$id){
+            $editoria = null;
+		}else {
+            $editoria = CategoryArticle::where(['id'=>$id])->first();
+        }
+        $search = false;
+    	if ($request->has('q')) {
+    		$search = true;
+            $q = $request->input('q');
+            $editorias = CategoryArticle::search($q)->orderBy('created_at','desc')->get();
+        }else {
+        	$editorias = CategoryArticle::orderBy('created_at','desc')->get();
+        }
+        
+
+        return view('Backend.CategoryArticle.index', compact('editorias','editoria'));
     }
     public function create()
     {
@@ -65,7 +79,39 @@ class CategoryArticleController extends Controller
     }
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'      => 'required|max:100|unique:category_articles,title,'.$id,
+        ],
+        [
+            'title.required'     => 'Você deve informar o nome da Editoria.',
+            'title.unique'       => 'Já existe uma editoria com este nome. Por favor, escolha outro.',
+            'title.max'          => 'O nome da Editoria excedeu o limite de 100 caracteres.',
+        ]);
+
+        $record   = CategoryArticle::findOrFail($id);
+
+        if($request->parent > 0){
+            $parent = CategoryArticle::findOrFail($request->parent);
+        }
+        
+
+        $dados = [
+            'title'  => $request->title,
+            'slug'   => \Str::slug($request->title)
+        ];
+
+        if($request->parent > 0){
+            $record->appendToNode($parent)->update($dados);
+        }else {
+            $record->makeRoot()->update($dados);
+        }
+
+        $notification = array(
+            'message' => 'A Editoria foi editada com sucesso!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('backend.category.noticias.index')->with($notification);
     }
     public function destroy($id)
     {

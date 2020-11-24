@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  24/11/2020 11:15:13 am
+ * Last Modified:  24/11/2020 4:19:02 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -77,7 +77,8 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
         'update' => 'category.noticias.update',
         'destroy' => 'category.noticias.destroy',
     ]);
-
+    Route::get('/{id}/bw-editar', 	['as' => 'category.noticias.edit', 	'uses' => 'CategoryArticleController@index']);
+        
     // Final rota notícias
 
 
