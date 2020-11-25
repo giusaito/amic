@@ -31,6 +31,7 @@ class CreateTerraDoSol extends Migration
         Schema::create('ts_slideshows', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ts_edition_id')->unsigned();
+            $table->string('path')->nullable();
             $table->string('image',100)->nullable();
             $table->timestamps();
 

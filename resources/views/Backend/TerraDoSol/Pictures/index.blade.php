@@ -2,8 +2,6 @@
 @section('title', 'Terra do Sol - '.$edicao->title.' - Fotos')
 @section('content')
     <h1>Terra do Sol - {{ $edicao->title }} &raquo; Fotos</h1>
-    {{-- <form action="{{ route('backend.ts.paths.store', ['edicao' => $edicao->id]) }}" class="form-bordered" method="post" enctype="multipart/form-data">
-        @csrf --}}
         <div class="row">
             <div class="col-md-12 mt-3">
                 <a class="btn btn-warning" href="{{route('backend.ts.editions.index')}}">	<i class="fa fa-arrow-left"></i> 
@@ -16,7 +14,6 @@
                 </div>
             </div>
         </div>
-    {{-- </form> --}}
     </section>
 @endsection
 @section('css')
@@ -61,9 +58,6 @@ $(document).ready(function() {
         }
     });
     $('#file-1').on('fileuploaded', function(event, data, previewId, index) {
-        // console.log(previewId);
-        // console.log(data['response']['key']);
-        // addHidden(document.forms.bugForm, 'fileUrl[' + index + '][]', fileName);
         $('#'+previewId).attr('data-id',data['response']['key']);
 
     });
