@@ -187,6 +187,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
         Route::group(['prefix'=>'fotos'],function(){
             Route::get('/{edicao}', ['as' => 'pictures.index', 'uses' => 'PicturesController@index']);
             Route::post('adicionar/{edicao}', ['as' => 'pictures.store', 'uses' =>'PicturesController@store']);
+            Route::post('excluir', ['as' => 'pictures.destroy', 'uses' => 'PicturesController@destroy']);
 			// Route::get('adicionar/{edicao}', ['as' => 'pictures.create', 'uses' =>'PicturesController@create']);
 			// Route::post('adicionar/{edicao}', ['as' => 'pictures.store', 'uses' =>'PicturesController@store']);
 			// Route::get('editar/{edicao}/{id}', ['as' => 'pictures.edit', 'uses' => 'PicturesController@edit']);

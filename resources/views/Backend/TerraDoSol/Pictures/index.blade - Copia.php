@@ -55,13 +55,6 @@ $(document).ready(function() {
             return filename.replace('(', '_').replace(']', '_');
         }
     });
-    $('#file-1').on('fileuploaded', function(event, data, previewId, index) {
-        // console.log(previewId);
-        // console.log(data['response']['key']);
-        // addHidden(document.forms.bugForm, 'fileUrl[' + index + '][]', fileName);
-        $('#'+previewId).attr('data-id',data['response']['key']);
-
-    });
 });
 </script>
 
