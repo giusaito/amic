@@ -40,11 +40,23 @@ class PicturesController extends Controller
         $record->image          = $hashname;
         $record->save();
 
-    	return response()->json(['uploaded' => $path.$hashname, 'key' => $record->id]);
+        return response()->json([
+            'initialPreview' => ['/storage/'.$path. 'original-' . $hashname],
+            'initialPreviewConfig' => [
+                ['key' => $record->id, 'exif' => $this->storage->path($path. 'original-' . $hashname)]
+            ]
+        ]);
     }
     public function destroy(Request $request)
     {
-        dd($request);
+        $record = Picture::find($request->key);
+        $foto = $record->path . 'original-' . $record->image;
+        if($record->delete()){
+            $this->storage->delete($foto);
+            return null;
+        }else {
+            return response()->json(['error'=>'Houve um problema para excluir a imagem! por favor, tente novamente!']);
+        }
         // $this->storage->delete($edico->path . 'original-' . $edico->logo);
         // $this->storage->delete($edico->path . '150x150-' . $edico->logo);
        
