@@ -22,9 +22,6 @@
 @section('title', 'Categorias notícias')
 @section('content')
 
-
-@section('content')
-
 @if(session('error'))
 	<div class="alert alert-danger text-center">
 		<strong>{{ session('error') }}</strong>
@@ -33,11 +30,11 @@
 
 <div class="card card user-card-full">
 	<div class="row m-l-0 m-r-0">
-		<div class="col-sm-4 bg-c-lite-green user-profile">
+		<div class="col-6">
 			<div class="card-block text-center">
-				<form action="@if(\Route::current()->getName() == 'backend.category.noticias.index') {{ route('backend.category.noticias.index') }} @else {{ route('backend.category.noticias.update', $editoria->id) }} @endif" class="form-bordered" method="post" enctype="multipart/form-data">
+				<form action="@if(\Route::current()->getName() == 'backend.category.noticias.index') {{ route('backend.category.noticias.index') }} @else {{ route('backend.category.noticias.update', $editoria->id) }} @endif" class="form-bordered" method="post">
 					    @csrf
-                        @if(\Route::current()->getName() == 'backend.category.noticias.index') {{ route('backend.category.site.index') }}
+                        @if(\Route::current()->getName() == 'backend.category.noticias.index')
                             @method('post')
                         @else
                             @method('put')
@@ -82,7 +79,6 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<button type="submit" class="btn btn-primary">@if(\Route::current()->getName() == 'backend.category.noticias.index') Cadastrar @else Editar @endif</button>
-									<button type="reset" class="btn btn-warning">Limpar</button>
 								</div>
 								<div class="col-sm-6 text-right">
 									@if(\Route::current()->getName() != 'backend.category.noticias.index')
@@ -97,7 +93,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="col-sm-8">
+		<div class="col-6">
 			<div class="card-block">
 				<div class="table-responsive">
 					<section class="panel">
@@ -110,7 +106,7 @@
 							        foreach ($array as $category) {
                                         echo "<li id=\"".$category->id."\">".
                                             '&nbsp;<a href="'.route('backend.category.noticias.edit',$category->id).'" class="warning-row mini-button" data-toggle="tooltip" data-placement="top" title="Editar registro" style="background: none;border: none;color: #85c9e7;"><i class="fa fa-edit"></i></a>'.
-                                            '<form class="delete" action="'.route('backend.category.noticias.edit', $category->id).'" method="POST" style="display: inline-block;">'.
+                                            '<form class="delete" action="'.route('backend.category.noticias.destroy', $category->id).'" method="POST" style="display: inline-block;">'.
                                             method_field('delete').
                                             '<input type="hidden" name="_method" value="DELETE">'.
                                             '<input type="hidden" name="_token" value="'.csrf_token().'" />'.
@@ -135,6 +131,7 @@
 </div>
 @endsection
 @section('css')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <style type="text/css">
 	ul.tree, ul.tree ul {
 		list-style-type: none;
@@ -165,29 +162,56 @@
 	}
 </style>
 @endsection
-@section('script')
+
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script>
-"use strict";
-$(document).ready(function(){
-	$('#color').minicolors({
-        control: $('#color').attr('data-control') || 'hue',
-        defaultValue: $('#color').attr('data-defaultValue') || '',
-        format: $('#color').attr('data-format') || 'hex',
-        keywords: $('#color').attr('data-keywords') || '',
-        inline: $('#color').attr('data-inline') === 'true',
-        letterCase: $('#color').attr('data-letterCase') || 'lowercase',
-        opacity: $('#color').attr('data-opacity'),
-        position: $('#color').attr('data-position') || 'bottom left',
-        swatches: $('#color').attr('data-swatches') ? $('#color').attr('data-swatches').split('|') : [],
-        change: function(value, opacity) {
-            if( !value ) return;
-            if( opacity ) value += ', ' + opacity;
-            if( typeof console === 'object' ) {
-                console.log(value);
-            }
-        },
-        theme: 'bootstrap'
-    });
-});
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": true,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+
+  @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type', 'info') }}";
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+        break;
+    }
+  @endif
+
+  @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+
 </script>
 @endsection

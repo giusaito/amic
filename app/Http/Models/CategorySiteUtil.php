@@ -20,6 +20,6 @@ class CategorySiteUtil extends Model
 
     public function childs()
     {
-        return $this->hasMany(Editorial::class, 'parent_id', 'id');
+        return $this->hasMany(CategorySiteUtil::class, 'parent_id', 'id');
     }
 }

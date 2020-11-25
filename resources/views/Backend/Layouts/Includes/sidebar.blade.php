@@ -60,7 +60,7 @@
                 <a href="#" aria-expanded="false"><i class="fa fa-link"></i> <span class="nav-label">Informações úteis</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                     <li class="{{ (request()->is('painel/categoria/site-util*')) ? 'active' : '' }}">
-                        <a href="{{route('backend.category.site.index')}}">
+                        <a href="{{route('backend.category.site.util.index')}}">
                             <span class="nav-label">Categoria Sites Úteis</span>
                         </a>
                     </li>

@@ -57,11 +57,13 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
         Route::get('site-util/pesquisar/', 'SiteUtilController@search')->name('site-util.search');
         Route::resource('/site-util', 'SiteUtilController');
         route::resource('categoria-site-util', 'CategorySiteUtilController')->names([
-            'index' => 'category.site.index',
-            'create' => 'category.site.create',
-            'update' => 'category.site.update',
-            'destroy' => 'category.site.destroy',
-        ]);
+        'index' => 'category.site.util.index',
+        'create' => 'category.site.util.create',
+        'store' => 'category.site.util.store',
+        'update' => 'category.site.util.update',
+        'destroy' => 'category.site.util.destroy',
+    ]);
+    Route::get('categoria-site-util/{id}/bw-editar',   ['as' => 'category.site.util.edit',  'uses' => 'CategorySiteUtilController@index']);
 
     // Final Link útil
     
@@ -69,7 +71,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
     Route::get('noticias/tag/', 'ArticleController@tag')->name('noticia.tag');
     Route::resource('/noticia', 'ArticleController');
-    Route::post('categoria-noticia/noticias/salvar-ordem/', 'CategoryArticleController@saveOrder')->name('category.noticias.saveOrder');
+    // Route::post('categoria-noticia/noticias/salvar-ordem/', 'CategoryArticleController@saveOrder')->name('category.noticias.saveOrder');
     route::resource('categoria-noticia', 'CategoryArticleController')->names([
         'index' => 'category.noticias.index',
         'create' => 'category.noticias.create',
