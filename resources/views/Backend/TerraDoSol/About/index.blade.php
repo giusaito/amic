@@ -12,11 +12,11 @@
                 <div class="card mt-3" style="padding:15px;">
                     <div class="form-group">
                         <label for="title">Título</label>
-                        <input name="title" type="text" class="form-control" id="title" placeholder="Título" required="required" value="{{$record->title}}">
+                        <input name="title" type="text" class="form-control" id="title" placeholder="Título" required="required" value="@if(isset($record->title)) {{$record->title}} @endif">
                     </div>
                     <div class="form-group">
                         <label for="subtitle">Subtítulo</label>
-                        <textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">{{$record->content}}</textarea>
+                        <textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">@if(isset($record->content)) {{$record->content}} @endif</textarea>
                     </div>
                 </div>
             </div>

@@ -50,23 +50,11 @@ class PicturesController extends Controller
     public function destroy(Request $request)
     {
         $record = Picture::find($request->key);
-        // $foto = $record->path . 'original-' . $record->image;
         if($record->delete()){
             $this->storage->delete($record->path . 'original-' . $record->image);
             return response()->json(['success'=>'Removido']);
         }else {
             return response()->json(['error'=>'Houve um problema para excluir a imagem! por favor, tente novamente!']);
         }
-        // $this->storage->delete($edico->path . 'original-' . $edico->logo);
-        // $this->storage->delete($edico->path . '150x150-' . $edico->logo);
-       
-        // $edico->delete();
-
-        // $notification = [
-        //     'message' => 'Edição excluída com sucesso',
-        //     'alert-type' => 'success'
-        // ];
-
-        // return redirect()->route('backend.ts.editions.index')->with($notification);
     }
 }
