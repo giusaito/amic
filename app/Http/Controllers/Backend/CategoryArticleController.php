@@ -25,14 +25,13 @@ class CategoryArticleController extends Controller
         }else {
         	$editorias = CategoryArticle::orderBy('created_at','desc')->get();
         }
-        
 
-        return view('Backend.CategoryArticle.index', compact('editorias','editoria'));
+        return view('Backend.Article.CategoryArticle.index', compact('editorias','editoria'));
     }
     public function create()
     {
         $editorias = CategoryArticle::orderBy('created_at','desc')->get();
-        return view('Backend.CategoryArticle.create', compact('editorias'));
+        return view('Backend.Article.CategoryArticle.create', compact('editorias'));
     }
     public function store(Request $request)
     {
@@ -69,14 +68,7 @@ class CategoryArticleController extends Controller
         $this->saveOrderByArray($request['data']);
         //saveOrderByArray
     }
-    public function show($id)
-    {
-        //
-    }
-    public function edit($id)
-    {
-        //
-    }
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -93,7 +85,6 @@ class CategoryArticleController extends Controller
         if($request->parent > 0){
             $parent = CategoryArticle::findOrFail($request->parent);
         }
-        
 
         $dados = [
             'title'  => $request->title,
@@ -115,7 +106,14 @@ class CategoryArticleController extends Controller
     }
     public function destroy($id)
     {
-        //
+       CategoryArticle::find($id)->delete();
+
+       $notification = array(
+            'message' => 'A Editoria foi deletada com sucesso!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('backend.category.noticias.index')->with($notification);
     }
 
     /**
