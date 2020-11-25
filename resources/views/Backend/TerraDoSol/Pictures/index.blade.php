@@ -31,8 +31,13 @@
 $(document).ready(function() {
     $("#file-1").fileinput({
         @if($records)
-        initialPreview: [@foreach($records as $record) '{{asset('storage')}}/{{ $record->path}}original-{{$record->image}}', @endforeach],
-        initialPreviewAsData: true,
+            initialPreview: [@foreach($records as $record) '{{asset('storage')}}/{{ $record->path}}original-{{$record->image}}', @endforeach],
+            initialPreviewAsData: true,
+            initialPreviewConfig: [
+                @foreach($records as $record) 
+                            {caption: "{{asset('storage')}}/{{ $record->path}}original-{{$record->image}}", key: {{$record->id}}},
+                @endforeach
+            ],
         @endif
         language: "pt-BR",
         uploadUrl: "{{ route('backend.ts.pictures.store', ['edicao' => $edicao->id]) }}",

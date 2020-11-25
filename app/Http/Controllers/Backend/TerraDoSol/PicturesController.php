@@ -50,10 +50,10 @@ class PicturesController extends Controller
     public function destroy(Request $request)
     {
         $record = Picture::find($request->key);
-        $foto = $record->path . 'original-' . $record->image;
+        // $foto = $record->path . 'original-' . $record->image;
         if($record->delete()){
-            $this->storage->delete($foto);
-            return null;
+            $this->storage->delete($record->path . 'original-' . $record->image);
+            return response()->json(['success'=>'Removido']);
         }else {
             return response()->json(['error'=>'Houve um problema para excluir a imagem! por favor, tente novamente!']);
         }
