@@ -196,12 +196,9 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 			Route::post('/{edicao}', ['as' => 'recomendations.store', 'uses' =>'RecomendationsController@store']);
 		});	
         Route::group(['prefix'=>'slideshow'],function(){
-			Route::get('/{edicao}', ['as' => 'slideshow.index', 'uses' => 'SlideshowController@index']);
-			Route::get('adicionar/{edicao}', ['as' => 'slideshow.create', 'uses' =>'SlideshowController@create']);
-			Route::post('adicionar/{edicao}', ['as' => 'slideshow.store', 'uses' =>'SlideshowController@store']);
-			Route::get('editar/{edicao}/{id}', ['as' => 'slideshow.edit', 'uses' => 'SlideshowController@edit']);
-            Route::post('editar/{edicao}/{id}', ['as' => 'slideshow.update', 'uses' => 'SlideshowController@update']);
-            Route::delete('excluir/{edicao}/{id}', ['as' => 'slideshow.destroy', 'uses' => 'SlideshowController@destroy']);
+            Route::get('/{edicao}', ['as' => 'slideshow.index', 'uses' => 'SlideshowController@index']);
+            Route::post('adicionar/{edicao}', ['as' => 'slideshow.store', 'uses' =>'SlideshowController@store']);
+            Route::post('excluir', ['as' => 'slideshow.destroy', 'uses' => 'SlideshowController@destroy']);
 		});	
         Route::group(['prefix'=>'patrocinadores'],function(){
 			Route::get('/{edicao}', ['as' => 'sponsors.index', 'uses' => 'SponsorsController@index']);
