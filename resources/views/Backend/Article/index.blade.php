@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:02:04 am
- * Last Modified:  23/11/2020 9:36:14 am
+ * Last Modified:  25/11/2020 11:26:45 am
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -71,6 +71,7 @@
                             <th scope="col">Título</th>
                             {{-- <th scope="col">Descrição</th> --}}
                             <th scope="col">Autor:</th>
+                            <th scope="col">Fotos:</th>
                             <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -90,8 +91,12 @@
                                         <th scope="row"><span class="label label-warning">Rascunho</span></th>
                                     @endif
                                     <th scope="row">{{$article->title}}</th>
-                                    {{-- <th scope="row">{{ Str::limit($article->description, 50) }}</th> --}}
                                     <th scope="row">{{$article->user->name}}</th>
+                                    <th scope="row">
+                                        <a href="{{route('backend.photo.noticias.index', ['photo' => $article->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Fotos">
+                                            <i class="fa fa-file-picture-o"></i>
+                                        </a>
+                                    </th>
                                     <th scope="row">
                                         <a href="{{route('backend.noticia.edit', ['noticium' => $article->id])}}" class="btn btn-warning btn-sm">
                                             <i class="fa fa-pencil"></i> 
