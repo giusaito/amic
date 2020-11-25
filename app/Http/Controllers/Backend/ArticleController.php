@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:59:44 am
- * Last Modified:  23/11/2020 3:03:07 pm
+ * Last Modified:  25/11/2020 3:37:44 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -296,5 +296,79 @@ class ArticleController extends Controller
     	$pesquisaTag = Tag::where('title','like','%'.$query.'%')->get(['tags.id','tags.title AS text']);
 
 		return response()->json($pesquisaTag);
+    }
+
+    public function push($id){
+        $APP_ID = 'a5b4524b-7831-4a5a-a268-ced5d946ee4d';
+        $SECRET_KEY = 'ZjIyODUzMzMtOWE3YS00NjQxLWE0NmUtOGQyMmI0MmY4MzNk';
+
+        $noticia = Article::where('id',$id)->with(['editorias'])->first();
+    
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+
+        if(!empty($noticia->path) && !empty($noticia->photo)){
+            $imagem =  env('APP_URL') . "/storage/" . $noticia->path . 'original/' . $noticia->image;
+        }else {
+            $imagem = '';
+        }
+        if(isset($noticia->editorias[0]['name'])){
+            $editoria = $noticia->editorias[0]['name'];
+        }else {
+            $editoria = '';
+        }
+
+
+        $date = Carbon::createFromTimeStamp(strtotime($noticia->created_at));
+        $date_only = $date->formatLocalized('%A %d de %B de %Y às %H:%M:%S');
+      
+        $fields = array(
+            'app_id' => $APP_ID,
+            'included_segments' => array('All'),
+            'data' => array(
+                'noticiaId' => $noticia->id,
+                'editoria' => $editoria,
+                'cabecalho' => utf8_encode($date_only),
+                'titulo' => $noticia->title,
+                'gravata' => $noticia->gravata,
+                'icon' => $imagem,
+                'link' => '/noticia/'.$noticia->id.'/'.$noticia->slug,
+            ),
+            'url' => env('APP_URL') . "/noticia/".$noticia->id.'/'.$noticia->slug,
+            'headings' => array(
+                'en' => $editoria,
+                'icon' =>  $imagem,
+                'image' => $imagem,
+
+            ),
+            'contents' => array(
+                'en' => $noticia->title,
+                'icon' =>  $imagem,
+                'image' => $imagem,
+            ),
+
+        );
+
+
+        $fields = json_encode($fields);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8', 'Authorization: Basic '.$SECRET_KEY));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+
+        $notification = array(
+            'message' => 'Push '.$noticia->title.' enviado com sucesso!',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('backend.noticia.index')->with($notification);
     }
 }

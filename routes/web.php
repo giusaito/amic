@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  25/11/2020 11:41:52 am
+ * Last Modified:  25/11/2020 3:12:17 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -70,6 +70,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     // Início rota notícias
     Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
     Route::get('noticias/tag/', 'ArticleController@tag')->name('noticia.tag');
+    Route::post('noticias/push/{id}', 'ArticleController@push')->name('noticia.push');
     Route::resource('/noticia', 'ArticleController');
     // Route::post('categoria-noticia/noticias/salvar-ordem/', 'CategoryArticleController@saveOrder')->name('category.noticias.saveOrder');
     route::resource('categoria-noticia', 'CategoryArticleController')->names([

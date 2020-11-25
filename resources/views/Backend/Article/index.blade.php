@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:02:04 am
- * Last Modified:  25/11/2020 11:26:45 am
+ * Last Modified:  25/11/2020 3:47:24 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -72,6 +72,7 @@
                             {{-- <th scope="col">Descrição</th> --}}
                             <th scope="col">Autor:</th>
                             <th scope="col">Fotos:</th>
+                            <th scope="col">Push:</th>
                             <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -96,6 +97,17 @@
                                         <a href="{{route('backend.photo.noticias.index', ['photo' => $article->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Fotos">
                                             <i class="fa fa-file-picture-o"></i>
                                         </a>
+                                    </th>
+                                    <th scope="row">
+                                    <form action="{{route('backend.noticia.push', $article->id)}}" method="POST">
+                                        @csrf
+                                        <button onclick="return confirm('Tem certeza que deseja enviar push para a notícia {{$article->title}}?')" type="submit" data-toggle="tooltip" data-container="body" data-title="Enviar Push" style="border: none;color: #2e353c;font-size: 14px;line-height: 18px;float: left;padding: 8px 10px;border-radius: 4px;background: #f2f3f4;margin-right: 5px; margin-left:5px">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </button>
+                                    </form>
+                                        {{-- <a href="{{route('backend.photo.noticias.index', ['photo' => $article->id])}}" class="btn btn-white btn-bitbucket" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Fotos">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </a> --}}
                                     </th>
                                     <th scope="row">
                                         <a href="{{route('backend.noticia.edit', ['noticium' => $article->id])}}" class="btn btn-warning btn-sm">
@@ -130,5 +142,4 @@
     </div>
 </section>
 @endsection
-
 @include('Backend.Includes.toast')
