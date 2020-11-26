@@ -131,6 +131,7 @@ class CreateTerraDoSol extends Migration
         Schema::create('ts_sponsors', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ts_edition_id')->unsigned();
+            $table->string('path')->nullable();
             $table->string('logo',100);
             $table->string('title');
             $table->string('slug');

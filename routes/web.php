@@ -206,6 +206,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
             Route::post('excluir', ['as' => 'slideshow.destroy', 'uses' => 'SlideshowController@destroy']);
 		});	
         Route::group(['prefix'=>'patrocinadores'],function(){
+            Route::get('pesquisar/{edicao}', 'SponsorsController@search')->name('sponsors.search');
 			Route::get('/{edicao}', ['as' => 'sponsors.index', 'uses' => 'SponsorsController@index']);
 			Route::get('adicionar/{edicao}', ['as' => 'sponsors.create', 'uses' =>'SponsorsController@create']);
 			Route::post('adicionar/{edicao}', ['as' => 'sponsors.store', 'uses' =>'SponsorsController@store']);
