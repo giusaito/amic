@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  25/11/2020 3:12:17 pm
+ * Last Modified:  26/11/2020 2:47:26 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -117,6 +117,11 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
     // Início informativo
     Route::get('informativo/pesquisar/', 'InformativeController@search')->name('informativo.search');
     Route::resource('informativo', 'InformativeController');
+    //Final informativo
+    
+    // Início informativo
+    Route::get('servico/pesquisar/', 'ServiceController@search')->name('servico.search');
+    Route::resource('servico', 'ServiceController');
     //Final informativo
     
     // Início leis e regimentos

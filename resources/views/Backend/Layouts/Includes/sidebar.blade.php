@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:30:00 am
- * Last Modified:  24/11/2020 2:08:09 pm
+ * Last Modified:  26/11/2020 5:32:15 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -103,13 +103,16 @@
                 <a href="{{route('backend.evento.index')}}"><i class="fa fa-calendar"></i> <span class="nav-label">Agenda</span></a>
             </li>
             <li class="{{ (request()->is('painel/patrocinador*')) ? 'active' : '' }}">
-                <a href="{{route('backend.patrocinador.index')}}"><i class="fa fa-money"></i> <span class="nav-label">Patrocinador</span></a>
+                <a href="{{route('backend.patrocinador.index')}}"><i class="fa fa-money"></i> <span class="nav-label">Patrocinadores</span></a>
             </li>
             <li class="{{ (request()->is('painel/publicidade*')) ? 'active' : '' }}">
                 <a href="{{route('backend.publicidade.index')}}"><i class="fa fa-money"></i> <span class="nav-label">Publicidade</span></a>
             </li>
             <li class="{{ (request()->is('painel/informativo*')) ? 'active' : '' }}">
                 <a href="{{route('backend.informativo.index')}}"><i class="fa fa-info"></i> <span class="nav-label">Informativo</span></a>
+            </li>
+            <li class="{{ (request()->is('painel/servico*')) ? 'active' : '' }}">
+                <a href="{{route('backend.servico.index')}}"><i class="fa fa-wrench"></i> <span class="nav-label">Serviços</span></a>
             </li>
             <li class="{{ (request()->is('painel/slide*')) ? 'active' : '' }}">
                 <a href="{{route('backend.slide.index')}}"><i class="fa fa-photo"></i> <span class="nav-label">Slide</span></a>
