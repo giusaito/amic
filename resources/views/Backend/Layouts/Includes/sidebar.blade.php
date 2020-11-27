@@ -117,6 +117,9 @@
             <li class="{{ (request()->is('painel/slide*')) ? 'active' : '' }}">
                 <a href="{{route('backend.slide.index')}}"><i class="fa fa-photo"></i> <span class="nav-label">Slide</span></a>
             </li>
+            <li class="{{ (request()->is('painel/terra-do-sol*')) ? 'active' : '' }}">
+                <a href="{{route('backend.ts.editions.index')}}"><i class="fas fa-sun"></i> <span class="nav-label">Terra do Sol</span></a>
+            </li>
             <li class="{{ (request()->is('painel/configuracoes*')) ? 'active' : '' }}">
                 <a href="{{route('backend.configuracoes.index')}}"><i class="fa fa-cogs"></i> <span class="nav-label">Configurações</span></a>
             </li>
