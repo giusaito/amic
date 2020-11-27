@@ -85,6 +85,7 @@ class CreateTerraDoSol extends Migration
         Schema::create('ts_videos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ts_edition_id')->unsigned();
+            $table->string('path')->nullable();
             $table->string('thumbnail',100);
             $table->string('video');
             $table->timestamps();

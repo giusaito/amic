@@ -225,7 +225,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 			Route::post('adicionar/{edicao}', ['as' => 'videos.store', 'uses' =>'VideosController@store']);
 			Route::get('editar/{edicao}/{id}', ['as' => 'videos.edit', 'uses' => 'VideosController@edit']);
             Route::post('editar/{edicao}/{id}', ['as' => 'videos.update', 'uses' => 'VideosController@update']);
-            Route::delete('excluir/{edicao}/{id}', ['as' => 'videos.destroy', 'uses' => 'VideosController@destroy']);
+            Route::delete('excluir/{edicao}/{video}', ['as' => 'videos.destroy', 'uses' => 'VideosController@destroy']);
 		});	
     });
 

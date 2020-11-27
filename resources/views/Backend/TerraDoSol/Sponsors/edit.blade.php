@@ -1,7 +1,7 @@
 @extends('Backend.Layouts.layout')
-@section('title', 'Terra do Sol - '.$edicao->title.' - Patrocinadores - Adicionar')
+@section('title', 'Terra do Sol - '.$edicao->title.' - Patrocinadores - Editar')
 @section('content')
-<h1>Terra do Sol - {{ $edicao->title }} &raquo; Patrocinadores - Adicionar</h1>
+<h1>Terra do Sol - {{ $edicao->title }} &raquo; Patrocinadores - Editar</h1>
     <form action="{{ route('backend.ts.sponsors.update', ['edicao' => $edicao->id, 'id' => $record->id]) }}" class="form form-vertical" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
@@ -111,7 +111,6 @@ $("#file").fileinput({
     allowedFileExtensions: ["jpg", "png", "gif"],
     language: "pt-BR",
     uploadUrl: "{{ route('backend.ts.sponsors.store', ['edicao' => $edicao->id]) }}",
-    deleteUrl: "{{ route('backend.ts.sponsors.destroy') }}",
 });
 </script>
 @endsection

@@ -52,78 +52,43 @@
                         </form>
                     </div> 
                 </div>
-                        @isset($records)
-                            <div class="grid" >
-                                @foreach($records as $record)
-                                    <div class="grid-item">
-                                        <div class="ibox">
-                                            <div class="ibox-content">
-                                                <h4 class="font-bold">
-                                                    {{$record->title}}
-                                                </h4>
-                                                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->logo}}" class="img-fluid">
-                                            </div>
-                                            <div class="ibox-footer">
-                                                <a href="{{route('backend.ts.sponsors.edit', ['edicao' => $edicao->id, 'id' => $record->id])}}" class="btn btn-warning">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                                <form  method="POST" action="{{route('backend.ts.sponsors.destroy', ['edicao' => $edicao->id, 'sponsor' => $record])}}" style="display:inline-block">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE') }}
-                                                    <div class="form-group">
-                                                        <button onclick="return confirm('Tem certeza que deseja excluir {{$record->title}}?')"  type="submit" class="btn btn-danger text-white">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                @isset($records)
+                    <div class="grid" >
+                        @foreach($records as $record)
+                            <div class="grid-item">
+                                <div class="ibox">
+                                    <div class="ibox-content">
+                                        <h4 class="font-bold">
+                                            {{$record->title}}
+                                        </h4>
+                                        <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->logo}}" class="img-fluid">
                                     </div>
-                                @endforeach
-                            </div>
-                        @endisset
-                        @empty($records)  
-                            <div class="ibox-content"> 
-                                <div class="alert alert-warning">
-                                    Nenhum patrocinador cadastrado.
+                                    <div class="ibox-footer">
+                                        <a href="{{route('backend.ts.sponsors.edit', ['edicao' => $edicao->id, 'id' => $record->id])}}" class="btn btn-warning">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <form  method="POST" action="{{route('backend.ts.sponsors.destroy', ['edicao' => $edicao->id, 'sponsor' => $record])}}" style="display:inline-block">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <div class="form-group">
+                                                <button onclick="return confirm('Tem certeza que deseja excluir {{$record->title}}?')"  type="submit" class="btn btn-danger text-white">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        @endempty
-                        {{-- <table class="table center-content-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">@sortablelink('content', 'Item')</th>
-                                    <th scope="col">@sortablelink('created_at', 'Adicionado')</th>
-                                    <th scope="col">@sortablelink('updated_at', 'Modificado')</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($records as $record)
-                                    <tr>
-                                        <th scope="row">{{$record->content}}</th>
-                                        <th scope="row">{{ Carbon\Carbon::parse($record->created_at)->format('d/m/Y') }}</th>
-                                        <th scope="row">{{ Carbon\Carbon::parse($record->updated_at)->format('d/m/Y') }}</th>
-                                        <th scope="row">
-                                            <a href="{{route('backend.ts.sponsors.edit', ['edicao' => $edicao->id, 'id' => $record->id])}}" class="btn btn-warning">
-                                                <i class="fas fa-edit"></i>
-                                                Editar
-                                            </a>
-                                            <form  method="POST" action="{{route('backend.ts.sponsors.destroy', ['edicao' => $edicao->id, 'checklist' => $record])}}" style="display:inline-block">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}
-                                                <div class="form-group">
-                                                    <button onclick="return confirm('Tem certeza que deseja excluir {{$record->title}}?')"  type="submit" class="btn btn-danger text-white">
-                                                        <i class="fa fa-trash"></i>
-                                                        Excluir
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </th>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table> --}}
+                        @endforeach
+                    </div>
+                @endisset
+                @empty($records)  
+                    <div class="ibox-content"> 
+                        <div class="alert alert-warning">
+                            Nenhum patrocinador cadastrado.
+                        </div>
+                    </div>
+                @endempty
             </div>
         </div> 
     </div>

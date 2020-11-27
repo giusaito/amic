@@ -112,7 +112,6 @@ $("#file").fileinput({
     allowedFileExtensions: ["jpg", "png", "gif"],
     language: "pt-BR",
     uploadUrl: "{{ route('backend.ts.sponsors.store', ['edicao' => $edicao->id]) }}",
-    deleteUrl: "{{ route('backend.ts.sponsors.destroy') }}",
 });
 </script>
 @endsection
