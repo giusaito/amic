@@ -2,6 +2,16 @@
 @section('title', 'Editar - ' . $record->title)
 @section('content')
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ route('backend.servico.update', ['servico' => $record->id]) }}" id="article-form" class=" form-bordered" method="post" enctype="multipart/form-data">
 	@method('PUT')
 	@csrf
@@ -13,7 +23,7 @@
 			<div class="card mt-3" style="padding:15px;">
 				<div class="form-group">
 					<label for="title">Título</label>
-					<input name="title" type="text" value="{{$record->title}}" class="form-control" id="title" placeholder="Título" required="required">
+					<input name="title" type="text" value="{{$record->title}}" class="form-control" id="title" placeholder="Título">
 				</div>
 				<div class="form-group">
 					<label for="description">Descrição</label>
@@ -21,38 +31,38 @@
 				</div>
 				<div class="form-group">
 					<label for="content">Conteúdo</label>
-					<textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">{!! $record->content !!}</textarea>
+					<textarea required="required" class="form-control editor" name="content" id="content" rows="15" data-height="400">{!! $record->content !!}</textarea>
                         {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
 				</div>
 				<h3 class="mb-3">Benefícios</h3> 
 				<div class="row mb-5">
 					<div class="col-md-3 mb-4">
-						<input type="file" name="benefit_icon_1" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_1) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_1}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_1}}" @endif />
-						<input type="text" name="isPhoto_benefitit_1" id="isPhoto_benefitit_1" value="{{!empty($record->benefit_icon_1) ? 1 : 0}}">
+						<input type="file" name="benefit_icon_1" id="field_benefit_1" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_1) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_1}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_1}}" @endif />
+						<input type="hidden" name="isPhoto_benefit_1" id="isPhoto_benefit_1" value="{{!empty($record->benefit_icon_1) ? 1 : 0}}">
 					</div>
 					<div class="col-md-9">
 						<textarea class="form-control" name="benefit_desc_1" id="benefit_desc_1" rows="9" maxlength="255">{{$record->benefit_desc_1}}</textarea>
 							{!! $errors->first('benefit_desc_1', '<p class="help-block">:message</p>') !!}
 					</div>
 					<div class="col-md-3 mb-4">
-						<input type="file" name="benefit_icon_2" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_2) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_2}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_2}}" @endif/>
-						<input type="text" name="isPhoto_benefitit_2" id="isPhoto_benefitit_2" value="{{!empty($record->benefit_icon_2) ? 1 : 0}}">
+						<input type="file" name="benefit_icon_2" id="field_benefit_2" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_2) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_2}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_2}}" @endif/>
+						<input type="hidden" name="isPhoto_benefit_2" id="isPhoto_benefit_2" value="{{!empty($record->benefit_icon_2) ? 1 : 0}}">
 					</div>
 					<div class="col-md-9">
 						<textarea class="form-control" name="benefit_desc_2" id="benefit_desc_2" rows="9" maxlength="255">{{$record->benefit_desc_2}}</textarea>
 							{!! $errors->first('benefit_desc_2', '<p class="help-block">:message</p>') !!}
 					</div>
 					<div class="col-md-3 mb-4">
-						<input type="file" name="benefit_icon_3" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_3) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_3}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_3}}" @endif/>
-						<input type="text" name="isPhoto_benefitit_3" id="isPhoto_benefitit_3" value="{{!empty($record->benefit_icon_3) ? 1 : 0}}">
+						<input type="file" name="benefit_icon_3" id="field_benefit_3" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_3) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_3}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_3}}" @endif/>
+						<input type="hidden" name="isPhoto_benefit_3" id="isPhoto_benefit_3" value="{{!empty($record->benefit_icon_3) ? 1 : 0}}">
 					</div>
 					<div class="col-md-9">
 						<textarea class="form-control" name="benefit_desc_3" id="benefit_desc_3" rows="9" maxlength="255">{{$record->benefit_desc_3}}</textarea>
 							{!! $errors->first('benefit_desc_3', '<p class="help-block">:message</p>') !!}
 					</div>
 					<div class="col-md-3 mb-4">
-						<input type="file" name="benefit_icon_4" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_4) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_4}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_4}}" @endif/>
-						<input type="text" name="isPhoto_benefitit_4" id="isPhoto_benefitit_4" value="{{!empty($record->benefit_icon_4) ? 1 : 0}}">
+						<input type="file" name="benefit_icon_4" id="field_benefit_4" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->benefit_icon_4) value="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_4}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_4}}" @endif/>
+						<input type="hidden" name="isPhoto_benefit_4" id="isPhoto_benefit_4" value="{{!empty($record->benefit_icon_4) ? 1 : 0}}">
 					</div>
 					<div class="col-md-9">
 						<textarea class="form-control" name="benefit_desc_4" id="benefit_desc_4" rows="9" maxlength="255">{{$record->benefit_desc_4}}</textarea>
@@ -96,8 +106,8 @@
 					<span>Defina uma foto destaque</span>
 				</div>
 				<div class="card-block p-3">
-					<input type="file" id="feature_image" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->path) value="{{asset('storage')}}/{{$record->path}}original-{{$record->image}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->image}}" @endif required="required"/>
-					<input type="text" name="isPhoto" id="isPhoto" value="{{!empty($record->image) ? 1 : 0}}">
+					<input type="file" id="feature_image" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if($record->path) value="{{asset('storage')}}/{{$record->path}}original-{{$record->image}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->image}}" @endif />
+					<input type="hidden" name="isPhoto" id="isPhoto" value="{{!empty($record->image) ? 1 : 0}}">
 				</div>
 			</div>
 			<div class="card mt-3 mb-3">
@@ -107,7 +117,7 @@
 				</div>
 				<div class="card-block p-3">
 					<input type="file" id="feature_image_internal" name="image_internal" class="dropify feature_image_internal" data-allowed-file-extensions="jpeg jpg png" @if($record->image_internal) value="{{asset('storage')}}/{{$record->path}}original-{{$record->image_internal}}" data-default-file="{{asset('storage')}}/{{$record->path}}original-{{$record->image_internal}}" @endif />
-					<input type="text" name="isPhotoInternal" id="isPhotoInternal" value="{{!empty($record->image_internal) ? 1 : 0}}">
+					<input type="hidden" name="isPhotoInternal" id="isPhotoInternal" value="{{!empty($record->image_internal) ? 1 : 0}}">
 				</div>
 			</div>
 		</div>
@@ -178,9 +188,10 @@ $('.dropify').attr("data-default-file");
 			fileSize:   'Desculpe, o arquivo é muito grande'
 		}
 	});
+	// Imagem destaque
 	var drEvent = $('#feature_image').dropify();
 	drEvent.on('dropify.feature_image.beforeClear', function(event, element){
-		return confirm("Você tem certeza que deseja excluir a foto?");
+		return confirm("Você tem certeza que deseja excluir a foto destaque?");
 	});
 
 	drEvent.on('dropify.feature_image.afterClear', function(event, element){
@@ -190,6 +201,83 @@ $('.dropify').attr("data-default-file");
 	$("#feature_image").change(function(){
 		$('#isPhoto').attr('value', 3);
 	});
+	// Fim Imagem destaque
+
+	// Imagem destaque interna
+	var drEvent = $('#feature_image_internal').dropify();
+	drEvent.on('dropify.feature_image.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir a foto da interna?");
+	});
+
+	drEvent.on('dropify.afterClear', function(event, element){
+		$('#isPhotoInternal').attr('value', 2);
+	});
+
+	$("#feature_image_internal").change(function(){
+		$('#isPhotoInternal').attr('value', 3);
+	});
+	// Fim destaque interna
+	
+	// Benefício 1
+	var drEvent = $('#field_benefit_1').dropify();
+	drEvent.on('dropify.feature_image.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir o ícone do benefício 1?");
+	});
+
+	drEvent.on('dropify.afterClear', function(event, element){
+		$('#isPhoto_benefit_1').attr('value', 2);
+	});
+
+	$("#field_benefit_1").change(function(){
+		$('#isPhoto_benefit_1').attr('value', 3);
+	});
+	// Fim benefício 1
+	
+	// Benefício 2
+	var drEvent = $('#field_benefit_2').dropify();
+	drEvent.on('dropify.feature_image.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir o ícone do benefício 2?");
+	});
+
+	drEvent.on('dropify.afterClear', function(event, element){
+		$('#isPhoto_benefit_2').attr('value', 2);
+	});
+
+	$("#field_benefit_2").change(function(){
+		$('#isPhoto_benefit_2').attr('value', 3);
+	});
+	// Fim benefício 2
+	
+	// Benefício 3
+	var drEvent = $('#field_benefit_3').dropify();
+	drEvent.on('dropify.feature_image.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir o ícone do benefício 3?");
+	});
+
+	drEvent.on('dropify.afterClear', function(event, element){
+		$('#isPhoto_benefit_3').attr('value', 2);
+	});
+
+	$("#field_benefit_3").change(function(){
+		$('#isPhoto_benefit_3').attr('value', 3);
+	});
+	// Fim benefício 3
+	
+	
+	// Benefício 4
+	var drEvent = $('#field_benefit_4').dropify();
+	drEvent.on('dropify.feature_image.beforeClear', function(event, element){
+		return confirm("Você tem certeza que deseja excluir o ícone do benefício 4?");
+	});
+
+	drEvent.on('dropify.afterClear', function(event, element){
+		$('#isPhoto_benefit_4').attr('value', 2);
+	});
+
+	$("#field_benefit_4").change(function(){
+		$('#isPhoto_benefit_4').attr('value', 3);
+	});
+	// Fim benefício 4
 	
 
 

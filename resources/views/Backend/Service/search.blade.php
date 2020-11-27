@@ -3,7 +3,7 @@
 @section('content')
 
 <section id="tvAmic">
-    <div class="text-right mt-4">
+    <div class="text-right mt-4 mb-3">
         <a href="{{route('backend.servico.index')}}/" class="btn btn-warning right"><i class="fa fa-chevron-left"></i> Voltar</a>
     </div>
 	    <div class="container-fluid">

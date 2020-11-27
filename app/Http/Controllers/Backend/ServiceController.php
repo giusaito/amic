@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ServiceRequest;
 use App\Http\Models\Service;
 use Illuminate\Support\Facades\Storage;
 use Image;
@@ -46,7 +47,7 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServiceRequest $request)
     {
         $path = "servicos/" . date('Y/m/d/');
         $file = $request->file('feature_image');
@@ -108,7 +109,7 @@ class ServiceController extends Controller
             $this->storage->put($path. 'original-' . $benefit_icon_4->hashName(),  $original);
            $benefit_icon_4 = $benefit_icon_4->hashName();
         }
-        
+
         $record = new Service;
         $record->title = $request->title;
         $record->slug = \Str::slug($request->title);
@@ -139,7 +140,6 @@ class ServiceController extends Controller
         ];
 
         return redirect()->route('backend.servico.index')->with($notification);
-
     }
 
     /**
@@ -172,10 +172,9 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ServiceRequest $request, $id)
     {
         $record = Service::find($id);
-
         $path = "servicos/" . date('Y/m/d/');
         $file = $request->file('feature_image');
         if($file){
@@ -203,6 +202,7 @@ class ServiceController extends Controller
         
         $benefit_icon_1 = $request->file('benefit_icon_1');
         if($benefit_icon_1){
+            $ext = $benefit_icon_1->getClientOriginalExtension();
             $height = Image::make($benefit_icon_1)->height();
             $width = Image::make($benefit_icon_1)->width();
             $original = Image::make($benefit_icon_1)->fit($width, $height)->encode($ext, 70);
@@ -212,6 +212,7 @@ class ServiceController extends Controller
         
         $benefit_icon_2 = $request->file('benefit_icon_2');
         if($benefit_icon_2){
+            $ext = $benefit_icon_2->getClientOriginalExtension();
             $height = Image::make($benefit_icon_2)->height();
             $width = Image::make($benefit_icon_2)->width();
             $original = Image::make($benefit_icon_2)->fit($width, $height)->encode($ext, 70);
@@ -221,6 +222,7 @@ class ServiceController extends Controller
         
         $benefit_icon_3 = $request->file('benefit_icon_3');
         if($benefit_icon_3){
+            $ext = $benefit_icon_3->getClientOriginalExtension();
             $height = Image::make($benefit_icon_3)->height();
             $width = Image::make($benefit_icon_3)->width();
             $original = Image::make($benefit_icon_3)->fit($width, $height)->encode($ext, 70);
@@ -230,6 +232,7 @@ class ServiceController extends Controller
         
         $benefit_icon_4 = $request->file('benefit_icon_4');
         if($benefit_icon_4){
+            $ext = $benefit_icon_4->getClientOriginalExtension();
             $height = Image::make($benefit_icon_4)->height();
             $width = Image::make($benefit_icon_4)->width();
             $original = Image::make($benefit_icon_4)->fit($width, $height)->encode($ext, 70);
@@ -237,24 +240,110 @@ class ServiceController extends Controller
            $benefit_icon_4 = $benefit_icon_4->hashName();
         }
 
-        $isPhoto = (int)$request->isPhoto;
         /* 1 A foto não foi alterada
            2 Foto deletada
            3 Foto alterada 
         */
+
+        // Imagem destaque
+        $isPhoto = (int)$request->isPhoto;
+        
         if($isPhoto == 1) {
             $path = $record->path;
             $hashname = $record->image;
             
         }else if($isPhoto == 2){
-            $path = NULL;
-            $hashname = NULL;
+            return back()->with('error','Não é permitido deixar o campo de logo sem arquivo. Por favor, faça o upload de uma logo');
         }
         else if($isPhoto == 3){
             $path = $path;
             $hashname = $hashname;
         }
+        // Fim imagem destaque
         
+        // Imagem interna
+        $image_internal = (int)$request->isPhotoInternal;
+        
+        if($image_internal == 1) {
+            $path = $record->path;
+            $hashname_internal = $record->image_internal;
+            
+        }else if($image_internal == 2){
+            $path = NULL;
+            $hashname_internal = NULL;
+        }
+        else if($image_internal == 3){
+            $path = $path;
+            $hashname_internal = $hashname_internal;
+        }
+        // Fim interna
+        
+        
+        // Benefício 1
+        $field_benefit_1 = (int)$request->isPhoto_benefit_1;
+        if($field_benefit_1 == 1) {
+            // $path = $record->path;
+            $benefit_icon_1 = $record->benefit_icon_1;
+            
+        }else if($field_benefit_1 == 2){
+            // $path = NULL;
+            // $hashname_internal = NULL;
+            $benefit_icon_1 = NULL;
+        }
+        else if($field_benefit_1 == 3){
+            $benefit_icon_1 = $benefit_icon_1;
+        }
+        // Fim benefício 1
+        
+        // Benefício 2
+        $field_benefit_2 = (int)$request->isPhoto_benefit_2;
+        if($field_benefit_2 == 1) {
+            // $path = $record->path;
+            $benefit_icon_2 = $record->benefit_icon_2;
+            
+        }else if($field_benefit_2 == 2){
+            // $path = NULL;
+            // $hashname_internal = NULL;
+            $benefit_icon_2 = NULL;
+        }
+        else if($field_benefit_2 == 3){
+            $benefit_icon_2 = $benefit_icon_2;
+        }
+        // Fim benefício 2
+        
+        // Benefício 3
+        $field_benefit_3 = (int)$request->isPhoto_benefit_3;
+        if($field_benefit_3 == 1) {
+            // $path = $record->path;
+            $benefit_icon_3 = $record->benefit_icon_3;
+            
+        }else if($field_benefit_3 == 2){
+            // $path = NULL;
+            // $hashname_internal = NULL;
+            $benefit_icon_3 = NULL;
+        }
+        else if($field_benefit_3 == 3){
+            $benefit_icon_3 = $benefit_icon_3;
+        }
+        // Fim benefício 3
+        
+        
+        // Benefício 4
+        $field_benefit_4 = (int)$request->isPhoto_benefit_4;
+        if($field_benefit_4 == 1) {
+            // $path = $record->path;
+            $benefit_icon_4 = $record->benefit_icon_4;
+            
+        }else if($field_benefit_4 == 2){
+            // $path = NULL;
+            // $hashname_internal = NULL;
+            $benefit_icon_4 = NULL;
+        }
+        else if($field_benefit_4 == 3){
+            $benefit_icon_4 = $benefit_icon_4;
+        }
+        // Fim benefício 4
+
         $record->title = $request->title;
         $record->slug = \Str::slug($request->title);
         $record->description = $request->description;
@@ -315,7 +404,6 @@ class ServiceController extends Controller
 
     public function search(Request $request){
         $search = $request->input('pesquisar');
-
         $records = Service::where(function($query) use($search){
             $searchWildcard = '%' . $search . '%';
             $query->orWhere('title', 'LIKE', $searchWildcard);

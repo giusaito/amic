@@ -2,6 +2,17 @@
 @section('title', 'Adicionar Serviço')
 @section('content')
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <form action="{{ route('backend.servico.store') }}" class="form-bordered" method="post" enctype="multipart/form-data">
 	@csrf
 	<div class="row">
@@ -11,16 +22,16 @@
 			</a>
 			<div class="card mt-3" style="padding:15px;">
 				<div class="form-group">
-					<label for="title">Título</label>
-					<input name="title" type="text" class="form-control" id="title" placeholder="Título" required="required">
+					<label for="title">Título *</label>
+					<input name="title" type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : ''}}" id="title" placeholder="Título" value="{{old('title')}}">
 				</div>
 				<div class="form-group">
-					<label for="description">Descrição</label>
-					<input name="description" type="text" class="form-control" id="description" placeholder="Descrição curta" required="required">
+					<label for="description">Descrição *</label>
+					<input name="description" type="text" class="form-control {{ $errors->has('description') ? 'is-invalid' : ''}}" id="description" placeholder="Descrição curta" value="{{old('description')}}" required="required" >
 				</div>
 				<div class="form-group">
-					<label for="content">Conteúdo</label>
-					<textarea class="form-control editor" name="content" id="content" rows="15" data-height="400">{{old('content')}}</textarea>
+					<label for="content">Conteúdo *</label>
+					<textarea class="form-control editor {{ $errors->has('content') ? 'is-invalid' : ''}}" name="content" id="content" rows="15" data-height="400">{{old('content')}}</textarea>
                         {!! $errors->first('content', '<p class="help-block">:message</p>') !!}
 				</div>
 				<h3 class="mb-3">Benefícios</h3> 
@@ -69,20 +80,20 @@
 			</button>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
-					<h5>Descrição do formulário de contato</h5>
+					<h5>Descrição do formulário de contato *</h5>
 					<span>Descrição curta do formulário de contato max: 155</span>
 				</div>
 				<div class="card-block p-3">
-					<input type="text" name="desc_form_contact" class="form-control" maxlength="155" required="required"/>
+					<input type="text" name="desc_form_contact" class="form-control {{ $errors->has('desc_form_contact') ? 'is-invalid' : ''}}" maxlength="155" required="required"/>
 				</div>
 			</div>
 			<div class="card mt-3 mb-3">
 				<div class="card-header">
-					<h5>E-mail do formulário de contato</h5>
+					<h5>E-mail do formulário de contato *</h5>
 					<span>Insira o e-mail que receberá os as mensagens enviadas pelos visitantes</span>
 				</div>
 				<div class="card-block p-3">
-					<input type="email" name="email_to" class="form-control" maxlength="155" required="required"/>
+					<input type="email" name="email_to" class="form-control {{ $errors->has('email_to') ? 'is-invalid' : ''}}" maxlength="155" value="{{old('email_to')}}" required="required"/>
 				</div>
 			</div>
 			<div class="card mt-3 mb-3">
