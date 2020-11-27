@@ -21,8 +21,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="ibox-title">
+                <div class="ibox">
+                    <div class="ibox-content">
                         <h5>Cadastros</h5>
                         <div class="ibox-tools">
                             @if(Route::current()->getName() == 'backend.ts.sponsors.search') 
@@ -36,23 +36,23 @@
                                 Adicionar
                             </a>
                         </div>
-                    </div>
-                    <hr>
-                    <form action="{{route('backend.ts.sponsors.search', ['edicao' => $edicao->id])}}" method="GET">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" name="pesquisar" class="form-control mb-2" placeholder="Digite um termo para buscar" required="required">
-                                <span class="input-group-append">
-                                    <button type="submit" class="btn btn-primary mb-2">
-                                    <i class="fa fa-search"></i> 
-                                        Pesquisar
-                                    </button>
-                                </span>
+                        <hr>
+                        <form action="{{route('backend.ts.sponsors.search', ['edicao' => $edicao->id])}}" method="GET">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <input type="text" name="pesquisar" class="form-control mb-2" placeholder="Digite um termo para buscar" required="required">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-primary mb-2">
+                                        <i class="fa fa-search"></i> 
+                                            Pesquisar
+                                        </button>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </form> 
-                    <div class="ibox-content">
-                        @empty($records)
+                        </form>
+                    </div> 
+                </div>
+                        @isset($records)
                             <div class="grid" >
                                 @foreach($records as $record)
                                     <div class="grid-item">
@@ -61,17 +61,34 @@
                                                 <h4 class="font-bold">
                                                     {{$record->title}}
                                                 </h4>
-                                                <img src="{{asset('storage')}}/{{$record->path}}150x150-{{$record->logo}}" class="img-fluid" width="50">
+                                                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->logo}}" class="img-fluid">
+                                            </div>
+                                            <div class="ibox-footer">
+                                                <a href="{{route('backend.ts.sponsors.edit', ['edicao' => $edicao->id, 'id' => $record->id])}}" class="btn btn-warning">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <form  method="POST" action="{{route('backend.ts.sponsors.destroy', ['edicao' => $edicao->id, 'sponsor' => $record])}}" style="display:inline-block">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <div class="form-group">
+                                                        <button onclick="return confirm('Tem certeza que deseja excluir {{$record->title}}?')"  type="submit" class="btn btn-danger text-white">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-                        @endempty
-                            {{-- <div class="alert alert-warning">
-                                Nenhum patrocinador cadastrado.
+                        @endisset
+                        @empty($records)  
+                            <div class="ibox-content"> 
+                                <div class="alert alert-warning">
+                                    Nenhum patrocinador cadastrado.
+                                </div>
                             </div>
-                        @endif --}}
+                        @endempty
                         {{-- <table class="table center-content-table">
                             <thead>
                                 <tr>
@@ -107,8 +124,6 @@
                                 @endforeach
                             </tbody>
                         </table> --}}
-                    </div>
-                </div>
             </div>
         </div> 
     </div>
@@ -129,17 +144,14 @@
 @section('js')
 <script src="{{ URL::asset('js/backend/masonry.pkgd.min.js') }}"></script>
 <script>
-    $(window).load(function() {
-
-        $('.grid').masonry({
-            // options
-            itemSelector: '.grid-item',
-            columnWidth: 300,
-            gutter: 25
-        });
-
+$(window).on('load', function(){ 
+    $('.grid').masonry({
+        // options
+        itemSelector: '.grid-item',
+        columnWidth: 300,
+        gutter: 25
     });
+});
 </script>
 @endsection
-
 @include('Backend.Includes.toast')

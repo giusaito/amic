@@ -217,7 +217,7 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
 			Route::post('adicionar/{edicao}', ['as' => 'sponsors.store', 'uses' =>'SponsorsController@store']);
 			Route::get('editar/{edicao}/{id}', ['as' => 'sponsors.edit', 'uses' => 'SponsorsController@edit']);
             Route::post('editar/{edicao}/{id}', ['as' => 'sponsors.update', 'uses' => 'SponsorsController@update']);
-            Route::delete('excluir/{edicao}/{id}', ['as' => 'sponsors.destroy', 'uses' => 'SponsorsController@destroy']);
+            Route::delete('excluir/{edicao}/{sponsor}', ['as' => 'sponsors.destroy', 'uses' => 'SponsorsController@destroy']);
 		});	
         Route::group(['prefix'=>'videos'],function(){
 			Route::get('/{edicao}', ['as' => 'videos.index', 'uses' => 'VideosController@index']);
