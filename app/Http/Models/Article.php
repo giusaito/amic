@@ -50,4 +50,10 @@ class Article extends Model
     public function photos(){
         return $this->hasMany(PhotoArticle::class);
     }
+
+    public function scopeValidPost($query)
+    {
+        return $query->where('status', 'PUBLISHED')
+                    ->where('published_at', '<=', date('Y-m-d H:i:s'));
+    }
 }
