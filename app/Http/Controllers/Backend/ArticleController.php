@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:59:44 am
- * Last Modified:  25/11/2020 3:37:44 pm
+ * Last Modified:  30/11/2020 4:32:31 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -87,11 +87,15 @@ class ArticleController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
+            $thumb2   = Image::make($file)->fit(1200, 380)->encode($ext, 70);
+
             $path = "noticia/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
             $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+            $this->storage->put($path. '1200x380-'.  $file->hashName(),  $thumb2);
 
            $hashname = $file->hashName();
         }
@@ -189,11 +193,15 @@ class ArticleController extends Controller
 
             $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
 
+            $thumb2   = Image::make($file)->fit(1200, 380)->encode($ext, 70);
+
             $path = "noticia/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
             $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+
+            $this->storage->put($path. '1200x380-'.  $file->hashName(),  $thumb2);
 
            $hashname = $file->hashName();
         }
@@ -268,6 +276,7 @@ class ArticleController extends Controller
     {
         $this->storage->delete($noticium->path . 'original-' . $noticium->image);
         $this->storage->delete($noticium->path . '150x150-' . $noticium->image);
+        $this->storage->delete($noticium->path . '1200x380-' . $noticium->image);
         $noticium->delete();
 
         $notification = [
