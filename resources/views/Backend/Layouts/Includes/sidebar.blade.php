@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 9:30:00 am
- * Last Modified:  26/11/2020 5:32:15 pm
+ * Last Modified:  30/11/2020 2:07:41 pm
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -36,7 +36,7 @@
                 </div>
             </li>
             <li class="{{ (request()->is('/')) ? 'active' : '' }}">
-                <a href="{{route('backend.index')}}"><i class="fa fa-th-large"></i> <span class="nav-label">Painel</span></a>
+                {{-- <a href="{{route('backend.index')}}"><i class="fa fa-th-large"></i> <span class="nav-label">Painel</span></a> --}}
             </li>
             <li class="{{ (request()->is('painel/projetos*')) ? 'active' : '' }}">
                 <a href="{{route('backend.projetos.index')}}"><i class="fa fa-list-alt"></i> <span class="nav-label">Projetos</span></a>
