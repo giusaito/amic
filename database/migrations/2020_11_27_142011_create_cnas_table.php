@@ -60,12 +60,18 @@ class CreateCnasTable extends Migration
         });
         Schema::create('cna_category_articles', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('cna_id')->unsigned();
             $table->string('title');
             $table->string('slug');
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->nestedSet();
             $table->timestamps();
+            
+            $table->foreign('cna_id')
+            ->references('id')
+            ->on('cnas')
+            ->onDelete('cascade');
         });
         
         Schema::create('cna_articles', function (Blueprint $table) {
@@ -152,10 +158,14 @@ class CreateCnasTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('cnas');
+        Schema::dropIfExists('cna_events');
+        Schema::dropIfExists('cna_directors');
         Schema::dropIfExists('cna_category_articles');
         Schema::dropIfExists('cna_articles');
         Schema::dropIfExists('cna_tags');
         Schema::dropIfExists('cna_tag_article');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

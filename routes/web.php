@@ -228,8 +228,19 @@ Route::group(['prefix' => 'painel', 'namespace' => 'Backend', 'as' => 'backend.'
             Route::delete('excluir/{edicao}/{video}', ['as' => 'videos.destroy', 'uses' => 'VideosController@destroy']);
 		});	
     });
-
     // Final Terra do Sol
+
+    Route::group(['prefix' => 'cna', 'namespace' => 'CNA', 'as' => 'cna.'], function () {
+        Route::get('pesquisar/', 'CnaController@search')->name('search');
+        route::resource('/', 'CnaController')->names([
+            'index' => 'index',
+            'create' => 'create',
+            'store' => 'store',
+            'edit' => 'edit',
+            'update' => 'update',
+            'destroy' => 'destroy',
+        ]);
+    });
 
 
 });
