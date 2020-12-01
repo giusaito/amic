@@ -7,7 +7,7 @@
  * E-mail: oi@bewweb.com.br
  * ---------------------------------------------------------------------
  * Data da criação: 19/10/2020 9:02:37 pm
- * Last Modified:  26/11/2020 2:47:26 pm
+ * Last Modified:  01/12/2020 5:53:03 pm
  * Modificado por: Leonardo Nascimento - <oi@bewweb.com.br>
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Bewweb
@@ -249,7 +249,7 @@ Route::group(['middleware' => ['web']], function(){
     Route::group(['as' => 'frontend.', 'namespace' => 'Frontend'], function()
     {
         Route::get('/', ['as' => 'home.index', 'uses' => 'HomeController@index']);
-        Route::get('/noticia/{id}/{slug}', ['as' => 'article.view', 'uses' => 'ArticleController@index']);
+        Route::get('/noticia/{id}/{slug}', ['as' => 'article.view', 'uses' => 'ArticleController@view']);
     });
 });
 Auth::routes(['register' => false]);

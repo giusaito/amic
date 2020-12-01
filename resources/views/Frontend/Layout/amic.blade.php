@@ -25,6 +25,6 @@
 <script src="{{asset('frontend/assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('frontend/assets/js/plugins.js')}}"></script>
 <script src="{{asset('frontend/assets/js/dist/main.prod.js')}}"></script>
-@yield('script')
+@yield('js')
 </body>
 </html>

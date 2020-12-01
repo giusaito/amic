@@ -46,10 +46,12 @@ class PhotoArticleController extends Controller
             $height = Image::make($file)->height();
             $width = Image::make($file)->width();
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(250, 200)->encode($ext, 70);
+            $thumb2   = Image::make($file)->fit(1200, 600)->encode($ext, 70);
             $path = "noticia/" . date('Y/m/d/') . 'fotos/';
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '250x200-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '1200x600-'.  $file->hashName(),  $thumb2);
             $hashname = $file->hashName();
         }
         $record                 = new PhotoArticle;
@@ -90,7 +92,8 @@ class PhotoArticleController extends Controller
         $record = PhotoArticle::find($request->key);
         if($record->delete()){
             $this->storage->delete($record->path . 'original-' . $record->image);
-            $this->storage->delete($record->path . '150x150-' . $record->image);
+            $this->storage->delete($record->path . '250x200-' . $record->image);
+            $this->storage->delete($record->path . '1200x600-' . $record->image);
             return response()->json(['success'=>'Removido']);
         }else {
             return response()->json(['error'=>'Houve um problema para excluir a imagem! por favor, tente novamente!']);
