@@ -18,8 +18,8 @@ class CnaController extends Controller
     }
 
     public function index(){
-        $records = Cna::sortable()->orderBy('id', 'desc')->paginate(10);
-        return view('Backend.CNA.Cna.index', compact('records'));
+        $record = Cna::first();
+        return view('Backend.CNA.Cna.index', compact('record'));
     }
     public function search(Request $request){
         $search = $request->input('pesquisar');

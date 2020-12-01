@@ -239,6 +239,10 @@ Route::group(['middleware' => ['web']], function(){
                 'update' => 'update',
                 'destroy' => 'destroy',
             ]);
+            Route::group(['prefix'=>'sobre'],function(){
+    			Route::get('/', ['as' => 'about.index', 'uses' => 'CnaController@about']);
+    			Route::post('/', ['as' => 'about.store', 'uses' =>'CnaController@aboutstore']);
+    		});	
         });
     });
 
