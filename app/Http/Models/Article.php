@@ -7,7 +7,7 @@
  * E-mail: leonardo.nascimento21@gmail.com
  * ---------------------------------------------------------------------
  * Data da criação: 11/11/2020 10:00:46 am
- * Last Modified:  25/11/2020 2:49:39 pm
+ * Last Modified:  01/12/2020 11:33:31 am
  * Modified By: Leonardo Nascimento - <leonardo.nascimento21@gmail.com> / MAC OS
  * ---------------------------------------------------------------------
  * Copyright (c) 2020 Leo
@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Models\FullTextSearch;
 use App\Http\Models\CategoryArticle;
 use App\Http\Models\PhotoArticle;
+use App\Http\Models\Theme;
 
 class Article extends Model
 {
@@ -50,6 +51,10 @@ class Article extends Model
     public function photos(){
         return $this->hasMany(PhotoArticle::class);
     }
+
+    public function themes(){
+        return $this->belongsTo(Theme::class, 'template_id');
+      }
 
     public function scopeValidPost($query)
     {

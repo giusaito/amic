@@ -36,6 +36,9 @@
 					<div class="content mt-5">
 						{!! $article->content !!}
 					</div>
+					@if($article->photos)
+						@include('Frontend.Article.Themes.Includes.photos')
+					@endif
   				</div>
 				<div class="col-3 mt-5">
 					<p class="text-center">Publicidade</p>
