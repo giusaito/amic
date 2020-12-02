@@ -229,7 +229,9 @@ Route::group(['middleware' => ['web']], function(){
         });
         // Final Terra do Sol
 
+        // Início CNA
         Route::group(['prefix' => 'cna', 'namespace' => 'CNA', 'as' => 'cna.'], function () {
+            // CNA
             Route::get('pesquisar/', 'CnaController@search')->name('search');
             route::resource('/', 'CnaController')->names([
                 'index' => 'index',
@@ -239,11 +241,61 @@ Route::group(['middleware' => ['web']], function(){
                 'update' => 'update',
                 'destroy' => 'destroy',
             ]);
+
+            // SOBRE
             Route::group(['prefix'=>'sobre'],function(){
     			Route::get('/', ['as' => 'about.index', 'uses' => 'CnaController@about']);
     			Route::post('/', ['as' => 'about.store', 'uses' =>'CnaController@aboutstore']);
+            });	
+            
+            // NOTÍCIAS
+            Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
+            Route::get('noticias/tag/', 'ArticleController@tag')->name('noticia.tag');
+            Route::post('noticias/push/{id}', 'ArticleController@push')->name('noticia.push');
+            Route::resource('/noticias', 'ArticleController')->names([
+                'index' => 'noticias.index',
+                'create' => 'noticias.create',
+                'store' => 'noticias.store',
+                'edit' => 'noticias.edit',
+                'update' => 'noticias.update',
+                'destroy' => 'noticias.destroy',
+            ]);
+            route::resource('categoria-noticia', 'CategoryArticleController')->names([
+                'index' => 'category.noticias.index',
+                'create' => 'category.noticias.create',
+                'store' => 'category.noticias.store',
+                'update' => 'category.noticias.update',
+                'destroy' => 'category.noticias.destroy',
+            ]);
+            Route::get('/{id}/bw-editar', 	['as' => 'category.noticias.edit', 	'uses' => 'CategoryArticleController@index']);
+            
+            Route::get('foto-noticia/{photo}', ['as' => 'photo.noticias.index', 'uses' => 'PhotoArticleController@index']);
+            Route::post('foto-noticia/adicionar/{photo}', ['as' => 'photo.noticias.store', 'uses' =>'PhotoArticleController@store']);
+            Route::post('foto-noticia/excluir', ['as' => 'photo.noticias.destroy', 'uses' => 'PhotoArticleController@destroy']);
+
+            // DIRETORIA
+            Route::group(['prefix'=>'diretoria'],function(){
+                Route::get('pesquisar', 'DirectorsController@search')->name('diretoria.search');
+    			Route::get('/', ['as' => 'diretoria.index', 'uses' => 'DirectorsController@index']);
+    			Route::get('adicionar', ['as' => 'diretoria.create', 'uses' =>'DirectorsController@create']);
+    			Route::post('adicionar', ['as' => 'diretoria.store', 'uses' =>'DirectorsController@store']);
+    			Route::get('editar/{id}', ['as' => 'diretoria.edit', 'uses' => 'DirectorsController@edit']);
+                Route::post('editar/{id}', ['as' => 'diretoria.update', 'uses' => 'DirectorsController@update']);
+                Route::delete('excluir/{diretor}', ['as' => 'diretoria.destroy', 'uses' => 'DirectorsController@destroy']);
+            });
+            
+            // EVENTOS
+            Route::group(['prefix'=>'eventos'],function(){
+                Route::get('pesquisar', 'EventsController@search')->name('eventos.search');
+    			Route::get('/', ['as' => 'eventos.index', 'uses' => 'EventsController@index']);
+    			Route::get('adicionar', ['as' => 'eventos.create', 'uses' =>'EventsController@create']);
+    			Route::post('adicionar', ['as' => 'eventos.store', 'uses' =>'EventsController@store']);
+    			Route::get('editar/{id}', ['as' => 'eventos.edit', 'uses' => 'EventsController@edit']);
+                Route::post('editar/{id}', ['as' => 'eventos.update', 'uses' => 'EventsController@update']);
+                Route::delete('excluir/{evento}', ['as' => 'eventos.destroy', 'uses' => 'EventsController@destroy']);
     		});	
         });
+        // Final CNA
     });
 
     Route::group(['as' => 'frontend.', 'namespace' => 'Frontend'], function()

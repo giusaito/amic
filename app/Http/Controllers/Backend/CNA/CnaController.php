@@ -35,31 +35,19 @@ class CnaController extends Controller
     }
     public function store(Request $request)
     {
-        /*
-         $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('imagem_destaque_path')->nullable();
-            $table->string('imagem_destaque')->nullable();
-            $table->string('about_foto_path')->nullable();
-            $table->string('about_foto')->nullable();
-            $table->text('about_content');
-            $table->string('logo_path')->nullable();
-            $table->string('logo')->nullable();
-            $table->timestamps(); 
-         */
         $this->validate($request, [
-            'title'             => 'required|unique:cnas|max:100',
-            'imagem_destaque'   => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
-            'about_foto'        => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
-            'about_content'     => 'required'
+            'title'             => 'required|max:100',
+            'logo'              => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
+            'description'       => 'required'
+            // 'about_foto'        => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
+            // 'about_content'     => 'required'
         ],
         [
-            'title.required' => 'Você deve informar o nome da Edição.',
-            'title.unique'   => 'Já existe uma edição com este nome. Por favor, escolha outro.',
-            'title.max'      => 'O nome da Edição excedeu o limite de 100 caracteres.',
-            'logo.image'     => 'A logomarca não é uma imagem',
-            'logo.mimes'     => 'A logomarca deve ter o formato JPG ou PNG'
+            'title.required'        => 'Você deve informar o título do CNA.',
+            'title.max'             => 'O Título excedeu o limite de 100 caracteres.',
+            'logo.image'            => 'A logomarca não é uma imagem',
+            'logo.mimes'            => 'A logomarca deve ter o formato JPG ou PNG',
+            'description.required'  => 'Você deve informar a descrição do CNA.',
         ]);
 
         $logo = $request->file('logo');
@@ -78,16 +66,9 @@ class CnaController extends Controller
         
         $record                         = new Cna;
         $record->title                  = $request->title;
-        $record->subtitle               = $request->subtitle;
-        $record->path                   = isset($path) ? $path : NULL;
+        $record->description            = $request->description;
+        $record->logo_path              = isset($path) ? $path : NULL;
         $record->logo                   = isset($hashname) ? $hashname : NULL;
-        $record->slug                   = \Str::slug($request->title);
-        $record->subscription_start     = DateTime::createFromFormat('d/m/Y', $request->subscription_start)->format('Y-m-d');
-        $record->subscription_finish    = DateTime::createFromFormat('d/m/Y', $request->subscription_finish)->format('Y-m-d');
-        $record->event_start            = DateTime::createFromFormat('d/m/Y', $request->event_start)->format('Y-m-d');
-        $record->event_finish           = DateTime::createFromFormat('d/m/Y', $request->subscription_finish)->format('Y-m-d');
-        $record->event_suspended        = $request->event_suspended == "on" ? 'true' : 'false';
-        $record->event_suspended_cause  = $request->event_suspended_cause;
         $record->save();
 
         $notification = [
