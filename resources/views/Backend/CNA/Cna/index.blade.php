@@ -42,7 +42,7 @@
                         <div class="full-height-scroll">
                             <hr>
 
-                            <ul class="list-group clear-list m-t">
+                            {{-- <ul class="list-group clear-list m-t">
                                 <li class="list-group-item fist-item">
                                     <a href="{{ route('backend.cna.') }}">
                                         <span class="label label-default"><i class="fa fa-caret-right"></i></span>
@@ -67,7 +67,7 @@
                                         <strong>Eventos</strong>
                                     </a>
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
                 </div>
