@@ -29,6 +29,11 @@
                             <label for="description">Descrição</label>
                             <textarea class="form-control editor" name="description" id="description" rows="15" data-height="400">@if(isset($record->description)) {{$record->description}} @endif</textarea>
                         </div>
+                        <button type="submit" id="submit-all" class="btn btn-primary pull-right">
+                            <i class="fa fa-check"></i>
+                            Salvar
+                        </button>
+                        <div class="clearfix"></div>
                     </form>
                 </div>
             </div>
@@ -37,37 +42,37 @@
             <div class="ibox selected">
                 <div class="ibox-content">
                     <div class="client-detail">
-                        <input type="file" name="feature_image" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if(isset($record->imagem_destaque_path) && $record->imagem_destaque_path) value="{{asset('storage')}}/{{$record->imagem_destaque_path}}original-{{$record->imagem_destaque}}" data-default-file="{{asset('storage')}}/{{$record->imagem_destaque_path}}original-{{$record->imagem_destaque}}" @endif />
-					    <input type="hidden" name="isPhoto" id="isPhoto" value="{{!empty($record->imagem_destaque_path) ? 1 : 0}}">
+                        <input type="file" name="logo" class="dropify" data-allowed-file-extensions="jpeg jpg png"  data-max-file-size="1M" @if(isset($record->logo_path) && $record->logo_path) value="{{asset('storage')}}/{{$record->logo_path}}original-{{$record->logo}}" data-default-file="{{asset('storage')}}/{{$record->logo_path}}original-{{$record->logo}}" @endif />
+					    <input type="hidden" name="isPhoto" id="isPhoto" value="{{!empty($record->logo_path) ? 1 : 0}}">
                         <div class="full-height-scroll">
                             <hr>
 
-                            {{-- <ul class="list-group clear-list m-t">
+                            <ul class="list-group clear-list m-t">
                                 <li class="list-group-item fist-item">
-                                    <a href="{{ route('backend.cna.') }}">
+                                    <a href="{{ route('backend.cna.about.index') }}">
                                         <span class="label label-default"><i class="fa fa-caret-right"></i></span>
                                         <strong>Sobre o CNA</strong>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{{ route('backend.cna.') }}">
+                                    <a href="{{ route('backend.cna.noticias.index') }}">
                                         <span class="label label-default"><i class="fa fa-caret-right"></i></span>
                                         <strong>Notícias</strong>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{{ route('backend.cna.') }}">
+                                    <a href="{{ route('backend.cna.diretoria.index') }}">
                                         <span class="label label-default"><i class="fa fa-caret-right"></i></span>
                                         <strong>Diretoria</strong>
                                     </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{{ route('backend.cna.') }}">
+                                    <a href="{{ route('backend.cna.eventos.index') }}">
                                         <span class="label label-default"><i class="fa fa-caret-right"></i></span>
                                         <strong>Eventos</strong>
                                     </a>
                                 </li>
-                            </ul> --}}
+                            </ul>
                         </div>
                     </div>
                 </div>
