@@ -21,7 +21,7 @@ class CreateCnasTable extends Migration
             $table->string('imagem_destaque')->nullable();
             $table->string('about_foto_path')->nullable();
             $table->string('about_foto')->nullable();
-            $table->text('about_content');
+            $table->text('about_content')->nullable();
             $table->string('logo_path')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
