@@ -26,7 +26,7 @@
 				</div>
 			</div>
   			<div class="row">
-  				<div class="col-9">
+  				<div class="col-xs-12 col-md-9">
 					<div class="share">
 						<a class="btn"><i class="fab fa-facebook-f"></i></a>
 						<a class="btn ml-3"><i class="fab fa-twitter"></i></a>
@@ -43,98 +43,17 @@
 					@endif
 						@include('Frontend.Article.Themes.Includes.newsletter')
   				</div>
-				<div class="col-3 mt-5">
+				<div class="col-xs-12 col-md-3 mt-5">
 					<p class="text-center">Publicidade</p>
 					<img src="http://via.placeholder.com/300x250">
 				</div>
   			</div>
   		</div>
+	{{-- @if(count($services) > 4) --}}
+	@if($services)
+		@include('Frontend.Article.Themes.Includes.services')
+	@endif
    	@include('Frontend.Layout.Includes.footer')
 	</div>
 @endsection
 
-<style>
-
-.share a {
-    background: #fb6629;
-    color: #fff;
-    /* border-radius: 72%; */
-    font-size: 1em;
-    width: 100;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.share a i {
-	margin-top:3px;
-}
-.article-title h1 {
-	font-family: louis_george_cafebold, sans-serif;
-}
-
-.article-title h4, .article-title h6{
-	margin-top:12px;
-}
-
-.newsletter {
-	background-image: url(https://i.imgur.com/FB4KXfB.jpg);
-	width: 100%;
-	height: 250px;
-	background-size:cover;
-}
-
-.newsletter h1 {
-	color:#fff !important;
-}
-
-.newsletter i {
-	color: #f27a28;
-}
-
-.btn-amic { 
-  color: #FFFFFF !important; 
-  background-color: #FB6629 !important;  
-  border-color: #FB6629 !important; 
-} 
- 
-.btn-amic:hover, 
-.btn-amic:focus, 
-.btn-amic:active, 
-.btn-amic.active, 
-.open .dropdown-toggle.btn-amic { 
-  color: #FFFFFF !important; 
-  background-color: #000000 !important; 
-  border-color: #000000 !important;
-} 
- 
-.btn-amic:active, 
-.btn-amic.active, 
-.open .dropdown-toggle.btn-amic { 
-  background-image: none; 
-} 
- 
-.btn-amic.disabled, 
-.btn-amic[disabled], 
-fieldset[disabled] .btn-amic, 
-.btn-amic.disabled:hover, 
-.btn-amic[disabled]:hover, 
-fieldset[disabled] .btn-amic:hover, 
-.btn-amic.disabled:focus, 
-.btn-amic[disabled]:focus, 
-fieldset[disabled] .btn-amic:focus, 
-.btn-amic.disabled:active, 
-.btn-amic[disabled]:active, 
-fieldset[disabled] .btn-amic:active, 
-.btn-amic.disabled.active, 
-.btn-amic[disabled].active, 
-fieldset[disabled] .btn-amic.active { 
-  background-color: #FB6629; 
-  border-color: #FB6629; 
-} 
- 
-.btn-amic .badge { 
-  color: #FB6629; 
-  background-color: #FFFFFF; 
-}
-</style>

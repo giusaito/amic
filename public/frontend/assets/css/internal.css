@@ -1,0 +1,126 @@
+.share a {
+    background: #fb6629;
+    color: #fff;
+    /* border-radius: 72%; */
+    font-size: 1em;
+    width: 100;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.share a i {
+	margin-top:3px;
+}
+.article-title h1 {
+	font-family: louis_george_cafebold, sans-serif;
+}
+
+.article-title h4, .article-title h6{
+	margin-top:12px;
+}
+
+.newsletter {
+	background-image: url(https://i.imgur.com/FB4KXfB.jpg);
+	width: 100%;
+	height: 250px;
+	background-size:cover;
+}
+
+.newsletter h1 {
+	color:#fff !important;
+}
+
+.newsletter i {
+	color: #f27a28;
+}
+
+.btn-amic { 
+  color: #FFFFFF !important; 
+  background-color: #FB6629 !important;  
+  border-color: #FB6629 !important; 
+} 
+ 
+.btn-amic:hover, 
+.btn-amic:focus, 
+.btn-amic:active, 
+.btn-amic.active, 
+.open .dropdown-toggle.btn-amic { 
+  color: #FFFFFF !important; 
+  background-color: #000000 !important; 
+  border-color: #000000 !important;
+} 
+ 
+.btn-amic:active, 
+.btn-amic.active, 
+.open .dropdown-toggle.btn-amic { 
+  background-image: none; 
+} 
+ 
+.btn-amic.disabled, 
+.btn-amic[disabled], 
+fieldset[disabled] .btn-amic, 
+.btn-amic.disabled:hover, 
+.btn-amic[disabled]:hover, 
+fieldset[disabled] .btn-amic:hover, 
+.btn-amic.disabled:focus, 
+.btn-amic[disabled]:focus, 
+fieldset[disabled] .btn-amic:focus, 
+.btn-amic.disabled:active, 
+.btn-amic[disabled]:active, 
+fieldset[disabled] .btn-amic:active, 
+.btn-amic.disabled.active, 
+.btn-amic[disabled].active, 
+fieldset[disabled] .btn-amic.active { 
+  background-color: #FB6629; 
+  border-color: #FB6629; 
+} 
+ 
+.btn-amic .badge { 
+  color: #FB6629; 
+  background-color: #FFFFFF; 
+}
+
+/* Serviços  */
+.service-carousel button.owl-prev, .service-carousel button.owl-next {
+    background: #f87d29 !important;
+    height: 50px;
+    width: 50px;
+    color: white !important;
+    border-radius: 50% !important;
+}
+
+.service-carousel .owl-nav .owl-next, .owl-nav .owl-prev {
+    position: absolute;
+    top: 48%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+.service-carousel button.owl-next {
+    right: 0;
+    display: flex;
+    margin-right: -7% !important;
+    font-size: 25px !important;
+}
+.service-carousel button.owl-prev{
+    left: 0;
+    display: flex;
+    margin-left: -7%!important;
+    font-size: 25px !important;
+}
+
+.service-carousel button.owl-prev span, .service-carousel button.owl-next span {
+    font-size: 50px !important;
+}
+
+.service-more {
+    position: fixed;
+    min-width: 155px;
+    min-height: 33px;
+    top: 75%;
+    left: 20%;
+    background: #f87d29;
+    text-align: center;
+    color: #fff;
+    padding-top: 5px;
+}

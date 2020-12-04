@@ -13,18 +13,21 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/dist/plugins.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/dist/style.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css" integrity="sha512-OTcub78R3msOCtY3Tc6FzeDJ8N9qvQn1Ph49ou13xgA9VsH9+LRxoFU6EqLhW4+PKRfU+/HReXmSZXHEkpYoOA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{asset('frontend/assets/css/internal.css')}}?{{microtime(true)}}">
     <link rel="canonical" href="{{env('APP_URL')}}">
     @yield('css')
 </head>
 <body>
     <noscript>Você precisa habilitar o javascript para rodar esse portal</noscript>
     @yield('content')
-<script src="{{asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js')}}"></script>
-<script src="{{asset('frontend/assets/js/vendor/jquery-3.5.1.min.js')}}"></script>
-<script src="{{asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js')}}"></script>
-<script src="{{asset('frontend/assets/js/vendor/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('frontend/assets/js/plugins.js')}}"></script>
-<script src="{{asset('frontend/assets/js/dist/main.prod.js')}}"></script>
+<script src="{{asset('frontend/assets/js/vendor/modernizr-3.6.0.min.js')}}?{{microtime(true)}}"></script>
+<script src="{{asset('frontend/assets/js/vendor/jquery-3.5.1.min.js')}}?{{microtime(true)}}"></script>
+<script src="{{asset('frontend/assets/js/vendor/jquery-migrate-3.3.0.min.js')}}?{{microtime(true)}}"></script>
+<script src="{{asset('frontend/assets/js/vendor/bootstrap.bundle.min.js')}}?{{microtime(true)}}"></script>
+<script src="{{asset('frontend/assets/js/plugins.js')}}?{{microtime(true)}}"></script>
+<script src="{{asset('frontend/assets/js/dist/main.prod.js')}}?{{microtime(true)}}"></script>
+<script src="{{asset('frontend/assets/js/internal.js')}}?{{microtime(true)}}"></script>
 @yield('js')
 </body>
 </html>

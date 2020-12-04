@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Models\Article;
+use App\Http\Models\Service;
 use App\Http\Models\Theme;
 use View;
 
@@ -12,7 +13,7 @@ class ArticleController extends FrontendController
 {
     public function view($id, $slug){
         $article = Article::validPost()->where('id', $id)->with('user', 'themes', 'editorias', 'photos')->first();
-
+        $services = Service::all();
         $themeLow = strtolower($article->themes->theme_name);
 
         $path_notice = resource_path("views/Frontend/Article/Themes/".$themeLow);
@@ -25,6 +26,6 @@ class ArticleController extends FrontendController
        {
             $route = 'Frontend.Article.Themes.modelo-1.index';
        }
-    	return view($route, compact('article'));
+    	return view($route, compact('article', 'services'));
     }
 }
