@@ -26,7 +26,7 @@
 				</div>
 			</div>
   			<div class="row">
-  				<div class="col-xs-12 col-md-9">
+  				<div class="col-xs-12 col-lg-9">
 					<div class="share">
 						<a class="btn"><i class="fab fa-facebook-f"></i></a>
 						<a class="btn ml-3"><i class="fab fa-twitter"></i></a>
@@ -43,7 +43,7 @@
 					@endif
 						@include('Frontend.Article.Themes.Includes.newsletter')
   				</div>
-				<div class="col-xs-12 col-md-3 mt-5">
+				<div class="col-xs-12 col-lg-3 mt-5">
 					<p class="text-center">Publicidade</p>
 					<img src="http://via.placeholder.com/300x250">
 				</div>
