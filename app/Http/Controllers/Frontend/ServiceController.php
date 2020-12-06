@@ -9,10 +9,12 @@ use App\Http\Models\Service;
 class ServiceController extends Controller
 {
     public function index(){
-        $service = Service::orderBy('id', 'desc')->get();
+        $records = Service::orderBy('id', 'desc')->paginate(9);
+        return view('Frontend.Service.index', compact('records'));
     }
 
     public function view($slug){
-        $service = Service::where('slug', $slug)->first();
+        $records = Service::where('slug', $slug)->first();
+        return view('Frontend.Service.view', compact('records'));
     }
 }

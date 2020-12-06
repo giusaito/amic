@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(SettingSeeder::class);
         factory(App\Http\Models\SiteUtil::class, 10)->create();
-        // factory(App\Http\Models\CategorySiteUtil::class, 59)->create();
+        $this->call(ThemeSeeder::class);
+        factory(App\Http\Models\Article::class, 10)->create();
+        factory(App\Http\Models\Service::class, 20)->create();
         $this->call(ProjectSeeder::class);
         $this->call(ProjectEditionSeeder::class);
         $this->call(ProjectEditionSeeder::class);

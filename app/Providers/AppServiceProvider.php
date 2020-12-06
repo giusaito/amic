@@ -21,6 +21,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Faker\Generator as FakerGenerator;
+use Faker\Factory as FakerFactory;
 
 class AppServiceProvider extends ServiceProvider
 { 
@@ -45,5 +47,9 @@ class AppServiceProvider extends ServiceProvider
             'create' => 'bw-adicionar',
             'edit' => 'bw-editar'
         ]);
+
+        $this->app->singleton(FakerGenerator::class, function () {
+            return FakerFactory::create('pt_BR');
+        });
     }
 }

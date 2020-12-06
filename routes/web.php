@@ -301,7 +301,10 @@ Route::group(['middleware' => ['web']], function(){
     Route::group(['as' => 'frontend.', 'namespace' => 'Frontend'], function()
     {
         Route::get('/', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+
+        Route::get('/ultimas-noticias', ['as' => 'article.index', 'uses' => 'ArticleController@index']);
         Route::get('/noticia/{id}/{slug}', ['as' => 'article.view', 'uses' => 'ArticleController@view']);
+
         Route::get('/servicos', ['as' => 'service.index', 'uses' => 'ServiceController@index']);
         Route::get('/servico/{slug}', ['as' => 'service.view', 'uses' => 'ServiceController@view']);
     });

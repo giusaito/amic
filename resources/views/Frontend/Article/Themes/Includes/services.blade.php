@@ -25,7 +25,7 @@
                     @foreach($services as $service)
                         <div class="item">
                             <a href="{{route('frontend.service.view', ['slug' => $service->slug])}}">
-                                <img src="{{asset('storage')}}/{{$service->path}}original-{{$service->image}}" class="img-fluid"> 
+                                <img src="{{asset('storage')}}/{{$service->path}}original-{{$service->image}}" class="img-fluid">
                                 <h4 class="text-center"><strong>{{$service->title}}</strong></h4>
                                 <h5 class="service-more">+ SAIBA MAIS</h5>
                             </a>

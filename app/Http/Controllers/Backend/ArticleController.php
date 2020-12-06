@@ -85,17 +85,21 @@ class ArticleController extends Controller
 
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
 
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(150, 200)->encode($ext, 70);
 
             $thumb2   = Image::make($file)->fit(1200, 380)->encode($ext, 70);
+
+            $thumb3   = Image::make($file)->fit(500, 300)->encode($ext, 70);
 
             $path = "noticia/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '150x200-'.  $file->hashName(),  $thumb1);
 
             $this->storage->put($path. '1200x380-'.  $file->hashName(),  $thumb2);
+
+            $this->storage->put($path. '500x300-'.  $file->hashName(),  $thumb3);
 
            $hashname = $file->hashName();
         }
@@ -191,17 +195,21 @@ class ArticleController extends Controller
 
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
 
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(150, 200)->encode($ext, 70);
 
             $thumb2   = Image::make($file)->fit(1200, 380)->encode($ext, 70);
+
+            $thumb3   = Image::make($file)->fit(500, 300)->encode($ext, 70);
 
             $path = "noticia/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '150x200-'.  $file->hashName(),  $thumb1);
 
             $this->storage->put($path. '1200x380-'.  $file->hashName(),  $thumb2);
+
+            $this->storage->put($path. '500x300-'.  $file->hashName(),  $thumb3);
 
            $hashname = $file->hashName();
         }
@@ -275,8 +283,9 @@ class ArticleController extends Controller
     public function destroy(Article $noticium)
     {
         $this->storage->delete($noticium->path . 'original-' . $noticium->image);
-        $this->storage->delete($noticium->path . '150x150-' . $noticium->image);
+        $this->storage->delete($noticium->path . '1500x200-' . $noticium->image);
         $this->storage->delete($noticium->path . '1200x380-' . $noticium->image);
+        $this->storage->delete($noticium->path . '500x300-' . $noticium->image);
         $noticium->delete();
 
         $notification = [

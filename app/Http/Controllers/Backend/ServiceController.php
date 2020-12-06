@@ -56,9 +56,9 @@ class ServiceController extends Controller
             $height = Image::make($file)->height();
             $width = Image::make($file)->width();
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(500, 400)->encode($ext, 70);
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '500x400-'.  $file->hashName(),  $thumb1);
            $hashname = $file->hashName();
         }
         
@@ -182,9 +182,9 @@ class ServiceController extends Controller
             $height = Image::make($file)->height();
             $width = Image::make($file)->width();
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(500, 400)->encode($ext, 70);
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '500x400-'.  $file->hashName(),  $thumb1);
            $hashname = $file->hashName();
         }
         
@@ -385,7 +385,7 @@ class ServiceController extends Controller
     {
         $this->storage->delete($servico->path . 'original-' . $servico->image);
         $this->storage->delete($servico->path . 'original-' . $servico->image_internal);
-        $this->storage->delete($servico->path . '150x150-' . $servico->image);
+        $this->storage->delete($servico->path . '500x400-' . $servico->image);
         $this->storage->delete($servico->path . '150x150-' . $servico->image_internal);
         $this->storage->delete($servico->path . 'original-' . $servico->benefit_icon_1);
         $this->storage->delete($servico->path . 'original-' . $servico->benefit_icon_2);
