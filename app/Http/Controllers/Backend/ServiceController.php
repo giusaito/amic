@@ -345,7 +345,6 @@ class ServiceController extends Controller
         // Fim benefício 4
 
         $record->title = $request->title;
-        $record->slug = \Str::slug($request->title);
         $record->description = $request->description;
         $record->content     = $request->content;
         $record->benefit_desc_1 = $request->benefit_desc_1;

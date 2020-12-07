@@ -20,11 +20,14 @@
 		<div class="row">
 			@foreach($records as $record)
 				<div class="col-xs-12 col-md-4">
+				<a href="{{route('frontend.service.view', ['slug' => $record->slug])}}">
 					<figure>
-						<img src="{{asset('storage')}}/{{$record->path}}500x300-{{$record->image}}" class="img-fluid">
+						<img src="{{asset('storage')}}/{{$record->path}}500x400-{{$record->image}}" class="img-fluid">
+						{{-- <img src="https://via.placeholder.com/500x300" class="img-fluid"> --}}
 					</figure>
 					<h2 class="text-center">{{$record->title}}</h2>
 					<h5>{{ Str::limit($record->description, 65) }}</h5>
+				</a>
 				</div>
 			@endforeach
 		</div>

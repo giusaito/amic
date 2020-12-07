@@ -16,7 +16,9 @@
 								{{date('H:m', strtotime($article->published_at))}} por
 								<i class="fas fa-user-circle"></i> 
 								{{$article->user->name}} |
-								{{$article->editorias[0]->title}}
+								@if($article->editoria[0])
+									{{$article->editorias[0]->title}}
+								@endif
 							</h6>
 						</hgroup>
 						@if($article->video)

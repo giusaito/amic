@@ -14,7 +14,7 @@ class ServiceController extends Controller
     }
 
     public function view($slug){
-        $records = Service::where('slug', $slug)->first();
-        return view('Frontend.Service.view', compact('records'));
+        $record = Service::where('slug', $slug)->first();
+        return view('Frontend.Service.view', compact('record'));
     }
 }
