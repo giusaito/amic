@@ -40,8 +40,6 @@ class CnaController extends Controller
             'logo'              => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
             'description'       => 'required',
             'imagem_destaque'   => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
-            // 'about_foto'        => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
-            // 'about_content'     => 'required'
         ],
         [
             'title.required'        => 'Você deve informar o título do CNA.',
@@ -137,6 +135,66 @@ class CnaController extends Controller
     }
     public function about(){
         $record = Cna::first();
-        return view('Backend.CNA.Cna.index', compact('record'));
+        return view('Backend.CNA.About.index', compact('record'));
+    }
+    public function aboutstore(Request $request)
+    {
+        $this->validate($request, [
+            'about_foto'        => 'nullable|sometimes|image|mimes:jpeg,png,jpg',
+            'about_content'     => 'required'
+        ],
+        [
+            'about_content.required' => 'Você deve informar o conteúdo.',
+            'about_foto.image'       => 'O arquivo não é uma imagem',
+            'about_foto.mimes'       => 'O arquivo deve ter o formato JPG ou PNG',
+        ]);
+
+        $record = Cna::first();
+        if(!$record){
+            $record  = new Cna;
+        }
+
+        $about_foto = $request->file('about_foto');
+        if($about_foto){
+            $ext = $about_foto->getClientOriginalExtension();
+
+            $height               = Image::make($about_foto)->height();
+            $width                = Image::make($about_foto)->width();
+            $original             = Image::make($about_foto)->fit($width, $height)->encode($ext, 70);
+            $thumb1               = Image::make($about_foto)->fit(150, 150)->encode($ext, 70);
+            $about_foto_path = "terra-do-sol/img/" . date('Y/m/d/');
+            $this->storage->put($about_foto_path. 'original-' . $about_foto->hashName(),  $original);
+            $this->storage->put($about_foto_path. '150x150-'.  $about_foto->hashName(),  $thumb1);
+            $about_foto_hashname = $about_foto->hashName();
+        }
+
+        $isPhoto2 = (int)$request->isPhoto2;
+        /* 1 A foto não foi alterada
+           2 Foto deletada
+           3 Foto alterada 
+        */
+        if($isPhoto2 == 1) {
+            $about_foto_path = $record->about_foto_path;
+            $about_foto_hashname = $record->about_foto;
+            
+        }else if($isPhoto2 == 2){
+            $about_foto_path = NULL;
+            $about_foto_hashname = NULL;
+        }
+        else if($isPhoto2 == 3){
+            $about_foto_path = $about_foto_path;
+            $about_foto_hashname = $about_foto_hashname;
+        }
+        $record->about_content     = $request->about_content;
+        $record->about_foto_path   = isset($about_foto_path) ? $about_foto_path : NULL;
+        $record->about_foto        = isset($about_foto_hashname) ? $about_foto_hashname : NULL;
+        $record->save();
+
+        $notification = [
+            'message' =>  $record->title . ' adicionado com sucesso',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('backend.cna.about.index')->with($notification);
     }
 }
