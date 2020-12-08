@@ -35,22 +35,36 @@
 			<div class="col-md-12">
                 <h2 class="text-center vantage">Vantagens<h2>
             </div>
-            <div class="col-3 bg-primary text-white">
+            <div class="col-6 col-lg-3 bg-warning text-white pt-5" style="min-height:400px">
+                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_1}}" class="mx-auto d-block img-fluid" width="80">
+                <h4 class="text-center text-white mt-4">{{$record->benefit_desc_1}}</h4>
             </div>
-            <div class="col-3 bg-dark text-white" style="height:100%">
-                ssss
-                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_1}}" class="img-fluid d-none d-lg-block service-img">
-
+            <div class="col-6 col-lg-3 bg-danger text-white pt-5">
+                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_2}}" class="mx-auto d-block img-fluid" width="80">
+                <h4 class="text-center text-white mt-4">{{$record->benefit_desc_2}}</h4>
             </div>
-            <div class="col-3 bg-dark text-white">
-                wwwww
+            <div class="col-6 col-lg-3 bg-warning text-white pt-5">
+                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_3}}" class="mx-auto d-block img-fluid" width="80">
+                <h4 class="text-center text-white mt-4">{{$record->benefit_desc_3}}</h4>
             </div>
-            <div class="col-3 bg-success text-white">
-                wwwww
+            <div class="col-6 col-lg-3 bg-danger text-white pt-5">
+                <img src="{{asset('storage')}}/{{$record->path}}original-{{$record->benefit_icon_4}}" class="mx-auto d-block img-fluid" width="80">
+                <h4 class="text-center text-white mt-4">{{$record->benefit_desc_4}}</h4>
             </div>
 		</div>
 	</div>
 </section>
+
+<section id="afer-content-service">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {!! $record->after_content !!}
+            </div>
+        </div>
+    </div>
+</section>
+
 @include('Frontend.Layout.Includes.footer')
 @endsection
 
@@ -62,10 +76,7 @@
     background-color: orange;
 }
 
-.service-img {
-    position: absolute;
-    margin-top: 50px;
-}
+
 
 .service-content {
     font-size: 27px;
@@ -73,13 +84,17 @@
 }
 
 .vantage {
-        background: #000;
+    background: #000;
     color: #fff;
     width: 300px;
     border-radius: 30px;
     padding: 10px;
-    text-align: center;
-    display: block;
-    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:-40px;
+    z-index: 1;
 }
 </style>
