@@ -47,7 +47,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::with('user')->orderBy('id', 'desc')->paginate(10);
-        return view('Backend.Article.index', compact('articles'));
+        return view('backend.cna.article.index', compact('articles'));
     }
 
     /**
@@ -58,7 +58,7 @@ class ArticleController extends Controller
     public function create()
     {
         $editorias = CategoryArticle::all();
-        return view('Backend.Article.create', compact('editorias'));
+        return view('backend.cna.article.create', compact('editorias'));
     }
 
     /**
@@ -166,7 +166,7 @@ class ArticleController extends Controller
             $editoriasSalvas[] = $editoria->id;
         }
         
-        return view('Backend.Article.edit', compact('article', 'editorias', 'editoriasSalvas'));
+        return view('backend.cna.article.edit', compact('article', 'editorias', 'editoriasSalvas'));
     }
 
     /**
@@ -296,7 +296,7 @@ class ArticleController extends Controller
         }else {
         	$articles = Article::orderBy('id','desc')->with('user')->paginate(10);
         }
-    	return view('Backend.Article.search', compact('articles','search'));
+    	return view('backend.cna.article.search', compact('articles','search'));
     }
 
     public function tag(Request $request){

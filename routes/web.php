@@ -249,9 +249,9 @@ Route::group(['middleware' => ['web']], function(){
             });	
             
             // NOTÍCIAS
-            Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticia.search');
-            Route::get('noticias/tag/', 'ArticleController@tag')->name('noticia.tag');
-            Route::post('noticias/push/{id}', 'ArticleController@push')->name('noticia.push');
+            Route::get('noticias/pesquisar/', 'ArticleController@search')->name('noticias.search');
+            Route::get('noticias/tag/', 'ArticleController@tag')->name('noticias.tag');
+            Route::post('noticias/push/{id}', 'ArticleController@push')->name('noticias.push');
             Route::resource('/noticias', 'ArticleController')->names([
                 'index' => 'noticias.index',
                 'create' => 'noticias.create',
