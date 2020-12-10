@@ -1,33 +1,30 @@
 @extends('Frontend.Layout.amic')
 
-@section('title', 'Serviços Amic')
+@section('title', 'Equipe Amic')
 @section('content')
 @include('Frontend.Layout.Includes.header')
 
-<section id="page-title-service" class="mb-5">
-   <div class="container">
-      <h1 class="text-center">
-     	<strong>
-     		<img src="https://i.imgur.com/iGvq3CI.png" width="45">
-     		SERVIÇOS
-     	</strong>
-  	</h1>
-   </div>
-</section>
-
-<section id="page-news" class="pb-5">
+<section id="page-team" class="pb-5 pt-5">
 	<div class="container">
 		<div class="row">
 			@foreach($records as $record)
-				<div class="col-xs-12 col-md-4">
-				<a href="{{route('frontend.service.view', ['slug' => $record->slug])}}">
-					<figure>
-						<img src="{{asset('storage')}}/{{$record->path}}500x400-{{$record->image}}" class="img-fluid">
-						{{-- <img src="https://via.placeholder.com/500x300" class="img-fluid"> --}}
-					</figure>
-					<h2 class="text-center">{{$record->title}}</h2>
-					<h5>{{ Str::limit($record->description, 65) }}</h5>
-				</a>
+				<div class="col-xs-12 col-md-4 text-center">
+					<div class="bg-light pt-4 pb-4">
+						<figure>
+							<img src="{{asset('storage')}}/{{$record->path}}222x235-{{$record->image}}" class="">
+						</figure>
+						<hgroup>
+							<h4 class="text-center font-weight-bold">{{$record->name}}</h4>
+							<h5>{{ Str::limit($record->office, 65) }}</h5>
+							<h6>{{ $record->description }}</h6>
+						</hgroup>
+						<a href="https://wa.me/55{{preg_replace('/[^0-9]/', '', $record->whatsapp)}}">
+							<i class="fab fa-whatsapp"></i>
+						</a>
+						<a href="mailto:{{$record->email}}">
+							<i class="fa fa-envelope"></i>
+						</a>
+					</div>
 				</div>
 			@endforeach
 		</div>
@@ -70,19 +67,13 @@
 		</div>
 	</div>
 </section>
-@include('Frontend.Layout.Includes.footer')
-@endsection
-
 @section('css')
 <style type="text/css">
-	#page-title-service {
-		background-image: url(https://i.imgur.com/4Uo06aI.jpg);
-	}
-	#page-title-service h1 {
-		padding: 80px 0;
-		color: #fff !important;
-		font-size: 2em !important;
-		min-height: 150px;
+	i.fab.fa-whatsapp, i.fa.fa-envelope{
+		font-size: 1.2em;
+		color: #f0825f !important;
 	}
 </style>
+@endsection
+@include('Frontend.Layout.Includes.footer')
 @endsection

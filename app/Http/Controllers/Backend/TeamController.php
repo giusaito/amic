@@ -57,13 +57,13 @@ class TeamController extends Controller
 
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
 
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(222, 235)->encode($ext, 70);
 
             $path = "team/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '222x235-'.  $file->hashName(),  $thumb1);
 
            $hashname = $file->hashName();
         }
@@ -131,13 +131,13 @@ class TeamController extends Controller
 
             $original = Image::make($file)->fit($width, $height)->encode($ext, 70);
 
-            $thumb1   = Image::make($file)->fit(150, 150)->encode($ext, 70);
+            $thumb1   = Image::make($file)->fit(222, 235)->encode($ext, 70);
 
             $path = "team/" . date('Y/m/d/');
 
             $this->storage->put($path. 'original-' . $file->hashName(),  $original);
 
-            $this->storage->put($path. '150x150-'.  $file->hashName(),  $thumb1);
+            $this->storage->put($path. '222x235-'.  $file->hashName(),  $thumb1);
 
            $hashname = $file->hashName();
         }
@@ -189,7 +189,7 @@ class TeamController extends Controller
     public function destroy(Team $equipe)
     {
         $this->storage->delete($equipe->path . 'original-' . $equipe->image);
-        $this->storage->delete($equipe->path . '150x150-' . $equipe->image);
+        $this->storage->delete($equipe->path . '222x235-' . $equipe->image);
         $equipe->delete();
 
         $notification = [

@@ -36,9 +36,9 @@
 }
 
 .btn-amic { 
-  color: #FFFFFF !important; 
-  background-color: #FB6629 !important;  
-  border-color: #FB6629 !important; 
+  color: #FFFFFF; 
+  background-color: #695D61; 
+  border-color: #695d61; 
 } 
  
 .btn-amic:hover, 
@@ -46,9 +46,9 @@
 .btn-amic:active, 
 .btn-amic.active, 
 .open .dropdown-toggle.btn-amic { 
-  color: #FFFFFF !important; 
-  background-color: #000000 !important; 
-  border-color: #000000 !important;
+  color: #FFFFFF; 
+  background-color: #695D61; 
+  border-color: #695d61; 
 } 
  
 .btn-amic:active, 
@@ -72,12 +72,12 @@ fieldset[disabled] .btn-amic:active,
 .btn-amic.disabled.active, 
 .btn-amic[disabled].active, 
 fieldset[disabled] .btn-amic.active { 
-  background-color: #FB6629; 
-  border-color: #FB6629; 
+  background-color: #695D61; 
+  border-color: #695d61; 
 } 
  
 .btn-amic .badge { 
-  color: #FB6629; 
+  color: #695D61; 
   background-color: #FFFFFF; 
 }
 

@@ -1,4 +1,4 @@
-$cor-principal: #fb6629;
+$cor-principal: #f0825f;
 @mixin border-radius($radius) {
 	border-radius: $radius;
 	-webkit-border-radius: $radius;
@@ -127,7 +127,7 @@ ul {
 .header-area {
     position: relative; 
     .header-top-area {
-        background:#000;
+        background:#695d61;
         color:#fff;
         a {
             color:#fff;
@@ -370,7 +370,7 @@ ul {
 -----------------------------------------*/
 #footer-area {
   margin-top:30px;
-  background:#000;
+  background:#695d61;
   color:#fff;
   font-size: 14px;
   padding:60px 0;

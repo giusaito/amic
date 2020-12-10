@@ -307,6 +307,8 @@ Route::group(['middleware' => ['web']], function(){
 
         Route::get('/servicos', ['as' => 'service.index', 'uses' => 'ServiceController@index']);
         Route::get('/servico/{slug}', ['as' => 'service.view', 'uses' => 'ServiceController@view']);
+        Route::get('/equipe', ['as' => 'team.index', 'uses' => 'TeamController@index']);
+        Route::get('/pagina/{slug}', ['as' => 'page.index', 'uses' => 'PageController@index']);
     });
 });
 Auth::routes(['register' => false]);
